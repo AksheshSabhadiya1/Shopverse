@@ -28,7 +28,7 @@ export default function Footer() {
                 <div>
                     <h2 className="mb-4 text-sm font-semibold uppercase">Support</h2>
                     <ul className="text-gray-400">
-                        <li className="mb-2">111 Bijoy Sarani, Surat, Gujarat, India</li>
+                        <li className="mb-2">Surat, Gujarat, India</li>
                         <li className="mb-2">shopverse@gmail.com</li>
                         <li className="mb-2">+88015-88888-9999</li>
                     </ul>
@@ -37,21 +37,22 @@ export default function Footer() {
                 <div>
                     <h2 className="mb-4 text-sm font-semibold uppercase">Account</h2>
                     <ul className="text-gray-400">
-                        <li className="mb-2"><a href="/" className="hover:underline">My Account</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">Login / Register</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">Cart</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">Wishlist</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">Shop</a></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">My Account</Link></li>
+                        <li className="mb-2"><Link to="/signin" className="hover:underline">Signin</Link></li>
+                        <li className="mb-2"><Link to="/signup" className="hover:underline">Register</Link></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">Cart</Link></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">Wishlist</Link></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">Shop</Link></li>
                     </ul>
                 </div>
 
                 <div>
                     <h2 className="mb-4 text-sm font-semibold uppercase">Quick Links</h2>
                     <ul className="text-gray-400">
-                        <li className="mb-2"><a href="/" className="hover:underline">Privacy Policy</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">Terms & Conditions</a></li>
-                        <li className="mb-2"><a href="/" className="hover:underline">FAQ</a></li>
-                        <li className="mb-2"><a href="/contact" className="hover:underline">Contact</a></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">Privacy Policy</Link></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">Terms & Conditions</Link></li>
+                        <li className="mb-2"><Link to="/" className="hover:underline">FAQ</Link></li>
+                        <li className="mb-2"><Link to="/contact" className="hover:underline">Contact</Link></li>
                     </ul>
                 </div>
 
