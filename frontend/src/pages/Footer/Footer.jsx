@@ -60,7 +60,7 @@ export default function Footer() {
                     <h2 className="mb-4 text-sm font-semibold uppercase">Download App</h2>
                     <p className="mb-2">Save ₹100 with App New User Only</p>
                     <div className="flex flex-wrap justify-center md:justify-start items-center space-x-2">
-                        <img src="/icons/QRCode.png" alt="QR Code" className="w-16" />
+                        <img src="/icons/QRCode.png" alt="QR Code" className="w-18" />
                         <div>
                             <img src="/icons/GooglePlay.png" alt="Google Play" className="mb-1 w-24" />
                             <img src="/icons/appstore.png" alt="App Store" className="w-24" />

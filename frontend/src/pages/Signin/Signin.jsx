@@ -32,11 +32,11 @@ export default function Signin(){
                         />
                         <button
                             type="submit"
-                            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition duration-300"
+                            className="w-full bg-orange-600 hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
                         >
                             Sign in
                         </button>
-                        <Link to='/signin' className="text-orange-600 hover:underline">forgot password?</Link>
+                        <Link to='/signin' className="text-red-500 hover:underline">forgot password?</Link>
                         
                     </form>
                 </div>

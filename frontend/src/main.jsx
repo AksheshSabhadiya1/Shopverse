@@ -8,6 +8,7 @@ import Contact from './pages/Contact/Contact.jsx'
 import Signin from './pages/Signin/Signin.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import Home from './pages/Home/Home.jsx'
+import Error from './pages/Error/Error.jsx'
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/home',
+        path: '/',
         element: <Home />
       }, 
       {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />
+      },
+      {
+        path: '/:other',
+        element: <Error />
       }
     ]
   }

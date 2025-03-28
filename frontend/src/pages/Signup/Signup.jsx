@@ -37,13 +37,13 @@ export default function Signup() {
                         />
                         <button
                             type="submit"
-                            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition duration-300"
+                            className="w-full bg-orange-600 hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
                         >
                             Create Account
                         </button>
                         <button
                             type="button"
-                            className="w-full flex items-center justify-center bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-3 rounded-lg transition duration-300"
+                            className="w-full flex items-center justify-center bg-white border cursor-pointer border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-3 rounded-lg transition duration-300"
                         >
                         <img
                             src="/icons/Google-logo.png"
