@@ -26,11 +26,7 @@ export default function Contact() {
 
       <div className="w-full md:w-1/2 lg:w-2/3 p-6">
         <form className="bg-white rounded-lg p-6">
-<<<<<<< HEAD
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-=======
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
->>>>>>> c0e281c519ad4a3fbee93641ae3704ac940099e6
             <input
               type="text"
               name="name"
@@ -42,22 +38,14 @@ export default function Contact() {
               type="email"
               name="email"
               placeholder="Your Email*"
-<<<<<<< HEAD
               className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-=======
-              className="w-full p-3  bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
->>>>>>> c0e281c519ad4a3fbee93641ae3704ac940099e6
               required
             />
             <input
               type="number"
               name="phoneNo"
               placeholder="Your Phone*"
-<<<<<<< HEAD
               className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-=======
-              className="w-full p-3  bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
->>>>>>> c0e281c519ad4a3fbee93641ae3704ac940099e6
               required
             />
           </div>
@@ -68,7 +56,6 @@ export default function Contact() {
               placeholder="Your Message"
               className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               rows="6"
-<<<<<<< HEAD
             ></textarea>
           </div>
 
@@ -80,20 +67,6 @@ export default function Contact() {
         </form>
       </div>
 
-=======
-              
-            ></textarea>
-          </div>
-          
-          <div className="flex justify-end">
-          <button className="mt-4 bg-orange-600 cursor-pointer text-white py-3 px-4 rounded hover:bg-orange-800 transition-all">
-            Send Message
-          </button>
-          </div>
-          
-        </form>
-      </div>
->>>>>>> c0e281c519ad4a3fbee93641ae3704ac940099e6
     </div>
   );
 }
