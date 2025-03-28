@@ -23,7 +23,7 @@ export default function Header() {
                         <input
                             type="text"
                             placeholder="What are you looking for?"
-                            className="text-gray-800 w-70 bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none"/>
+                            className="text-gray-800 w-70 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none"/>
                         <Link>
                             <img src="/icons/search.png" alt="search" className="relative end-10" />
                         </Link>
