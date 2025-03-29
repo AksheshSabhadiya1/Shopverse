@@ -1,10 +1,13 @@
-import React, { useState } from "react"; 
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from 'lucide-react';
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [userDropDown, setUserDropDown] = useState(false);
+
+    const { pathname } = useLocation()
+    const path = pathname.split('/').filter((x) => x).toString()
 
     return (
         <header className="shadow sticky z-50 top-0">
@@ -20,64 +23,64 @@ export default function Header() {
                     <img src="/icons/DropDown.png" alt="Dropdown" className="w-4 h-4 ml-1" />
                 </div>
             </div>
-            <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
+            <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                     <Link to="/" className="flex items-center">
-                        <strong>ShopVerse</strong>
+                        <strong className="mx-6">ShopVerse</strong>
                     </Link>
                     <div className="flex items-center lg:order-2">
                         <input
                             type="text"
                             placeholder="What are you looking for?"
-                            className="text-gray-800 w-70 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none" 
+                            className="text-gray-800 w-70 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none"
                         />
                         <Link>
                             <img src="/icons/search.png" alt="search" className="relative end-10" />
                         </Link>
-                        <Link>
-                            <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
-                        </Link>
-                        <Link>
-                            <img src="/icons/cart.png" alt="cart" className="mx-2" />
-                        </Link>
-
-                        <button 
-                            onClick={() => setUserDropDown(!userDropDown)} 
-                            className="relative"
-                        > <img src="/icons/user.png" alt="user" className="mx-2" />
-                        </button>
-
-                        <div 
-                            className={`absolute right-5 top-22 mt-2 w-50 bg-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"}`}
-                        >
-                            <div className="px-4 py-3 text-sm text-gray-900">
-                                <div>Bonnie Green</div>
-                                <div className="font-medium truncate">name@flowbite.com</div>
+                        {
+                            !(path === 'signup' || path === 'signin') && <div className="flex">
+                                <Link>
+                                    <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
+                                </Link>
+                                <Link>
+                                    <img src="/icons/cart.png" alt="cart" className="mx-2" />
+                                </Link>
+                                <button
+                                    onClick={() => setUserDropDown(!userDropDown)}
+                                    className="relative"
+                                > {userDropDown ? <img src="/icons/login-user.png" alt="user" className="mx-2 w-8 h-8" /> : <img src="/icons/user.png" alt="user" className="mx-2 w-8 h-8" />}
+                                </button>
                             </div>
-                            <Link className="flex items-center hover:bg-gray-100">
-                                <img src="/icons/user.png" alt="user" className="mx-2" /> Manage My Account
-                            </Link>
-                            <Link className="flex items-center hover:bg-gray-100">
-                                <img src="/icons/user.png" alt="user" className="mx-2" /> My Order
-                            </Link>
-                            <Link className="flex items-center hover:bg-gray-100">
-                                <img src="/icons/user.png" alt="user" className="mx-2" /> My Cancellations
-                            </Link>
-                            <Link className="flex items-center hover:bg-gray-100">
-                                <img src="/icons/user.png" alt="user" className="mx-2" /> My Reviews
-                            </Link>
-                            <Link className="flex items-center hover:bg-gray-100">
-                                <img src="/icons/user.png" alt="user" className="mx-2" /> Logout
-                            </Link>
-                            <ul className="py-2 text-sm text-gray-700">
-                                <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
-                                <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
-                                <li><a href="#" className="block px-4 py-2 hover:bg-gray-100">Earnings</a></li>
-                            </ul>
-                            <div className="py-2">
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                        }
+
+
+                        <div
+                            className={`absolute right-0 md:right-0 top-full mt-2 w-48 sm:w-56 md:w-64 bg-black/50 text-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
+                                }`}
+                        >
+                            <div className="px-4 py-3 text-sm">
+                                <div className="font-semibold">Akshu Sabhadiya</div>
+                                <div className="font-medium truncate text-gray-300">name@shopverse.com</div>
+                            </div>
+                            <div className="py-1 space-y-1">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                    <img src="/icons/white-user.png" alt="Account" className="w-5 h-5 mr-3" /> Manage My Account
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                    <img src="/icons/bag-icon.png" alt="Orders" className="w-5 h-5 mr-3" /> My Order
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                    <img src="/icons/cancel-icon.png" alt="Cancellations" className="w-5 h-5 mr-3" /> My Cancellations
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                    <img src="/icons/star-icon.png" alt="Reviews" className="w-5 h-5 mr-3" /> My Reviews
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-red-600 transition">
+                                    <img src="/icons/logout-icon.png" alt="Logout" className="w-5 h-5 mr-3" /> Logout
+                                </Link>
                             </div>
                         </div>
+
                     </div>
 
                     <button className="lg:hidden p-2 text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>

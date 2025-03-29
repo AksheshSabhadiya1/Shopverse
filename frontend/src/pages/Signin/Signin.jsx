@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Signin(){
   return (
-    <div className="flex flex-col md:flex-row h-screen items-center justify-center -my-10 px-6 md:px-12 lg:px-24">
+    <div className="flex flex-col md:flex-row h-screen items-center -mt-10 justify-center px-4 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
                 <img
                     src="/icons/signinpage-image.png"
@@ -22,13 +22,13 @@ export default function Signin(){
                             type="email"
                             name="email-phone"
                             placeholder="Email or Phone Number"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                         <input
                             type="password"
                             name="password"
-                            placeholder="Set Password"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            placeholder="Password"
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                         <button
                             type="submit"

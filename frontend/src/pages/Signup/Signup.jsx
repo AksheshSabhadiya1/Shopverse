@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+
+    
+
     return (
         <div className="flex flex-col md:flex-row h-screen items-center justify-center -my-10 px-6 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
@@ -21,29 +24,32 @@ export default function Signup() {
                             type="text"
                             name="name"
                             placeholder="Name"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                         <input
                             type="email"
                             name="email-phone"
                             placeholder="Email or Phone Number"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                         <input
                             type="password"
                             name="password"
                             placeholder="Set Password"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                         <button
                             type="submit"
-                            className="w-full bg-orange-600 hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
+                            className="w-full bg-orange-600 hover:bg-orange-700 text-white cursor-pointer font-semibold py-2 rounded-lg transition duration-300"
                         >
                             Create Account
                         </button>
                         <button
                             type="button"
-                            className="w-full flex items-center justify-center bg-white border cursor-pointer border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-3 rounded-lg transition duration-300"
+                            className="w-full flex items-center justify-center bg-white border cursor-pointer border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-2 rounded-lg transition duration-300"
                         >
                         <img
                             src="/icons/Google-logo.png"
