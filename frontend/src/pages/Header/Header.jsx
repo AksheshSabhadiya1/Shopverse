@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [userDropDown, setUserDropDown] = useState(false);
+    const [sidebar, setSidebar] = useState(false)
 
     const { pathname } = useLocation()
     const path = pathname.split('/').filter((x) => x).toString()
@@ -25,9 +26,45 @@ export default function Header() {
             </div>
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <Link to="/" className="flex items-center">
-                        <strong className="mx-6">ShopVerse</strong>
-                    </Link>
+                    <button onClick={() => setSidebar(!sidebar)}  
+                            class="font-bold px-5 py-2.5 focus:outline-none" type="button">
+                        <strong className="mx-6  text-3xl">ShopVerse</strong>
+                    </button>
+
+                    <div className={`absolute left-0 md:left-30 h-auto top-full border-t border-r border-gray-200 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-100 transition-all duration-300 ${sidebar ? "block" : "hidden" }`}>
+                            <div className="py-1 space-y-1">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                <div className="flex">
+                                    <p>Woman's Fashion </p> <img src="/icons/arrow-left-icon.png" className="absolute right-5" />
+                                </div>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Men's Fashion </p> <img src="/icons/arrow-left-icon.png" className="absolute right-5" />
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Electronics </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Home & Lifestyle </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Medicine </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Sports & Outdoor </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Baby's & Toys </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Groceries & Pets </p>
+                                </Link>
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <p> Health & Beauty </p>
+                                </Link>
+                            </div>
+                        </div>
+                    
                     <div className="flex items-center lg:order-2">
                         <input
                             type="text"
@@ -55,7 +92,7 @@ export default function Header() {
 
 
                         <div
-                            className={`absolute right-0 md:right-0 top-full mt-2 w-48 sm:w-56 md:w-64 bg-black/50 text-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
+                            className={`absolute right-0 md:right-30 top-26 w-48 sm:w-56 md:w-64 bg-black/50 text-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
                                 }`}
                         >
                             <div className="px-4 py-3 text-sm">
@@ -63,19 +100,19 @@ export default function Header() {
                                 <div className="font-medium truncate text-gray-300">name@shopverse.com</div>
                             </div>
                             <div className="py-1 space-y-1">
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
                                     <img src="/icons/white-user.png" alt="Account" className="w-5 h-5 mr-3" /> Manage My Account
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
                                     <img src="/icons/bag-icon.png" alt="Orders" className="w-5 h-5 mr-3" /> My Order
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
                                     <img src="/icons/cancel-icon.png" alt="Cancellations" className="w-5 h-5 mr-3" /> My Cancellations
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-gray-700 transition">
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
                                     <img src="/icons/star-icon.png" alt="Reviews" className="w-5 h-5 mr-3" /> My Reviews
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-red-600 transition">
+                                <Link to="#" className="flex items-center px-4 py-2 rounded-lg hover:bg-red-700 transition">
                                     <img src="/icons/logout-icon.png" alt="Logout" className="w-5 h-5 mr-3" /> Logout
                                 </Link>
                             </div>

@@ -60,7 +60,7 @@ export default function Contact() {
           </div>
 
           <div className="flex justify-end">
-            <button className="mt-4 bg-orange-600 cursor-pointer text-white py-2 px-6 rounded hover:bg-orange-800 transition-all">
+            <button className="mt-4 bg-[#DB4444] cursor-pointer text-white py-2 px-6 rounded hover:bg-orange-800 transition-all">
               Send Message
             </button>
           </div>
