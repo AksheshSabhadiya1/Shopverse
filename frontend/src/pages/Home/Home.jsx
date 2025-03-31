@@ -1,36 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Clock from "../../components/Clock/Clock";
+import ProductCard from "../../components/ProductsAPI/ProductCard";
 
 export default function Home() {
-  const date = new Date().getTime() + 4 * 24 * 60 * 60 * 1000
-
-  const calculateTime = () => {
-    const currentDate = new Date()
-    const diff = date - currentDate
-
-    return {
-      Days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      Hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-      Minutes: Math.floor((diff / (1000 * 60)) % 60),
-      Seconds: Math.floor(diff / (1000) % 60),
-    }
-  }
-
-  const [time, setTime] = useState(calculateTime())
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(calculateTime())
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [])
-
-  useEffect(()=> {
-  fetch('https://api.escuelajs.co/api/v1/products').then(res=> console.log(res))
   
-  },[])
-
   return (
     <div className="lg:ml-40 lg:mr-30">
       <div className="flex flex-col lg:flex-row " >
@@ -84,33 +58,23 @@ export default function Home() {
           <span className="ml-2 text-[#DB4444] font-semibold">Today's</span>
         </div>
       </div>
+
       <div className="flex items-center space-x-20">
         <p className="text-4xl font-semibold py-2">Flash Sales</p>
-        <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-          {Object.entries(time).map(([unit, value], index) => (
-            <div key={index} className="flex p-2 bg-neutral rounded-box text-neutral-content">
-              <div className="flex flex-col">
-                {unit}
-                <span className="countdown font-mono text-5xl">
-                  {value}
-                </span>
-              </div>
-              {
-                unit !== 'Seconds' && <span className="text-5xl py-4 relative text-[#DB4444] left-5">:</span>
-              }
-            </div>
-          ))}
-        </div>
+        <Clock />
 
         <div className="flex space-x-2 mx-auto">
           <div className="bg-gray-200 w-10 h-10 text-center hover:text-[#DB4444] hover:scale-110 rounded-full">
-              <button className="font-bold p-2">🡠</button>
+            <button className="font-bold p-2">🡠</button>
           </div>
           <div className="bg-gray-200 w-10 h-10 text-center hover:text-[#DB4444] hover:scale-110 rounded-full">
-              <button className="font-bold p-2">🡢</button>
+            <button className="font-bold p-2">🡢</button>
           </div>
         </div>
-
+      </div>
+      
+      <div>
+        <ProductCard />
       </div>
 
     </div>
