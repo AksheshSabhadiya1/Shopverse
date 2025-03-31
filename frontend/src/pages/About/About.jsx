@@ -101,7 +101,7 @@ export default function About() {
       <div className="w-full container mx-auto px-2 sm:px-2 md:px-6 lg:px-10 xl:px-12 py-10">
         <Swiper
           slidesPerView={1}
-          spaceBetween={20}
+          spaceBetween={0}
           breakpoints={{
             640: {
               slidesPerView: 2,

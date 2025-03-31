@@ -9,6 +9,7 @@ import Signin from './pages/Signin/Signin.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import Home from './pages/Home/Home.jsx'
 import Error from './pages/Error/Error.jsx'
+import Accountpage from './pages/Accountpage/Accountpage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />
+      },
+      {
+        path: '/my-account',
+        element: <Accountpage />
       },
       {
         path: '/:other',

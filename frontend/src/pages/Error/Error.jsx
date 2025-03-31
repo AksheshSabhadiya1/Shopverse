@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Error() {
     return (
-        <div className="flex flex-col items-center justify-center h-100 bg-gray-100 text-center">
+        <div className="flex flex-col items-center justify-center h-100 text-center">
             <div className="w-full rounded-2xl">
                 <h1 className="text-5xl font-bold text-gray-800 mb-4">404 Page Not Found</h1>
                 <p className="text-gray-500 mb-5">

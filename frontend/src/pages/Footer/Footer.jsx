@@ -37,7 +37,7 @@ export default function Footer() {
                 <div>
                     <h2 className="mb-4 text-sm font-semibold uppercase">Account</h2>
                     <ul className="text-gray-400">
-                        <li className="mb-2"><Link to="/" className="hover:underline">My Account</Link></li>
+                        <li className="mb-2"><Link to="/my-account" className="hover:underline">My Account</Link></li>
                         <li className="mb-2"><Link to="/signin" className="hover:underline">Signin</Link></li>
                         <li className="mb-2"><Link to="/signup" className="hover:underline">Register</Link></li>
                         <li className="mb-2"><Link to="/" className="hover:underline">Cart</Link></li>

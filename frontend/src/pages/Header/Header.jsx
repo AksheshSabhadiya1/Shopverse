@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from 'lucide-react';
 
@@ -9,6 +9,22 @@ export default function Header() {
 
     const { pathname } = useLocation()
     const path = pathname.split('/').filter((x) => x).toString()
+
+    useEffect(()=>{
+        const time = setTimeout(()=>{
+            setUserDropDown(false)
+        },2000)
+
+        return ()=> clearTimeout(time)
+    }, [userDropDown])
+
+    useEffect(()=>{
+        const time = setTimeout(()=>{
+            setSidebar(false)
+        },2000)
+
+        return ()=> clearTimeout(time)
+    }, [sidebar])
 
     return (
         <header className="shadow sticky z-50 top-0">
@@ -27,7 +43,7 @@ export default function Header() {
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                     <button onClick={() => setSidebar(!sidebar)}  
-                            class="font-bold px-5 py-2.5 focus:outline-none" type="button">
+                            className="font-bold px-5 py-2.5 focus:outline-none" type="button">
                         <strong className="mx-6  text-3xl">ShopVerse</strong>
                     </button>
 
@@ -100,7 +116,7 @@ export default function Header() {
                                 <div className="font-medium truncate text-gray-300">name@shopverse.com</div>
                             </div>
                             <div className="py-1 space-y-1">
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
+                                <Link to="/my-account" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
                                     <img src="/icons/white-user.png" alt="Account" className="w-5 h-5 mr-3" /> Manage My Account
                                 </Link>
                                 <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
