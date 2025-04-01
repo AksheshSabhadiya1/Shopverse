@@ -91,7 +91,8 @@ export default function Header() {
                             <img src="/icons/search.png" alt="search" className="relative end-10" />
                         </Link>
                         {
-                            !(path === 'signup' || path === 'signin') && <div className="flex">
+                            !(path === 'signup' || path === 'signin') && 
+                            <div className="hidden md:flex lg:flex">
                                 <Link>
                                     <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
                                 </Link>
@@ -105,6 +106,20 @@ export default function Header() {
                                 </button>
                             </div>
                         }
+
+                            <div className="lg:hidden md:hidden flex justify-center items-center">
+                                <Link>
+                                    <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
+                                </Link>
+                                <Link>
+                                    <img src="/icons/cart.png" alt="cart" className="mx-2" />
+                                </Link>
+                                <button
+                                    onClick={() => setUserDropDown(!userDropDown)}
+                                    className="relative"
+                                > {userDropDown ? <img src="/icons/login-user.png" alt="user" className="mx-2 w-8 h-8" /> : <img src="/icons/user.png" alt="user" className="mx-2 w-8 h-8" />}
+                                </button>
+                            </div>
 
 
                         <div
@@ -156,12 +171,13 @@ export default function Header() {
                     </div>
 
                     {menuOpen && (
-                        <div className="lg:hidden flex flex-col bg-white py-4 space-y-3 text-center">
+                        <div className="lg:hidden flex flex-col bg-white py-4 space-y-3 justify-center items-center text-center">
                             <NavLink to="/" className="text-gray-700 hover:text-orange-700" onClick={() => setMenuOpen(false)}>Home</NavLink>
                             <NavLink to="/about" className="text-gray-700 hover:text-orange-700" onClick={() => setMenuOpen(false)}>About</NavLink>
                             <NavLink to="/contact" className="text-gray-700 hover:text-orange-700" onClick={() => setMenuOpen(false)}>Contact</NavLink>
                             <NavLink to="/signup" className="text-gray-700 hover:text-orange-700" onClick={() => setMenuOpen(false)}>Sign Up</NavLink>
                         </div>
+                        
                     )}
                 </div>
             </nav>

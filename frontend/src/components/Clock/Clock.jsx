@@ -27,20 +27,18 @@ export default function Clock() {
     }, [])
 
     return (
-        <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-            {Object.entries(time).map(([unit, value], index) => (
-                <div key={index} className="flex p-2 bg-neutral rounded-box text-neutral-content">
-                    <div className="flex flex-col">
-                        {unit}
-                        <span className="countdown font-mono text-5xl">
-                            {value}
-                        </span>
-                    </div>
-                    {
-                        unit !== 'Seconds' && <span className="text-5xl py-4 relative text-[#DB4444] left-5">:</span>
-                    }
-                </div>
-            ))}
+        <div className="grid grid-flow-col gap-2 sm:gap-4 text-center auto-cols-max">
+          {Object.entries(time).map(([unit, value], index) => (
+            <div key={index} className="p-2 bg-neutral font-semibold rounded-lg flex flex-col items-center">
+              <p className="text-xs sm:text-sm text-start">{unit}</p>
+              <span className="countdown text-2xl sm:text-3xl md:text-5xl">{value}
+                {unit !== "Seconds" && (
+                <span className="text-xl font-medium relative left-3 sm:text-2xl md:text-5xl text-[#DB4444]">:</span>
+              )}
+              </span>
+
+            </div>
+          ))}
         </div>
     )
 }
