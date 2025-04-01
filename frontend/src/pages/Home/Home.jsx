@@ -4,10 +4,13 @@ import ProductSlider from "../../components/ProductsAPI/ProductSlider";
 import Clock from '../../components/Clock/Clock'
 import CategorySlider from "../../components/ProductsAPI/CategorySlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
+import SaleClock from "../../components/Clock/SaleClock";
+import AllProductSlider from "../../components/ProductsAPI/AllProductSlider";
+import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
 
 export default function Home() {
-  
-  
+
+
 
 
   return (
@@ -40,7 +43,7 @@ export default function Home() {
         </div>
       </div>
 
-      
+
       <ProductSlider />
 
       <div className="mb-15 flex justify-center lg:mt-4">
@@ -48,9 +51,76 @@ export default function Home() {
       </div>
 
       <CategorySlider />
-      
       <BestSellProduct />
-      
+
+      <div className=" mt-20 mb-10 flex flex-col lg:flex-row items-center justify-between bg-black text-white p-6 lg:p-12">
+        <div className="flex flex-col text-center lg:text-left max-w-lg">
+          <span className="text-[#DB4444] text-lg font-semibold">Categories</span>
+          <p className="text-3xl lg:text-5xl font-bold mt-2">Enhance Your Music Experience</p>
+          <SaleClock />
+          <div className="mt-6">
+            <button className="px-8 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded-lg hover:bg-red-700">
+              Buy Now
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-8 lg:mt-0">
+          <img
+            src="/images/JBL_BOOMBOX.png"
+            alt="JBL Boombox"
+            className="max-w-full h-auto"
+          />
+        </div>
+      </div>
+
+      <AllProductSlider />
+      <div className="mb-25 flex justify-center lg:mt-4">
+        <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+      </div>
+
+      <FeatureProducts />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mb-10">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-center mb-4">
+              <img
+                src="icons/truck-icon.png"
+                alt="Fast Delivery"
+                className="w-18 h-18 object-contain"
+              />
+            </div>
+            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">FREE AND FAST DELIVERY</h3>
+            <p className="text-gray-500 text-xs sm:text-sm text-center">Free delivery for all orders over $140</p>
+          </div>
+
+          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-center mb-4">
+              <img
+                src="icons/support-icon.png"
+                alt="Fast Delivery"
+                className="w-18 h-18 object-contain"
+              />
+            </div>
+            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">24/7 CUSTOMER SERVICE</h3>
+            <p className="text-gray-500 text-xs sm:text-sm text-center">Friendly 24/7 customer support</p>
+          </div>
+
+          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-center mb-4">
+              <img
+                src="icons/tick-icon.png"
+                alt="Fast Delivery"
+                className="w-18 h-18 object-contain"
+              />
+            </div>
+            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">MONEY BACK GUARANTEE</h3>
+            <p className="text-gray-500 text-xs sm:text-sm text-center">We reurn money within 30 days</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

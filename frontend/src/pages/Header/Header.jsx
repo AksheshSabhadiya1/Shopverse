@@ -32,7 +32,7 @@ export default function Header() {
                 <p className="font-light sm:text-base mb-2 sm:mb-0 max-w-[60%] sm:max-w-full">
                     Summer Sale For All Swim Suits And Free Express Delivery - <span className="font-bold">50% OFF!</span>
                     <Link to="#" className="flex-shrink-0">
-                        <span className="ms-2 underline font-bold hover:text-orange-500 transition-all">Shop Now</span>
+                        <span className="ms-2 border-b font-bold hover:text-orange-500 transition-all">Shop Now</span>
                     </Link>
                 </p>
                 <div className="fixed right-0 flex items-center max-w-[50%] text-sm sm:text-base">

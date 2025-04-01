@@ -55,7 +55,7 @@ export default function ProductSlider() {
             </div>
 
             <div className="relative overflow-hidden">
-                <div ref={sliderRef} className="flex gap-6 py-6 overflow-hidden">
+                <div ref={sliderRef} className="flex gap-12 py-6 overflow-hidden">
                     {products.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
                             <div className="">
@@ -78,6 +78,11 @@ export default function ProductSlider() {
                             <div className="-mt-6 w-50">
                                 <p className="font-semibold text-base truncate">{product.title}</p>
                                 <p className="text-[#DB4444] font-bold text-xl">₹{product.price} <span className="text-gray-500 line-through text-sm ml-2">₹{product.price + 100}</span></p>
+                                {
+                                    Array.from({ length: 5 }, (_, index) => (
+                                        <span key={index} className={index < product.rating.rate ? "text-yellow-500" : "text-gray-500"}>★</span>
+                                    ) )
+                                }<span className="text-base ml-2">({product.rating.count})</span> 
                             </div>
                         </div>
                     ))}
