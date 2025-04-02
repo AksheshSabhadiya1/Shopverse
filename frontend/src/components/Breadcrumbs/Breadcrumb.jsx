@@ -8,6 +8,7 @@ export default function Breadcrumb() {
     if (path.includes('signin') || path.includes('signup')) return null
 
     return (
+        
         <nav className="flex flex-wrap items-center text-sm text-gray-500 py-10 -mb-10 px-4 lg:px-4 md:px-8 w-full max-w-screen-xl mx-auto">
 
             {path.length > 0 && (

@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductSlider from "../../components/ProductsAPI/ProductSlider";
-import Clock from '../../components/Clock/Clock'
 import CategorySlider from "../../components/ProductsAPI/CategorySlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
 import SaleClock from "../../components/Clock/SaleClock";
-import AllProductSlider from "../../components/ProductsAPI/AllProductSlider";
+import AllProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
+import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 
 export default function Home() {
 
@@ -43,15 +43,48 @@ export default function Home() {
         </div>
       </div>
 
-
+      
+      <div className="mt-10 lg:mt-16">
+                <div className="flex items-center">
+                    <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
+                    <span className="ml-4 text-[#DB4444] font-semibold">Today's</span>
+                </div>
+      </div>
       <ProductSlider />
 
       <div className="mb-15 flex justify-center lg:mt-4">
         <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 
+      <div className="border-t border-gray-300">
+        <div className="mt-10 lg:mt-16 ">
+          <div className="flex items-center">
+            <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
+            <span className="ml-4 text-[#DB4444] font-semibold">Categories</span>
+          </div>
+        </div>
+      </div>
       <CategorySlider />
+
+      <div className="border-t border-gray-300">
+        <div className="mt-10 lg:mt-16 ">
+          <div className="flex items-center">
+            <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
+            <span className="ml-4 text-[#DB4444] font-semibold">This Month</span>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 mb-6 gap-4">
+          <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center md:text-left">
+            Best Selling Products
+          </p>
+          <div className="flex justify-center">
+            <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+          </div>
+        </div>
+      </div>
       <BestSellProduct />
+
 
       <div className=" mt-20 mb-10 flex flex-col lg:flex-row items-center justify-between bg-black text-white p-6 lg:p-12">
         <div className="flex flex-col text-center lg:text-left max-w-lg">
@@ -74,14 +107,32 @@ export default function Home() {
         </div>
       </div>
 
-      <AllProductSlider />
+
+      <div><div className="mt-10 lg:mt-20">
+        <div className="flex items-center">
+          <div className="w-5 h-10 bg-[#DB4444]"></div>
+          <span className="ml-4 text-[#DB4444] font-semibold">Our Products</span>
+        </div>
+      </div>
+
+        <div className="lg:mt-5 flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+          <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center md:text-left">
+            Explore Our Products
+          </p>
+          <div className="flex justify-center">
+            <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+          </div>
+        </div></div>
+      <ExpolreProductSlider />
       <div className="mb-25 flex justify-center lg:mt-4">
         <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 
+
       <FeatureProducts />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mb-10">
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-10 sm:py-12 mb-0">
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-center mb-4">
@@ -119,6 +170,11 @@ export default function Home() {
             <p className="text-gray-500 text-xs sm:text-sm text-center">We reurn money within 30 days</p>
           </div>
         </div>
+      </div>
+
+
+      <div className="fixed bottom-5 right-5 md:right-20 w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full shadow-lg cursor-pointer hover:bg-gray-400 transition">
+        <span className="text-lg">🡡</span>
       </div>
 
     </div>

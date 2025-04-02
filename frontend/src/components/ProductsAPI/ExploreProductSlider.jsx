@@ -1,40 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect, useRef } from "react";
+import { ExploreProducts } from "../../API/API";
+import {RingLoader} from 'react-spinners';
 
-export default function AllProductSlider() {
-    const [products, setProducts] = useState([]);
+
+export default function ExpolreProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const sliderRef = useRef(null);
 
-    useEffect(() => {
-        fetch("https://fakestoreapi.com/products/")
-            .then((res) => res.json())
-            .then((res) => {
-                setProducts(res.reverse());
-            })
-            .catch((err) => console.error("Error fetching products:", err));
-    }, []);
+    const {data, isLoading, isError, error} = useQuery({
+        queryKey: ['exploreProduct'],
+        queryFn: () => ExploreProducts()
+    })
+
+
+    if(isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
+    if(isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
+    
 
     return (
         <div>
-            <div className="mt-10 lg:mt-20">
-                <div className="flex items-center">
-                    <div className="w-5 h-10 bg-[#DB4444]"></div>
-                    <span className="ml-4 text-[#DB4444] font-semibold">Our Products</span>
-                </div>
-            </div>
-
-            <div className="lg:mt-5 flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-                <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center md:text-left">
-                    Explore Our Products
-                </p>
-                <div className="flex justify-center">
-                    <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
-                </div>
-            </div>
+            
 
             <div className="relative overflow-hidden">
                 <div ref={sliderRef} className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-12 py-6 overflow-x-auto whitespace-wrap">
-                    {products.slice(0, 8).map((product) => (
+                    {data?.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
                             <div className="">
                                 <div className="relative left-46 cursor-pointer -top-8 bg-gray-200 rounded-full w-8 p-1.5">

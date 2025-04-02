@@ -10,6 +10,9 @@ import Signup from './pages/Signup/Signup.jsx'
 import Home from './pages/Home/Home.jsx'
 import Error from './pages/Error/Error.jsx'
 import Accountpage from './pages/Accountpage/Accountpage.jsx'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import Wishlist from './pages/Wishlist/Wishlist.jsx'
+import Cart from './pages/Cart/Cart.jsx'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,14 @@ const router = createBrowserRouter([
         element: <Accountpage />
       },
       {
+        path: '/wishlist',
+        element: <Wishlist />
+      },
+      {
+        path: '/cart',
+        element: <Cart />
+      },
+      {
         path: '/:other',
         element: <Error />
       }
@@ -48,8 +59,12 @@ const router = createBrowserRouter([
   }
 ])
 
+const queryclient = new QueryClient()
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryclient} >
+      <RouterProvider router={router} /> 
+    </QueryClientProvider>
   </StrictMode>,
 )

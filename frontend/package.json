@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.17",
+    "@tanstack/react-query": "^5.71.1",
+    "axios": "^1.8.4",
     "lucide-react": "^0.484.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^7.4.0",
+    "react-spinners": "^0.15.0",
     "swiper": "^11.2.6",
     "tailwindcss": "^4.0.17"
   },

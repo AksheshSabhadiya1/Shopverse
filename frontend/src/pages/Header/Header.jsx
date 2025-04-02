@@ -93,7 +93,7 @@ export default function Header() {
                         {
                             !(path === 'signup' || path === 'signin') && 
                             <div className="hidden md:flex lg:flex">
-                                <Link>
+                                <Link to='/wishlist'>
                                     <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
                                 </Link>
                                 <Link>
@@ -108,7 +108,7 @@ export default function Header() {
                         }
 
                             <div className="lg:hidden md:hidden flex justify-center items-center">
-                                <Link>
+                                <Link to='/wishlist'>
                                     <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
                                 </Link>
                                 <Link>
