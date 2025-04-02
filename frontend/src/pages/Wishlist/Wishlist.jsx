@@ -24,7 +24,7 @@ export default function Wishlist() {
                     Wishlist ({data?.length || 0})
                 </p>
                 <div className="flex justify-center">
-                    <button className="px-12 py-3 cursor-pointer font-semibold bg-white text-black border border-gray-300 hover:text-white rounded hover:bg-[#DB4444] transition">
+                    <button className="px-12 py-3 cursor-pointer font-semibold bg-white text-black border border-gray-400 hover:text-white rounded hover:bg-[#DB4444] transition">
                         Move All To Bag
                     </button>
                 </div>
@@ -62,7 +62,7 @@ export default function Wishlist() {
                         <span className="ml-4 text-[#DB4444] font-semibold">Just For You</span>
                     </div>
                     <div className="flex justify-center">
-                        <button className="px-12 py-3 cursor-pointer font-semibold bg-white text-black border border-gray-300 hover:text-white rounded hover:bg-[#DB4444] transition">
+                        <button className="px-12 py-3 cursor-pointer font-semibold bg-white text-black border border-gray-400 hover:text-white rounded hover:bg-[#DB4444] transition">
                             See All
                         </button>
                     </div>

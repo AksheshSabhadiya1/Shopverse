@@ -96,7 +96,7 @@ export default function Header() {
                                 <Link to='/wishlist'>
                                     <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
                                 </Link>
-                                <Link>
+                                <Link to='/cart'>
                                     <img src="/icons/cart.png" alt="cart" className="mx-2" />
                                 </Link>
                                 <button

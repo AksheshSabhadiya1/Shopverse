@@ -41,6 +41,18 @@ export const Categories = () => {
 
 
 export const wishlist = async() =>{
-   const res = await api.get('/products')
-   return res.data.slice(0,4)
+    const res = await api.get('/products')
+    return res.data.slice(0,4)
+}
+
+
+export const CartData = async () => {
+    const res = await api.get('/products')
+    return res.data.slice(0,2)
+}
+
+
+export const FindProductDetails = async (id) => {
+    const res = await api.get(`/products/${id}`)
+    return Array(res.data)
 }

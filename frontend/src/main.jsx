@@ -13,6 +13,7 @@ import Accountpage from './pages/Accountpage/Accountpage.jsx'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Wishlist from './pages/Wishlist/Wishlist.jsx'
 import Cart from './pages/Cart/Cart.jsx'
+import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />
+      },
+      {
+        path: '/product/:id',
+        element: <ProductDetails />
       },
       {
         path: '/:other',

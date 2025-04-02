@@ -4,18 +4,39 @@ import ProductSlider from "../../components/ProductsAPI/ProductSlider";
 import CategorySlider from "../../components/ProductsAPI/CategorySlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
 import SaleClock from "../../components/Clock/SaleClock";
-import AllProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
 import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 
 export default function Home() {
 
+  const [isvisible, setIsVisible] = useState(false)
 
+  const handleScroll = () => {
+    if (window.scrollY > 800) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
+  }
+
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    setIsVisible(false)
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  })
 
 
   return (
-    <div className="px-4 py-6 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10">
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+    <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10" >
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8" id="home">
         <div className="relative w-full lg:w-64 bg-white text-black border-gray-200 divide-y divide-gray-100">
           <div className="py-1 space-y-1">
             {["Woman's Fashion", "Men's Fashion", "Electronics", "Home & Lifestyle", "Medicine", "Sports & Outdoor", "Baby's & Toys", "Groceries & Pets", "Health & Beauty"].map((category, index) => (
@@ -43,12 +64,12 @@ export default function Home() {
         </div>
       </div>
 
-      
+
       <div className="mt-10 lg:mt-16">
-                <div className="flex items-center">
-                    <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
-                    <span className="ml-4 text-[#DB4444] font-semibold">Today's</span>
-                </div>
+        <div className="flex items-center">
+          <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
+          <span className="ml-4 text-[#DB4444] font-semibold">Today's</span>
+        </div>
       </div>
       <ProductSlider />
 
@@ -98,13 +119,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-8 lg:mt-0">
+        <div className="w-100 h-100 rounded-full bg-white bg-opacity-30 backdrop-blur-sm relative flex items-center justify-center">
           <img
-            src="/images/JBL_BOOMBOX.png"
+            src="/images/JBL_BOOMBOX.png" 
             alt="JBL Boombox"
-            className="max-w-full h-auto"
+            className="max-w-full h-60 object-contain"
           />
         </div>
+
       </div>
 
 
@@ -172,10 +194,11 @@ export default function Home() {
         </div>
       </div>
 
+      {
+        isvisible &&
+        <button onClick={scrollTop} className="fixed bottom-10 right-5 md:right-20 w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full shadow-lg cursor-pointer hover:bg-gray-400 transition" >🡡</button>
 
-      <div className="fixed bottom-5 right-5 md:right-20 w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full shadow-lg cursor-pointer hover:bg-gray-400 transition">
-        <span className="text-lg">🡡</span>
-      </div>
+      }
 
     </div>
   );
