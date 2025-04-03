@@ -119,7 +119,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-100 h-100 rounded-full bg-white bg-opacity-30 backdrop-blur-sm relative flex items-center justify-center">
+        <div className="w-100 h-100 rounded-full bg-white/80 opacity-10 relative flex items-center justify-center">
+            <div className="w-60 h-60 rounded-full bg-white/60">
+
+            </div>
+        </div>
+
+        <div className="absolute">
           <img
             src="/images/JBL_BOOMBOX.png" 
             alt="JBL Boombox"
