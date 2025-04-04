@@ -1,13 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { FaBox, FaUsers } from "react-icons/fa";
+import SliderContext from "../../context/Slidercontext";
 
 
 export default function Dashboard(){
     const [totalProducts, setTotalProducts] = useState(120);
     const [totalUsers, setTotalUsers] = useState(50);
+
+    const {sliderOpen} = useContext(SliderContext)
     
     return (
-      <div className="">
+      <div className={`pt-15 ${sliderOpen ? " pl-64" : "pl-0"}`}>
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 p-6 flex flex-col items-center">
       <h1 className="text-4xl font-bold text-white mb-8">Admin Dashboard</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl">

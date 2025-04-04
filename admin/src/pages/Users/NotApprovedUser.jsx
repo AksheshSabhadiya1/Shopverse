@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import SliderContext from "../../context/Slidercontext";
 
 export default function NotApprovedUser() {
     const [users, setProducts] = useState([
@@ -8,7 +9,10 @@ export default function NotApprovedUser() {
         { id: 4, name: "Bluetooth Speaker", price: "$79", description: "Portable speaker with deep bass.", image: "/images/speaker.png" },
     ]);
 
+    const {sliderOpen} = useContext(SliderContext)
+
     return (
+    <div className={`pt-15 ${sliderOpen ? " pl-64" : "pl-0"}`}>
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 flex flex-col items-center p-6">
             <h2 className="text-3xl font-bold text-white mb-6">NotApproved users</h2>
             <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -31,6 +35,7 @@ export default function NotApprovedUser() {
                     <p className="text-center text-gray-300 w-full col-span-4">No users available.</p>
                 )}
             </div>
+        </div>
         </div>
     );
 }

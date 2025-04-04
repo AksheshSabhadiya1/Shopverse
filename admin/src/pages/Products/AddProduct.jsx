@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import SliderContext from "../../context/Slidercontext";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -10,7 +11,10 @@ export default function AddProduct() {
     console.log("Product Added:", { productName, price, description });
   };
 
+  const {sliderOpen} = useContext(SliderContext)
+
   return (
+    <div className={`pt-0 ${sliderOpen ? " pl-64" : "pl-0"}`}>
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center p-6">
       <div className="bg-white/10 backdrop-blur-lg shadow-xl p-8 rounded-2xl border border-white/20 w-full max-w-md">
         <h2 className="text-3xl font-bold text-white text-center mb-6">Add Product</h2>
@@ -27,7 +31,7 @@ export default function AddProduct() {
             />
           </div>
           <div>
-            <label className="block text-white mb-1">Price ($)</label>
+            <label className="block text-white mb-1">Price (₹)</label>
             <input 
               type="number"
               value={price}
@@ -56,6 +60,7 @@ export default function AddProduct() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

@@ -32,25 +32,26 @@ export default function Sidebar() {
                 <div className="relative dropdown-container">
                     <button onClick={(e) => { e.stopPropagation(); setProductDropDown(!productDropDown); }}
                         className="sidebar-link flex items-center space-x-4 w-full text-left">
-                        <FaBox className="sidebar-icon" /> <span>Products</span> <img src="/icons/arrow-down-white.png" alt="" className="w-4 h-4" />
+                        <FaBox className="sidebar-icon" /> <span>Products</span> <img src="/icons/arrow-down-white.png" alt="" className={`${productDropDown ? "rotate-180" : "rotate-0"} w-4 h-4`} />
                     </button>
                     {productDropDown && (
                         <div className=" bg-gray-800 rounded-md shadow-lg py-2 w-full mt-2">
-                            <NavLink to="/admin/products/addproduct" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Add Product</NavLink>
                             <NavLink to="/admin/products" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">View All Products</NavLink>
+                            <NavLink to="/admin/products/addproduct" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Add Product</NavLink>
+                            <NavLink to="/admin/products/editproduct" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Edit Product</NavLink>
                         </div>
                     )}
                 </div>
                 <div className="relative dropdown-container2">
                     <button onClick={(e) => { e.stopPropagation(); setUserDropDown(!userDropDown); }}
                         className="sidebar-link flex items-center space-x-4 w-full text-left">
-                        <FaUsers className="sidebar-icon" /> <span>Users</span> <img src="/icons/arrow-down-white.png" alt="" className="w-4 h-4" />
+                        <FaUsers className="sidebar-icon" /> <span>Users</span> <img src="/icons/arrow-down-white.png" alt="" className={`${userDropDown ? "rotate-180" : "rotate-0"} w-4 h-4`} />
                     </button>
                     {userDropDown && (
                         <div className=" bg-gray-800 rounded-md shadow-lg py-2 w-full mt-2">
+                            <NavLink to="/admin/users" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">View All Users</NavLink>
                             <NavLink to="/admin/users/approveduser" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Approved Users</NavLink>
                             <NavLink to="/admin/users/notapproveduser" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Not Approved Users</NavLink>
-                            <NavLink to="/admin/users" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">View All Users</NavLink>
                         </div>
                     )}
                 </div>

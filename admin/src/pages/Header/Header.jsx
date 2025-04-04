@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { NavLink} from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { Menu, X } from "lucide-react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import SliderContext from "../../context/Slidercontext";
 
 export default function Header() {
     const [adminDropDown, setAdminDropDown] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(true);
+    // const [sliderOpen, setSliderOpen] = useState(true);
+
+    const {sliderOpen, setSliderOpen} = useContext(SliderContext)
 
     useEffect(() => {
         const time = setTimeout(() => {
@@ -17,14 +20,14 @@ export default function Header() {
 
     return (
         <div className="flex fixed w-full">
-            {menuOpen && <div className={`fixed top-0 left-0 h-full transition-all duration-300 ${menuOpen ? "w-64" : "w-0"} overflow-hidden`}>
+            {sliderOpen && <div className={`fixed top-0 left-0 h-full transition-all duration-300 ${sliderOpen ? "w-64" : "w-0"} overflow-hidden`}>
             <Sidebar />
                 </div> }
             
-            <div className={`flex-1 transition-all duration-300 ${menuOpen ? "ml-64" : "ml-0"}`}>
+            <div className={`flex-1 transition-all duration-300 ${sliderOpen ? "ml-64" : "ml-0"}`}>
                 <header className="shadow sticky z-50 top-0 bg-white flex justify-start items-center">
-                        <button className="text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
-                            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+                        <button className="text-gray-700" onClick={() => setSliderOpen(!sliderOpen)}>
+                            {sliderOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
                     <nav className="px-4 lg:px-6 py-2">
                         <div className="hidden lg:flex space-x-4">
@@ -47,7 +50,7 @@ export default function Header() {
                         </div>
                     </nav>
                 </header>
-                            <div className={`w-full bg-white transition-all duration-300 shadow-xl py-2 ${menuOpen ? "w-64 " : "w-full px-0"}`}>
+                            <div className={`w-full bg-white transition-all duration-300 shadow-xl py-2 ${sliderOpen ? "w-64 " : "w-full px-0"}`}>
                                 <Breadcrumb />
                             </div>
             </div>
