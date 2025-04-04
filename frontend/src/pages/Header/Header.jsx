@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from 'lucide-react';
+import FilterContext from "../../context/FilterContext";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [filterSlider, setFilterSlider] = useState(false);
     const [userDropDown, setUserDropDown] = useState(false);
-    const [sidebar, setSidebar] = useState(false)
+
+    const {filterMenu, setFilterMenu} = useContext(FilterContext)
 
     const { pathname } = useLocation()
     const path = pathname.split('/').filter((x) => x).toString()
@@ -18,13 +21,6 @@ export default function Header() {
         return ()=> clearTimeout(time)
     }, [userDropDown])
 
-    useEffect(()=>{
-        const time = setTimeout(()=>{
-            setSidebar(false)
-        },2000)
-
-        return ()=> clearTimeout(time)
-    }, [sidebar])
 
     return (
         <header className="shadow sticky z-50 top-0">
@@ -42,12 +38,15 @@ export default function Header() {
             </div>
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <button onClick={() => setSidebar(!sidebar)}  
+                    <button onClick={() => setFilterMenu(!filterMenu)}  
                             className="font-bold px-5 py-2.5 focus:outline-none" type="button">
-                        <strong className="mx-6  text-3xl">ShopVerse</strong>
+                        <button className="text-gray-700" onClick={() => setFilterSlider(!filterSlider)}>
+                            {filterSlider ? <X size={28} /> : <Menu size={28} />}
+                        </button>
+                        <strong className="mx-6 text-3xl">ShopVerse</strong>
                     </button>
 
-                    <div className={`absolute left-0 md:left-30 h-auto top-full border-t border-r border-gray-200 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-100 transition-all duration-300 ${sidebar ? "block" : "hidden" }`}>
+                    <div className={`absolute left-0 md:left-45 h-auto top-full border-t border-r border-gray-200 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-100 transition-all duration-300 ${filterMenu ? "block" : "hidden" }`}>
                             <div className="py-1 space-y-1">
                                 <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
                                 <div className="flex">

@@ -32,7 +32,7 @@ export default function Signup() {
                 <div className="w-full max-w-md space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">Create an account</h1>
                     <h2 className="text-3xs text-gray-600">Enter your details below</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-2.5">
                         <div className='w-full flex justify-center items-center mb-4'>
                             <div className="w-full me-2">
                                 <input
@@ -59,13 +59,22 @@ export default function Signup() {
                         </div>
                         <input
                             type="email"
-                            name="email_phone"
-                            id="email_phone"
-                            {...register("email_phone", { required: "Email or Phone-Number is required" })}
-                            placeholder="Email or Phone Number"
+                            name="email"
+                            id="email"
+                            {...register("email", { required: "Email is required" })}
+                            placeholder="Email"
                             required
                             className="w-full p-3 bg-gray-100 rounded focus:outline-none"
-                        /><p className="error ml-2 text-red-500">{errors.email_phone?.message}</p>
+                        /><p className="error ml-2 text-red-500">{errors.email?.message}</p>
+                        <input
+                            type="number"
+                            name="mobile"
+                            id="mobile"
+                            {...register("mobile", { required: "Mobile Number is required" })}
+                            placeholder="Mobile Number"
+                            required
+                            className="w-full p-3 bg-gray-100 rounded focus:outline-none"
+                        /><p className="error ml-2 text-red-500">{errors.mobile?.message}</p>
                         <input
                             type="password"
                             name="password"

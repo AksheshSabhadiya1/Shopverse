@@ -33,17 +33,17 @@ export default function Signin(){
                 <div className="w-full max-w-md space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">Signin to ShopVerse</h1>
                     <h2 className="text-lg text-gray-600">Enter your details below</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-2.5">
                         
                         <input
                             type="email"
-                            name="email_phone"
-                            id="email_phone"
+                            name="email"
+                            id="email"
                             required
-                            {...register('email_phone', { required: "Email or Phone-Number is required"})}
-                            placeholder="Email or Phone Number"
+                            {...register('email', { required: "Email is required"})}
+                            placeholder="Email"
                             className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
+                        /><p className="error ml-2 text-red-500">{errors.email?.message}</p>
                         <input
                             type="password"
                             name="password"
@@ -52,7 +52,7 @@ export default function Signin(){
                             placeholder="Password"
                             {...register('password', { required: "Password is required"})}
                             className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
+                        /><p className="error ml-2 text-red-500">{errors.password?.message}</p>
                         <button
                             type="submit"
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
