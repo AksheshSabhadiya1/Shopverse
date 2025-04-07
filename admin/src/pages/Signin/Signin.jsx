@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+import SliderContext from "../../context/Slidercontext";
 
 
 export default function Signin(){
@@ -9,7 +10,8 @@ export default function Signin(){
             defaultValues: {
                 firstname: '',
                 lastname: '',
-                email_phone: '',
+                email: '',
+                mobile: '',
                 password: '',
             },
             mode: 'all',
@@ -19,7 +21,12 @@ export default function Signin(){
     
         const { errors } = formState
 
+  const {sliderOpen, setSliderOpen} = useContext(SliderContext)
+
+  if(sliderOpen) setSliderOpen(!sliderOpen)
+
   return (
+    <div className={`pt-0 ${sliderOpen ? " pl-64" : "pl-0"}`}>
     <div className="flex flex-col md:flex-row h-screen items-center -mt-10 justify-center px-4 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
                 <img
@@ -37,13 +44,13 @@ export default function Signin(){
                         
                         <input
                             type="email"
-                            name="email_phone"
-                            id="email_phone"
+                            name="email"
+                            id="email"
                             required
-                            {...register('email_phone', { required: "Email or Phone-Number is required"})}
-                            placeholder="Email or Phone Number"
+                            {...register('email', { required: "Email is required"})}
+                            placeholder="Email"
                             className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
+                        /><p className="error ml-2 text-red-500">{errors.email?.message}</p>
                         <input
                             type="password"
                             name="password"
@@ -52,7 +59,7 @@ export default function Signin(){
                             placeholder="Password"
                             {...register('password', { required: "Password is required"})}
                             className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
+                        /><p className="error ml-2 text-red-500">{errors.password?.message}</p>
                         <button
                             type="submit"
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
@@ -64,6 +71,7 @@ export default function Signin(){
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

@@ -5,8 +5,6 @@ export default function Breadcrumb() {
 
     const path = pathname.split('/').filter(Boolean);
 
-    if (path.includes('signin') || path.includes('signup')) return null;
-
     const breadcrumbs = path.map((segment, index) => {
         const url = `/${path.slice(0, index + 1).join('/')}`;
         const isLast = index === path.length - 1;

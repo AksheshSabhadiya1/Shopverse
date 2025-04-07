@@ -12,6 +12,7 @@ import AllUser from './pages/Users/AllUser.jsx'
 import ApprovedUser from './pages/Users/ApprovedUser.jsx'
 import NotApprovedUser from './pages/Users/NotApprovedUser.jsx'
 import Dashboard from './pages/Dashboard/Dashboard.jsx'
+import Error from './Error/Error.jsx'
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         path: 'users/notapproveduser',
         element: <NotApprovedUser />
       },
+      {
+        path: ':other',
+        element: <Error />
+      }
       
     ]
   }
