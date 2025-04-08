@@ -1,13 +1,14 @@
-import React,{useContext, useEffect} from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import SliderContext from "../../context/Slidercontext";
+import axios  from "axios";
 
 
 export default function Signup() {
 
-    const {sliderOpen, setSliderOpen} = useContext(SliderContext)
-    if(sliderOpen) setSliderOpen(!sliderOpen)
+    const { sliderOpen, setSliderOpen } = useContext(SliderContext)
+    if (sliderOpen) setSliderOpen(!sliderOpen)
 
     const form = useForm({
         defaultValues: {
@@ -19,12 +20,25 @@ export default function Signup() {
         },
         mode: 'all',
     })
-    const { register, formState, trigger } = form
+    const { register,handleSubmit, formState, trigger, reset } = form
     const { errors } = formState
+    const nevigate = useNavigate()
 
+
+    const CreateNewAdmin = async(data) => {
+        try{
+            await axios.post('http://localhost:5000/admin/signup', data, {
+                withCredentials: true
+            })
+            nevigate('/admin')
+        }
+        catch(error){
+            console.log("New Admin not Created", error);
+            reset()
+        }
+    }
 
     return (
-    <div className={`pt-0 ${sliderOpen ? " pl-64" : "pl-0"}`}>
         <div className="flex pt-25 flex-col md:flex-row h-screen items-center justify-center -my-10 px-6 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
                 <img
@@ -38,7 +52,8 @@ export default function Signup() {
                 <div className="w-full max-w-md space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">Create an account</h1>
                     <h2 className="text-3xs text-gray-600">Enter your details below</h2>
-                    <form className="space-y-4" method="get">
+
+                    <form onSubmit={handleSubmit(CreateNewAdmin)} className="space-y-4">
                         <div className='w-full flex justify-center items-center mb-4'>
                             <div className="w-full me-2">
                                 <input
@@ -67,7 +82,13 @@ export default function Signup() {
                             type="email"
                             name="email"
                             id="email"
-                            {...register("email", { required: "Email is required" })}
+                            {...register("email", {
+                                required: "Email is required", 
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid Email Format"
+                                }
+                            })}
                             placeholder="Email"
                             required
                             className="w-full p-3 bg-gray-100 rounded focus:outline-none"
@@ -93,6 +114,7 @@ export default function Signup() {
                         <button
                             type="submit"
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-2 rounded-lg transition duration-300"
+                            onClick={() => trigger()}
                         >
                             Create Account
                         </button>
@@ -110,11 +132,10 @@ export default function Signup() {
                         </button>
                     </form>
                     <p className="text-gray-600">
-                        Already have an account? <Link to='/signin' className="text-orange-600 hover:underline">Login</Link>
+                        Already have an account? <Link to='/admin/signin' className="text-orange-600 hover:underline">Login</Link>
                     </p>
                 </div>
             </div>
-        </div>
         </div>
     );
 }

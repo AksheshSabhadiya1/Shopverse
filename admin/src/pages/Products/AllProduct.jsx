@@ -1,38 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import SliderContext from "../../context/Slidercontext";
 import { Trash2 } from "lucide-react"; 
+import { NavLink } from "react-router-dom";
+import axios from "axios";
+
 
 export default function AllProduct() {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: "₹99",
-      description: "High-quality sound with noise cancellation.",
-      image: "/images/headphones.png",
-    },
-    {
-      id: 2,
-      name: "Smartwatch",
-      price: "₹199",
-      description: "Track your health and fitness with ease.",
-      image: "/images/smartwatch.png",
-    },
-    {
-      id: 3,
-      name: "Gaming Mouse",
-      price: "₹49",
-      description: "Ergonomic design with RGB lighting.",
-      image: "/images/mouse.png",
-    },
-    {
-      id: 4,
-      name: "Bluetooth Speaker",
-      price: "₹79",
-      description: "Portable speaker with deep bass.",
-      image: "/images/speaker.png",
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
   const { sliderOpen } = useContext(SliderContext);
 
@@ -40,6 +14,22 @@ export default function AllProduct() {
     setProducts(products.filter((p) => p.id !== id));
   };
 
+  const fetchAllProductData = async() => {
+    try{
+      const {data} = await axios.get('http://localhost:5000/admin/products', {
+        withCredentials: true
+      })
+      data[0].length > 0 ? setProducts(data[0]) : null
+    } catch(error){
+      console.log("Data Fetching Error", error);
+    }
+  }
+  
+  useEffect(()=>{
+    fetchAllProductData()
+  },[])
+
+  
   return (
     <div className={`pt-15 ${sliderOpen ? "pl-64" : "pl-0"}`}>
       <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 flex flex-col items-center p-6">
@@ -63,17 +53,19 @@ export default function AllProduct() {
                 <div>
                   <img
                     src={product.image}
-                    alt={product.name}
-                    className="w-24 h-24 object-contain mx-auto mb-3"
+                    alt={product.productname}
+                    className="w-30 h-24 object-contain mx-auto mb-3"
                   />
-                  <h3 className="text-lg font-semibold">{product.name}</h3>
+                  <h3 className="text-lg font-semibold">{product.productname}</h3>
                   <p className="text-sm text-gray-300">{product.description}</p>
-                  <p className="mt-2 text-lg font-bold text-blue-400">{product.price}</p>
+                  <p className="mt-2 text-lg font-bold text-blue-400">₹{product.price}</p>
                 </div>
 
+                <NavLink to={`/admin/products/editproduct/${product.id}`}>
                 <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                   Edit
                 </button>
+                </NavLink>
               </div>
             ))
           ) : (

@@ -27,8 +27,8 @@ export default function ApprovedUser() {
                             <h3 className="text-lg font-semibold">{user.name}</h3>
                             <p className="text-sm text-gray-300">{user.description}</p>
                             <p className="mt-2 text-lg font-bold text-blue-400">{user.price}</p>
-                            <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                                View Details
+                            <button title="click to toggle" className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                                Approved
                             </button>
                         </div>
                     ))

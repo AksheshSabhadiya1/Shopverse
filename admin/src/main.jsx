@@ -13,6 +13,7 @@ import ApprovedUser from './pages/Users/ApprovedUser.jsx'
 import NotApprovedUser from './pages/Users/NotApprovedUser.jsx'
 import Dashboard from './pages/Dashboard/Dashboard.jsx'
 import Error from './Error/Error.jsx'
+import EditProduct from './pages/Products/EditProduct.jsx'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'products/addproduct',
         element: <AddProduct />
+      },
+      {
+        path: 'products/editproduct/:id',
+        element: <EditProduct />
       },
       {
         path: 'products/:id',

@@ -29,27 +29,29 @@ export default function Header() {
                     <button className="text-gray-700" onClick={() => setSliderOpen(!sliderOpen)}>
                         {sliderOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
-                    <nav className="px-4 lg:px-6 py-2">
+                    <nav className="px-4 lg:px-6 py-0">
                         <div className="hidden lg:flex space-x-4">
 
                             {
-                                (path === 'signin' || path === 'signup') ? <p>Admin {path}</p> : <div className="flex space-x-3">
-                                    <NavLink to="/admin" className={({ isActive }) => `${isActive ? "text-[#DB4444]" : "text-gray-700"} hover:text-orange-700`}>
-                                        Dashboard
-                                    </NavLink>
+                                (path === 'signin' || path === 'signup') ?
+                                    <div className="flex space-x-2">
+                                        <NavLink to="/admin/signin" className="block p-2 hover:bg-blue-400 hover:text-white transition">Signin</NavLink>
+                                        <NavLink to="/admin/signup" className="block p-2 hover:bg-blue-400 hover:text-white transition">Signup</NavLink>
+                                    </div> :
 
-                                    <div className="relative">
-                                        <NavLink to='/admin/products' className={({ isActive }) => `${isActive ? "text-[#DB4444]" : "text-gray-700"} hover:text-orange-700`}>
-                                            Products
+                                    <div className="flex space-x-3">
+                                        <NavLink to="/admin" className={({ isActive }) => `${isActive ? (path === 'products' || path === 'users') ? "text-gray-700" : "text-[#DB4444]" : "text-gray-700"} hover:bg-blue-400 hover:text-white p-2`}>
+                                            Dashboard
                                         </NavLink>
-                                    </div>
 
-                                    <div className="relative">
-                                        <NavLink to='/admin/users' className={({ isActive }) => `${isActive ? "text-[#DB4444]" : "text-gray-700"} hover:text-orange-700`}>
-                                            Users
-                                        </NavLink>
+                                            <NavLink to='/admin/products' className={({ isActive }) => `${isActive ? "text-[#DB4444]" : "text-gray-700"} hover:bg-blue-400 hover:text-white p-2`}>
+                                                Products
+                                            </NavLink>
+
+                                            <NavLink to='/admin/users' className={({ isActive }) => `${isActive ? "text-[#DB4444]" : "text-gray-700"} hover:bg-blue-400 hover:text-white p-2`}>
+                                                Users
+                                            </NavLink>
                                     </div>
-                                </div>
                             }
                         </div>
                     </nav>

@@ -30,7 +30,7 @@ export default function Breadcrumb() {
                     <NavLink
                         to={url}
                         className={({ isActive }) =>
-                            `${isActive ? "text-black underline font-semibold" : "text-gray-600"} capitalize hover:text-orange-500 transition`
+                            `${isActive ? "text-gray-500 underline font-semibold" : "text-gray-600"} capitalize hover:text-orange-500 transition`
                         }
                     >
                         {label}

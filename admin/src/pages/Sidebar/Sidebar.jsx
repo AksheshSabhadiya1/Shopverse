@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLoaderData, useLocation, Link } from "react-router-dom";
 import { FaHome, FaBox, FaUsers, FaSignOutAlt } from "react-icons/fa";
 
 export default function Sidebar() {
@@ -36,9 +36,8 @@ export default function Sidebar() {
                     </button>
                     {productDropDown && (
                         <div className=" bg-gray-800 rounded-md shadow-lg py-2 w-full mt-2">
-                            <NavLink to="/admin/products" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">View All Products</NavLink>
-                            <NavLink to="/admin/products/addproduct" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Add Product</NavLink>
-                            <NavLink to="/admin/products/editproduct" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Edit Product</NavLink>
+                            <NavLink to="/admin/products" className="block px-4 py-2 hover:bg-blue-400 hover:text-white transition">View All Products</NavLink>
+                            <NavLink to="/admin/products/addproduct" className="block px-4 py-2 hover:bg-blue-400 hover:text-white transition">Add Product</NavLink>
                         </div>
                     )}
                 </div>
@@ -49,17 +48,19 @@ export default function Sidebar() {
                     </button>
                     {userDropDown && (
                         <div className=" bg-gray-800 rounded-md shadow-lg py-2 w-full mt-2">
-                            <NavLink to="/admin/users" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">View All Users</NavLink>
-                            <NavLink to="/admin/users/approveduser" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Approved Users</NavLink>
-                            <NavLink to="/admin/users/notapproveduser" className="block px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">Not Approved Users</NavLink>
+                            <NavLink to="/admin/users" className="block px-4 py-2 hover:bg-blue-400 hover:text-white transition">View All Users</NavLink>
+                            <NavLink to="/admin/users/approveduser" className="block px-4 py-2 hover:bg-blue-400 hover:text-white transition">Approved Users</NavLink>
+                            <NavLink to="/admin/users/notapproveduser" className="block px-4 py-2 hover:bg-blue-400 hover:text-white transition">Not Approved Users</NavLink>
                         </div>
                     )}
                 </div>
             </nav>
             <div className="mt-auto">
-                <button className="w-full flex items-center gap-3 px-4 py-3 text-left bg-red-500 text-white transition-all">
+                <Link to='/admin/signin'>
+                <button className="w-full flex items-center gap-3 px-4 py-3 cursor-pointer text-left bg-red-500 text-white transition-all">
                     <FaSignOutAlt className="sidebar-icon" /> Logout
                 </button>
+                </Link>
             </div>
         </div>
     );
