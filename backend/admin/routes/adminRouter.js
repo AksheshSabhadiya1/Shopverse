@@ -50,9 +50,16 @@ adminRouter.post('/signup', async (req, res)=>{
 
 adminRouter.get('/products', async(req, res)=>{
 
-    const products = await db.execute('SELECT * FROM products')
+    const [products] = await db.execute('SELECT * FROM products')
     return res.json(products)
 })
+
+adminRouter.get('/products/:id', async(req, res)=>{
+
+    const [products] = await db.execute('SELECT * FROM products WHERE id=?',[req.params.id])
+    return res.json(products)
+})
+
 
 adminRouter.post('/products/addproduct', upload.single('image') , async(req, res)=>{
 
@@ -68,13 +75,22 @@ adminRouter.post('/products/addproduct', upload.single('image') , async(req, res
 })
 
 
-adminRouter.post('/editproduct/:id', async(req, res)=>{
 
-    // const response = db.execute('SELECT * FROM products WHERE id=?',[req.params.id])
+adminRouter.post('/products/editproduct/:id', upload.single('image'), async(req, res)=>{
+    try {
+
+        const {productname, price, description, category, rating, rate_count, stock_count, brand} = req.body
+        
+        const [[oldimage]] = await db.execute('SELECT image FROM products WHERE id=?',[req.params.id])
+        const image = req.file ? Base64.encode(req.file?.originalname) : oldimage.image
+
+        await db.execute('UPDATE products SET productname=?, price=?, description=?, category=?, image=?, rating=?, rate_count=?, stock_count=?, brand=? WHERE id=? ' ,[productname, price, description, category, image, rating,  rate_count, stock_count, brand, req.params.id])
+        return res.json("Product Succesfully Updated")
+
+    } catch (error) {
+        console.log("Product not Updated",error);
+    }
     
-    const {productname, price, description, category, image, rating, rate_count, stock_count, brand} = req.body
-    await db.execute('UPDATE products SET productname=?, price=?, description=?, category=?, image=?, rating=?, rate_count=?, stock_count=?, brand=?, updated_at=? WHERE id=? ' ,[productname, price, description, category, image, rating,  rate_count, stock_count, brand, CURRENT_TIMESTAMP, req.params.id])
-    return res.json("Product Succesfully Updated")
 })
 
 module.exports = adminRouter
