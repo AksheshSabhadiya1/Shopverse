@@ -10,8 +10,16 @@ export default function AllProduct() {
 
   const { sliderOpen } = useContext(SliderContext);
 
-  const handleDelete = (id) => {
-    setProducts(products.filter((p) => p.id !== id));
+  const handleDelete = async(id) => {
+    try {
+      const result = await axios.delete(`http://localhost:5000/admin/products/${id}`)
+      if(result.status === 200){
+        setProducts(products.filter((product) => product.id !== id))
+        console.log("Product deleted successfully");
+      }
+    } catch (error) {
+      console.log("Data Deleting Error", error);
+    }
   };
 
   const fetchAllProductData = async() => {
@@ -52,16 +60,16 @@ export default function AllProduct() {
 
                 <div>
                   <img
-                    src={product.image}
+                    src={`http://localhost:5000/uploads/products/${product.image}`}
                     alt={product.productname}
                     className="w-30 h-24 object-contain mx-auto mb-3"
                   />
                   <h3 className="text-lg font-semibold">{product.productname}</h3>
-                  <p className="text-sm text-gray-300">{product.description}</p>
+                  <p className="text-sm text-gray-300 truncate">{product.description}</p>
                   <p className="mt-2 text-lg font-bold text-blue-400">₹{product.price}</p>
                 </div>
 
-                <NavLink to={`/admin/products/editproduct/${product.id}`}>
+                <NavLink to={`/admin/products/editproduct/${product.slug}`}>
                 <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
                   Edit
                 </button>

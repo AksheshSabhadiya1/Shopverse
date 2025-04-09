@@ -3,23 +3,19 @@ import SliderContext from "../../context/Slidercontext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function EditProduct() {
   const { sliderOpen } = useContext(SliderContext);
 
-  const [product, setProduct] = useState([]);
   const [oldImage, setOldImage] = useState('');
 
-  const {pathname} = useLocation()
-  const id = pathname.split('/').filter(Number)[0]
-  
+  const {id} = useParams()
   const nevigate = useNavigate()
 
   const form = useForm({
         defaultValues: async() =>{
           const {data} = await axios.get(`http://localhost:5000/admin/products/${id}`)
-          setProduct(data[0])
           setOldImage(data[0].image)
 
           return{

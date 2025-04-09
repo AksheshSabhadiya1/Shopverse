@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Signin from './pages/Signin/Signin.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import AllProduct from './pages/Products/AllProduct.jsx'
-import ProductDetails from './pages/Products/EditProduct.jsx'
 import AddProduct from './pages/Products/AddProduct.jsx'
 import AllUser from './pages/Users/AllUser.jsx'
 import ApprovedUser from './pages/Users/ApprovedUser.jsx'
@@ -14,6 +13,7 @@ import NotApprovedUser from './pages/Users/NotApprovedUser.jsx'
 import Dashboard from './pages/Dashboard/Dashboard.jsx'
 import Error from './Error/Error.jsx'
 import EditProduct from './pages/Products/EditProduct.jsx'
+import ProductDetails from './pages/Products/ProductDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -54,11 +54,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'users/approveduser',
-        element: <ApprovedUser />
+        // element: <ApprovedUser />
+        element: <AllUser />
       },
       {
         path: 'users/notapproveduser',
-        element: <NotApprovedUser />
+        // element: <NotApprovedUser />
+        element: <AllUser />
       },
       {
         path: ':other',
