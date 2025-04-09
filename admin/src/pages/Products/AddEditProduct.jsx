@@ -3,22 +3,22 @@ import SliderContext from "../../context/Slidercontext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function EditProduct() {
+export default function AddEditProduct() {
   const { sliderOpen } = useContext(SliderContext);
+  const [oldImage, setOldImage] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [oldImage, setOldImage] = useState('');
-
-  const {id} = useParams()
-  const nevigate = useNavigate()
+  const isEdit = Boolean(id);
 
   const form = useForm({
-        defaultValues: async() =>{
-          const {data} = await axios.get(`http://localhost:5000/admin/products/${id}`)
-          setOldImage(data[0].image)
-
-          return{
+    defaultValues: isEdit
+      ? async () => {
+          const { data } = await axios.get(`http://localhost:5000/admin/products/${id}`);
+          setOldImage(data[0].image);
+          return {
             productname: data[0].productname,
             price: data[0].price,
             description: data[0].description,
@@ -27,54 +27,75 @@ export default function EditProduct() {
             rate_count: data[0].rate_count,
             stock_count: data[0].stock_count,
             brand: data[0].brand,
-          }
-        }, 
-      mode: 'all',
-    })
-
-    const {register, handleSubmit, setValue, trigger, formState} = form
-    const {errors} = formState
-
-
-
-  const updateProduct = async(data) => {
-    try {
-      const formdata = new FormData()
-      formdata.append('productname', data.productname);
-      formdata.append('price', data.price);
-      formdata.append('description', data.description);
-      formdata.append('category', data.category);
-      formdata.append('rating', data.rating);
-      formdata.append('rate_count', data.rate_count);
-      formdata.append('stock_count', data.stock_count);
-      formdata.append('brand', data.brand);
-      formdata.append('image',oldImage)
-
-      if(data.image && data.image[0]){
-        formdata.append('image',data.image[0])
-      }
-
-      await axios.post(`http://localhost:5000/admin/products/editproduct/${id}`, formdata, {
-        withCredentials: true,
-        headers:{
-          'Content-Type': 'multipart/form-data'
+          };
+        }
+      : {
+          productname: "",
+          price: "",
+          description: "",
+          category: "",
+          image: "",
+          rating: "",
+          rate_count: "",
+          stock_count: "",
+          brand: "",
         },
-      })
-      console.log("Product Updated Successfully"); 
-      nevigate('/admin/products')
+    mode: "all",
+  });
+
+  const { register, handleSubmit, getValues, trigger, formState } = form;
+  const { errors } = formState;
+
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("productname", data.productname);
+      formData.append("price", data.price);
+      formData.append("description", data.description);
+      formData.append("category", data.category);
+      formData.append("rating", data.rating);
+      formData.append("rate_count", data.rate_count);
+      formData.append("stock_count", data.stock_count);
+      formData.append("brand", data.brand);
+
+      if (isEdit) {
+        formData.append("image", oldImage);
+        if (data.image && data.image[0]) {
+          formData.set("image", data.image[0]);
+        }
+        await axios.post(`http://localhost:5000/admin/products/editproduct/${id}`, formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Product Updated Successfully");
+      } else {
+        formData.append("image", data.image[0]);
+        await axios.post("http://localhost:5000/admin/products/addproduct", formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("New Product added Successfully");
+      }
+      navigate("/admin/products");
     } catch (error) {
-      console.log("Product not updated", error);
+      console.log("Product not processed", error);
     }
   };
 
   return (
     <div className={`${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen pt-20 bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] flex items-center justify-center">
         <div className="bg-white/10 backdrop-blur-lg shadow-xl p-8 rounded-2xl border border-white/20 w-full max-w-5xl">
-          <h2 className="text-3xl font-bold text-white text-center mb-6">Update Product</h2>
-          <form onSubmit={handleSubmit(updateProduct)} className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <h2 className="text-3xl font-bold text-white text-center mb-6">
+            {isEdit ? `Edit Product: ${getValues("productname")}` : "Add New Product"}
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
-              <label className="block text-white mb-1">Product Name</label>
+              <label className="block text-white mb-1">Product Name<span className="text-red-500">*</span></label>
               <input
                 type="text"
                 name="productname"
@@ -88,7 +109,7 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Price (₹)</label>
+              <label className="block text-white mb-1">Price<span className="text-red-500">*</span> (₹)</label>
               <input
                 type="number"
                 name="price"
@@ -101,7 +122,7 @@ export default function EditProduct() {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-white mb-1">Description</label>
+              <label className="block text-white mb-1">Description<span className="text-red-500">*</span></label>
               <textarea
                 name="description"
                 title="Enter product description"
@@ -114,7 +135,7 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Category</label>
+              <label className="block text-white mb-1">Category<span className="text-red-500">*</span></label>
               <input
                 type="text"
                 name="category"
@@ -127,7 +148,7 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Brand</label>
+              <label className="block text-white mb-1">Brand<span className="text-red-500">*</span></label>
               <input
                 type="text"
                 name="brand"
@@ -140,17 +161,24 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Image</label>
+              <label className="block text-white mb-1">Image<span className="text-red-500">*</span></label>
+              <div className="flex justify-center items-center">
+                {
+                  isEdit && <img src={`http://localhost:5000/uploads/products/${oldImage}`} alt="image" className="w-20 h-20 object-cover rounded" />
+                }
               <input
                 type="file"
                 name="image"
                 title="Enter product image"
+                {...register('image', {required: "product image is required"})}
                 className={`w-full p-3 bg-white/20 text-white rounded outline-none  ${errors.image?.message ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-blue-400" }`}
-              />
+                required
+              /><p className="error ml-2 text-red-500">{errors.image?.message}</p>
+              </div>
             </div>
 
             <div>
-              <label className="block text-white mb-1">Rating</label>
+              <label className={`block text-white mb-1 ${isEdit ? 'mt-4' : ''}`}>Rating<span className="text-red-500">*</span></label>
               <input
                 type="number"
                 name="rating"
@@ -163,7 +191,7 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Rate Count</label>
+              <label className="block text-white mb-1">Rate Count<span className="text-red-500">*</span></label>
               <input
                 type="number"
                 name="rate_count"
@@ -176,7 +204,7 @@ export default function EditProduct() {
             </div>
 
             <div>
-              <label className="block text-white mb-1">Stock Count</label>
+              <label className="block text-white mb-1">Stock Count<span className="text-red-500">*</span></label>
               <input
                 type="number"
                 name="stock_count"
@@ -196,7 +224,7 @@ export default function EditProduct() {
                 className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 transition"
                 onClick={()=> trigger()}
               >
-                Update Product
+                {isEdit ? "Update Product" : "Add Product"}
               </button>
             </div>
           </form>

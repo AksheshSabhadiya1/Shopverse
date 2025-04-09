@@ -25,12 +25,12 @@ export default function Breadcrumb() {
             <span key={url} className="flex items-center">
                 <span className="mx-2 text-gray-500">/</span>
                 {isLast ? (
-                    <span className="text-black font-semibold capitalize">{label}</span>
+                    <span className="text-[#DB4444] font-semibold capitalize">{label}</span>
                 ) : (
                     <NavLink
                         to={url}
                         className={({ isActive }) =>
-                            `${isActive ? "text-gray-500 underline font-semibold" : "text-gray-600"} capitalize hover:text-orange-500 transition`
+                            `${isActive ? "text-white/80 underline font-semibold" : "text-gray-600"} capitalize hover:text-[#DB4444] transition`
                         }
                     >
                         {label}
@@ -41,8 +41,8 @@ export default function Breadcrumb() {
     });
 
     return (
-        <nav className="flex flex-wrap items-center text-sm text-gray-500 py-0 px-4 lg:mx-8 md:px-6 w-full max-w-screen-xl mx-auto">
-            <Link to="/admin" className="hover:text-orange-500 transition underline font-medium">
+        <nav className="flex flex-wrap items-center text-sm text-white/80 py-0 px-4 lg:mx-8 md:px-6 w-full max-w-screen-xl mx-auto">
+            <Link to="/admin" className="hover:text-[#DB4444] transition underline font-medium">
                 Home
             </Link>
             {breadcrumbs}
