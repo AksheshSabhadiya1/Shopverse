@@ -2,34 +2,26 @@ import React, { useState, useContext, useEffect } from "react";
 import SliderContext from "../../context/Slidercontext";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProductData } from "../../API/API";
+
 
 export default function ProductDetails() {
-    const [product, setProduct] = useState(null);
     const { sliderOpen } = useContext(SliderContext);
     const { id } = useParams();
 
-    const fetchProductData = async () => {
-        try {
-            const { data } = await axios.get(`http://localhost:5000/admin/products/${id}`, {
-                withCredentials: true,
-            });
-            if (Array.isArray(data) && data.length > 0) {
-                setProduct(data[0]);
-            }
-        } catch (error) {
-            console.log("Product Fetching Error", error);
-        }
-    };
+    const {data: product, isError} = useQuery({
+        queryKey: ['productDetails'],
+        queryFn: ()=> fetchProductData(id)
+    })
 
-    useEffect(() => {
-        fetchProductData();
-    }, []);
+    if(isError) return <div><p className="text-gray-300 text-lg">No product data available.</p></div>
 
     return (
         <div className={`pt-0 ${sliderOpen ? "pl-64" : "pl-0"}`}>
-            <div className="min-h-screen pt-10 w-full bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] flex justify-center items-center p-6">
-                {product ? (
-                    <div className="max-w-5xl w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-8">
+            <div className="min-h-screen pt-10 w-full bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex justify-center items-center p-6">
+                {product?.map((product) => (
+                    <div key={product.id} className="max-w-5xl w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-8">
 
                         <div className="w-full md:w-1/2 flex justify-center">
                             <img
@@ -75,9 +67,7 @@ export default function ProductDetails() {
                         </div>
 
                     </div>
-                ) : (
-                    <p className="text-gray-300 text-lg">No product data available.</p>
-                )}
+                ))}
             </div>
         </div>
     );

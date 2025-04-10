@@ -21,7 +21,7 @@ export default function Sidebar() {
     }, []);
 
     return (
-        <div className="h-screen w-64 bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white fixed left-0 top-0 flex flex-col p-4 shadow-lg overflow-y-auto">
+        <div className="h-screen w-64 bg-gradient-to-br from-black via-gray-800 to-black text-white fixed left-0 top-0 flex flex-col p-4 shadow-lg overflow-y-auto">
             <div className="text-2xl flex font-bold text-center mx-2 py-5 tracking-wide border-b border-white/20">
                 ShopVerse <span className="text-blue-400">Admin</span>
             </div>

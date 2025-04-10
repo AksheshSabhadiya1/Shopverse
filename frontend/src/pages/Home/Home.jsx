@@ -7,6 +7,7 @@ import SaleClock from "../../components/Clock/SaleClock";
 import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
 import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import FilterContext from "../../context/FilterContext";
+import {ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react'
 
 export default function Home() {
 
@@ -49,7 +50,7 @@ export default function Home() {
             <p className="text-3xl sm:text-4xl lg:text-5xl font-semibold">Up to 10% off Voucher</p>
             <Link to="/" className="mt-4 flex items-center group">
               <span className="ml-2 underline group-hover:text-gray-300">Shop Now</span>
-              <span className="group-hover:translate-x-1">🡢</span>
+              <span className="group-hover:translate-x-1"><ArrowRight /></span>
             </Link>
           </div>
           <img src="/images/iphone.png" alt="iPhone" className="w-78 sm:w-70 md:w-70 lg:w-75 mt-4" />
@@ -190,7 +191,7 @@ export default function Home() {
 
       {
         isvisible &&
-        <button onClick={scrollTop} className="fixed bottom-10 right-5 md:right-20 w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full shadow-lg cursor-pointer hover:bg-gray-400 transition" >🡡</button>
+        <button onClick={scrollTop} className="fixed bottom-10 right-5 md:right-20 w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full shadow-lg cursor-pointer hover:bg-gray-400 transition" ><ArrowUp /></button>
 
       }
 

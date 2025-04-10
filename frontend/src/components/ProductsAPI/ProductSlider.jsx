@@ -4,6 +4,7 @@ import {useQuery} from '@tanstack/react-query'
 import { fetchProducts } from "../../API/API";
 import {RingLoader} from 'react-spinners';
 import { useLocation } from "react-router-dom";
+import { Heart, Eye, ArrowRight, ArrowLeft } from 'lucide-react';
 
 
 export default function ProductSlider() {
@@ -46,13 +47,13 @@ export default function ProductSlider() {
                         onClick={ProductSliderScrollLeft}
                         className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-200"
                     >
-                        🡠
+                        <ArrowLeft />
                     </button>
                     <button
                         onClick={ProductSliderScrollRight}
                         className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-200"
                     >
-                        🡢
+                        <ArrowRight />
                     </button>
                 </div>
             </div>
@@ -67,11 +68,11 @@ export default function ProductSlider() {
                                 <div className="relative -left-4 top-0 bg-[#DB4444] text-white rounded w-12 text-center p-1">
                                     <p className="font-light">-{((((product.price+100)-product.price)/product.price)*10).toFixed(0)}%</p>
                                 </div>
-                                <div className="relative left-46 -top-8 bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/heart small.png" alt="" />
+                                <div className="relative left-44 -top-8 w-8 p-1.5">
+                                    <Heart className="hover:text-red-500" />
                                 </div>
-                                <div className="relative left-46 -top-5 bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/eye-icon.png" alt="" />
+                                <div className="relative left-44 -top-5 w-8 p-1.5">
+                                    <Eye className="hover:text-blue-500" />
                                 </div>
                             </div>
                             <div className="h-50 w-full flex flex-col items-center">

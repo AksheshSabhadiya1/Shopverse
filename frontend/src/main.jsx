@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />
-      }, 
+      },
       {
         path: '/about',
         element: <About />
@@ -69,7 +69,9 @@ const queryclient = new QueryClient()
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryclient} >
-      <RouterProvider router={router} /> 
+      <RouterProvider router={router} >
+        <App />
+      </RouterProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

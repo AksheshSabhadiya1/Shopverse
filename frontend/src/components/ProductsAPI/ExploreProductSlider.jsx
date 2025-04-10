@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect, useRef } from "react";
 import { ExploreProducts } from "../../API/API";
 import {RingLoader} from 'react-spinners';
+import { Heart, Eye } from 'lucide-react';
+
 
 
 export default function ExpolreProductSlider() {
@@ -27,11 +29,11 @@ export default function ExpolreProductSlider() {
                     {data?.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
                             <div className="">
-                                <div className="relative left-46 cursor-pointer -top-8 bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/heart small.png" alt="" />
+                                <div className="relative left-44 cursor-pointer -top-10 w-8 p-1.5">
+                                    <Heart className="hover:text-red-500" />
                                 </div>
-                                <div className="relative left-46 -top-5 cursor-pointer bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/eye-icon.png" alt="" />
+                                <div className="relative left-44 -top-10 cursor-pointer w-8 p-1.5">
+                                    <Eye className="hover:text-blue-500" />
                                 </div>
                             </div>
                             <div className="h-50 w-50 flex flex-col items-center">

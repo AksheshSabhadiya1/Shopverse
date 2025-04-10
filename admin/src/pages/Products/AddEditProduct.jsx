@@ -3,7 +3,7 @@ import SliderContext from "../../context/Slidercontext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 
 export default function AddEditProduct() {
   const { sliderOpen } = useContext(SliderContext);
@@ -88,7 +88,7 @@ export default function AddEditProduct() {
 
   return (
     <div className={`${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen pt-20 bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] flex items-center justify-center">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex items-center justify-center">
         <div className="bg-white/10 backdrop-blur-lg shadow-xl p-8 rounded-2xl border border-white/20 w-full max-w-5xl">
           <h2 className="text-3xl font-bold text-white text-center mb-6">
             {isEdit ? `Edit Product: ${getValues("productname")}` : "Add New Product"}
@@ -164,21 +164,20 @@ export default function AddEditProduct() {
               <label className="block text-white mb-1">Image<span className="text-red-500">*</span></label>
               <div className="flex justify-center items-center">
                 {
-                  isEdit && <img src={`http://localhost:5000/uploads/products/${oldImage}`} alt="image" className="w-20 h-20 object-cover rounded" />
+                  isEdit && <img src={`http://localhost:5000/uploads/products/${oldImage}`} alt="image" className="w-20 h-15 rounded" />
                 }
               <input
                 type="file"
                 name="image"
                 title="Enter product image"
-                {...register('image', {required: "product image is required"})}
-                className={`w-full p-3 bg-white/20 text-white rounded outline-none  ${errors.image?.message ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-blue-400" }`}
-                required
-              /><p className="error ml-2 text-red-500">{errors.image?.message}</p>
+                {...register('image')}
+                className={`w-full p-3 bg-white/20 text-white rounded outline-none ${errors.image?.message ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-blue-400" }`}
+              />
               </div>
             </div>
 
             <div>
-              <label className={`block text-white mb-1 ${isEdit ? 'mt-4' : ''}`}>Rating<span className="text-red-500">*</span></label>
+              <label className={`block text-white mb-1 ${isEdit ? 'mt-1.5' : ''}`}>Rating<span className="text-red-500">*</span></label>
               <input
                 type="number"
                 name="rating"
@@ -218,7 +217,7 @@ export default function AddEditProduct() {
 
             
 
-            <div className="md:col-span-2 mt-2">
+            <div className="md:col-span-2 space-x-4 mt-2">
               <button
                 type="submit"
                 className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 transition"
@@ -226,6 +225,14 @@ export default function AddEditProduct() {
               >
                 {isEdit ? "Update Product" : "Add Product"}
               </button>
+              <NavLink to='/admin/products'>
+              <button
+                type="submit"
+                className="bg-red-500 text-white py-3 px-6 rounded hover:bg-red-700 transition"
+              >
+                Cancel
+              </button>
+              </NavLink>
             </div>
           </form>
         </div>

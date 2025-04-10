@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard/Dashboard.jsx'
 import Error from './Error/Error.jsx'
 import ProductDetails from './pages/Products/ProductDetails.jsx'
 import AddEditProduct from './pages/Products/AddEditProduct.jsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const router = createBrowserRouter([
   {
@@ -66,8 +67,12 @@ const router = createBrowserRouter([
   }
 ])
 
+const queryclient = new QueryClient()
+
 createRoot(document.getElementById('root')).render(
+  <QueryClientProvider client={queryclient} >
   <RouterProvider router={router}>
       <App />
   </RouterProvider>
+  </QueryClientProvider>
 )

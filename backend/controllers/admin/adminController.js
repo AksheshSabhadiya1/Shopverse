@@ -1,9 +1,10 @@
 
-const db = require('../database/database')
+const db = require('../../config/database')
 
 
-const getAdminHomepage = (req, res)=>{
-    return res.send("admin homepage").end()
+const getAdminHomepage = async(req, res)=>{
+    const [admindata] = await db.execute('SELECT * FROM admin limit 1')
+    return res.send(admindata)
 }
 
 const postAdminHomepage = (req, res)=>{

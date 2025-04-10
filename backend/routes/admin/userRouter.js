@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const userRouter = Router()
 const multer = require('multer')
-const { getAllUsers, getUserById, deleteUserById } = require('../controllers/userController')
+const { getAllUsers, getUserById, deleteUserById } = require('../../controllers/admin/userController')
 
 const diskstorage = multer.diskStorage({
     destination: (req, file, cb) => {

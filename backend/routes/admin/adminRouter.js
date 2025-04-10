@@ -1,7 +1,7 @@
 
 const { Router } = require('express')
 const adminRouter = Router()
-const {getAdminHomepage, postAdminHomepage, getSignin, postSignin, postSignup} = require('../controllers/adminController')
+const {getAdminHomepage, postAdminHomepage, getSignin, postSignin, postSignup} = require('../../controllers/admin/adminController')
 
 adminRouter.get('/', getAdminHomepage)
 adminRouter.post('/', postAdminHomepage)

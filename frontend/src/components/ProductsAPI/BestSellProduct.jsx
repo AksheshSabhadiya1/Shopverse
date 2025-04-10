@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {BestProduct} from '../../API/API'
 import {RingLoader} from 'react-spinners';
 import { useLocation } from "react-router-dom";
-
+import { Heart, Eye} from "lucide-react";
 
 
 export default function BestSellProduct() {
@@ -28,11 +28,11 @@ export default function BestSellProduct() {
                     {data?.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
                             <div className="">
-                                {path !== 'wishlist' && <div className="relative left-46 -top-8 bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/heart small.png" alt="" />
+                                {path !== 'wishlist' && <div className="relative left-46 -top-8 w-8 p-1.5">
+                                    <Heart className="hover:text-red-500" />
                                 </div> }
-                                <div className="relative left-46 -top-5 bg-gray-200 rounded-full w-8 p-1.5">
-                                    <img src="/icons/eye-icon.png" alt="" />
+                                <div className="relative left-46 -top-5 w-8 p-1.5">
+                                    <Eye className="hover:text-blue-500" />
                                 </div>
                             </div>
                             <div className="h-50 w-50 flex flex-col items-center">

@@ -7,15 +7,15 @@ export default function Error() {
     console.log(path);
 
     return (
-        <div className="flex flex-col items-center justify-center h-100 text-center">
+        <div className="flex flex-col bg-gradient-to-br from-[#DB4444] via-gray-900 to-black items-center justify-center h-screen text-center">
             <div className="w-full rounded-2xl">
-                <h1 className="text-5xl font-bold text-gray-800 mb-4">404 Page Not Found</h1>
-                <p className="text-gray-500 mb-5">
+                <h1 className="text-5xl font-bold text-white mb-4">404 Page Not Found</h1>
+                <p className="text-white/60 mb-5">
                     The page you are looking for does not exist or has been moved.
                 </p>
                 <Link
                     to="/admin/signin"
-                    className="bg-orange-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-orange-700 transition duration-300"
+                    className="bg-[#DB4444] text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-orange-700 transition duration-300"
                 >
                     Go to Signin
                 </Link>

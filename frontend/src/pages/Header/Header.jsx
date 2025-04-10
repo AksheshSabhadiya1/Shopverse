@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Heart, ShoppingCart, User, Search } from 'lucide-react';
 import FilterContext from "../../context/FilterContext";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [filterSlider, setFilterSlider] = useState(false);
     const [userDropDown, setUserDropDown] = useState(false);
 
     const {filterMenu, setFilterMenu} = useContext(FilterContext)
@@ -16,7 +15,7 @@ export default function Header() {
     useEffect(()=>{
         const time = setTimeout(()=>{
             setUserDropDown(false)
-        },2000)
+        },8000)
 
         return ()=> clearTimeout(time)
     }, [userDropDown])
@@ -38,13 +37,12 @@ export default function Header() {
             </div>
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <button onClick={() => setFilterMenu(!filterMenu)}  
-                            className="font-bold px-5 py-2.5 focus:outline-none" type="button">
-                        <button className="text-gray-700" onClick={() => setFilterSlider(!filterSlider)}>
-                            {filterSlider ? <X size={28} /> : <Menu size={28} />}
+                    <div className="font-bold px-5 py-2.5 focus:outline-none" type="button">
+                        <button onClick={() => setFilterMenu(!filterMenu)}  className="text-gray-700">
+                            {filterMenu ? <X size={28} /> : <Menu size={28} />}
                         </button>
                         <strong className="mx-6 text-3xl">ShopVerse</strong>
-                    </button>
+                    </div>
 
                     <div className={`absolute left-0 md:left-45 h-auto top-full border-t border-r border-gray-200 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-100 transition-all duration-300 ${filterMenu ? "block" : "hidden" }`}>
                             <div className="py-1 space-y-1">
@@ -87,36 +85,36 @@ export default function Header() {
                             className="text-gray-800 w-70 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none"
                         />
                         <Link>
-                            <img src="/icons/search.png" alt="search" className="relative end-10" />
+                            <Search className="relative end-10" />
                         </Link>
                         {
                             !(path === 'signup' || path === 'signin') && 
-                            <div className="hidden md:flex lg:flex">
+                            <div className="hidden space-x-5 md:flex lg:flex justify-center items-center">
                                 <Link to='/wishlist'>
-                                    <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
+                                    <Heart className="hover:text-red-500" />
                                 </Link>
                                 <Link to='/cart'>
-                                    <img src="/icons/cart.png" alt="cart" className="mx-2" />
+                                    <ShoppingCart className="hover:text-blue-500"  />
                                 </Link>
                                 <button
                                     onClick={() => setUserDropDown(!userDropDown)}
-                                    className="relative"
-                                > {userDropDown ? <img src="/icons/login-user.png" alt="user" className="mx-2 w-8 h-8" /> : <img src="/icons/user.png" alt="user" className="mx-2 w-8 h-8" />}
+                                    className={`flex items-center justify-center ${userDropDown ? 'w-8 h-8 text-white bg-red-500 rounded-full' : 'w-8 h-8'}`}
+                                > <User />
                                 </button>
                             </div>
                         }
 
                             <div className="lg:hidden md:hidden flex justify-center items-center">
                                 <Link to='/wishlist'>
-                                    <img src="/icons/wishlist.png" alt="wishlist" className="mx-2" />
+                                    <Heart className="hover:text-red-500" />
                                 </Link>
-                                <Link>
-                                    <img src="/icons/cart.png" alt="cart" className="mx-2" />
+                                <Link to='/cart'>
+                                    <ShoppingCart className="hover:text-blue-500"  />
                                 </Link>
                                 <button
                                     onClick={() => setUserDropDown(!userDropDown)}
-                                    className="relative"
-                                > {userDropDown ? <img src="/icons/login-user.png" alt="user" className="mx-2 w-8 h-8" /> : <img src="/icons/user.png" alt="user" className="mx-2 w-8 h-8" />}
+                                    className={`flex items-center justify-center ${userDropDown ? 'w-8 h-8 text-white bg-red-500 rounded-full' : 'w-8 h-8'}`}
+                                > <User />
                                 </button>
                             </div>
 

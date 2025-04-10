@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
-import { Categories } from "../../API/API";
 import {RingLoader} from 'react-spinners';
+import {ArrowRight, ArrowLeft, LaptopMinimal, Smartphone, Watch, Camera, Headphones, Gamepad, Tablet, Speaker,  } from 'lucide-react'
 
 
 export default function CategorySlider(){
@@ -10,13 +10,13 @@ export default function CategorySlider(){
     const scrollCategoryRight = () => categorysliderRef.current?.scrollBy({ left: 200, behavior: "smooth" });
 
 
-    const {data, isError, isLoading, error} = useQuery({
-        queryKey: ['categories'],
-        queryFn: () => Categories()
-    })
+    // const {data, isError, isLoading, error} = useQuery({
+    //     queryKey: ['categories'],
+    //     queryFn: () => Categories()
+    // })
 
-    if(isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
-    if(isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
+    // if(isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
+    // if(isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
 
 
     return(
@@ -31,13 +31,13 @@ export default function CategorySlider(){
                                     onClick={scrollCategoryLeft}
                                     className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-200"
                                 >
-                                    🡠
+                                    <ArrowLeft />
                                 </button>
                                 <button
                                     onClick={scrollCategoryRight}
                                     className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-200"
                                 >
-                                    🡢
+                                    <ArrowRight />
                                 </button>
                             </div>
                         </div>
@@ -48,14 +48,54 @@ export default function CategorySlider(){
                     className="flex gap-4 sm:gap-6 md:gap-8 lg:gap-10 overflow-x-auto scroll-smooth no-scrollbar py-4"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
-                    {data?.map((category, index) => (
-                        <div key={index} className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
                             <div className="flex items-center justify-center mb-4">
-                                <img src={category.icon} alt={category.name} className="w-8 h-8 object-contain" />
+                                <Smartphone className="w-8 h-8 object-contain" />
                             </div>
-                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">{category.name}</h3>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Phones</h3>
                         </div>
-                    ))}
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <LaptopMinimal className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Computers</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Watch className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">SmartWatch</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Camera  className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Camera</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Headphones className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Headphones</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Gamepad className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Gaming</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Tablet  className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Tablet</h3>
+                        </div>
+                        <div className="w-40 sm:w-48 flex-shrink-0 p-6 border border-gray-400 cursor-pointer hover:bg-[#DB4444] transition-shadow">
+                            <div className="flex items-center justify-center mb-4">
+                                <Speaker  className="w-8 h-8 object-contain" />
+                            </div>
+                            <h3 className="uppercase font-semibold text-sm md:text-base text-center">Speakers</h3>
+                        </div>
                 </div>
             </div>
         </div>

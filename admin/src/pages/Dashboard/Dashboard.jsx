@@ -1,44 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaBox, FaUsers } from "react-icons/fa";
 import SliderContext from "../../context/Slidercontext";
-import axios from "axios";
 import { NavLink } from "react-router-dom";
+import {useQuery} from '@tanstack/react-query'
+import { fetchAllProductData, fetchTotalUsers } from "../../API/API";
+import {RingLoader} from 'react-spinners'
+
+
 
 export default function Dashboard() {
-  const [totalProducts, setTotalProducts] = useState(0);
-  const [totalUsers, setTotalUsers] = useState(0);
   const { sliderOpen } = useContext(SliderContext);
 
-  const fetchTotalProducts = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/admin/products", {
-        withCredentials: true,
-      });
-      if (data?.length) setTotalProducts(data.length);
-    } catch (error) {
-      console.log("Error while fetching total products data");
-    }
-  };
+  const {data: productdata, isError: isProductError, isLoading: isProductLoading} = useQuery({
+    queryKey: ["products"],
+    queryFn: ()=> fetchAllProductData()
+  })
 
-  const fetchTotalUsers = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/admin/users", {
-        withCredentials: true,
-      });
-      if (data?.length) setTotalUsers(data.length);
-    } catch (error) {
-      console.log("Error while fetching total users data");
-    }
-  };
+  const {data: userdata, isError: isUserError, isLoading: isUserLoading} = useQuery({
+    queryKey: ["users"],
+    queryFn: ()=> fetchTotalUsers()
+  })
 
-  useEffect(() => {
-    fetchTotalProducts();
-    fetchTotalUsers();
-  }, []);
+  if(isProductError) return <div><h1> Error : Product not found </h1></div>
+  if(isUserError) return <div><h1> Error : User not found </h1></div>
+
 
   return (
     <div className={`pt-20 transition-all duration-300 ${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] px-4 sm:px-8 py-10 flex flex-col items-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#DB4444] via-gray-900 to-black px-4 sm:px-8 py-10 flex flex-col items-center">
         <h1 className="text-4xl font-extrabold text-white mb-10 tracking-wide">Admin Dashboard</h1>
         
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
@@ -47,7 +36,7 @@ export default function Dashboard() {
               <FaBox className="text-blue-400 text-5xl" />
               <div>
                 <h2 className="text-xl font-semibold text-white">Total Products</h2>
-                <p className="text-3xl font-bold text-blue-300">{totalProducts}</p>
+                <p className="text-3xl font-bold text-blue-300">{productdata ? productdata.length : 0}</p>
               </div>
             </div>
           </NavLink>
@@ -57,7 +46,7 @@ export default function Dashboard() {
               <FaUsers className="text-green-400 text-5xl" />
               <div>
                 <h2 className="text-xl font-semibold text-white">Total Users</h2>
-                <p className="text-3xl font-bold text-green-300">{totalUsers}</p>
+                <p className="text-3xl font-bold text-green-300">{userdata ? userdata.length : 0}</p>
               </div>
             </div>
           </NavLink>

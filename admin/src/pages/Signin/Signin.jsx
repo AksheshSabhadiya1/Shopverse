@@ -33,7 +33,7 @@ export default function Signin() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-screen items-center justify-center bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] px-4 md:px-12">
+        <div className="flex flex-col md:flex-row h-screen items-center justify-center bg-gradient-to-br from-[#DB4444] via-gray-900 to-black px-4 md:px-12">
             <div className="hidden lg:flex justify-center md:block md:w-1/2">
                 <img
                     src="/icons/signinpage-image.png"

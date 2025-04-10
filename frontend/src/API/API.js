@@ -23,22 +23,6 @@ export const ExploreProducts = async () => {
 }
 
 
-export const Categories = () => {
-    const categories = [
-        { name: "Phones", icon: "icons/mobile-phone-black.png" },
-        { name: "Computers", icon: "icons/computer-black.png" },
-        { name: "SmartWatch", icon: "icons/smartwatch-black.png" },
-        { name: "Camera", icon: "icons/camera-black.png" },
-        { name: "HeadPhones", icon: "icons/headphones-black.png" },
-        { name: "Gaming", icon: "icons/gaming-black.png" },
-        { name: "Tablets", icon: "icons/tablet-black.png" },
-        { name: "Drones", icon: "icons/drone-black.png" },
-        { name: "Speakers", icon: "icons/speaker-black.png" },
-    ];
-
-    return categories
-}
-
 
 export const wishlist = async() =>{
     const res = await api.get('/products')

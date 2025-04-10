@@ -1,4 +1,4 @@
-const db = require('../database/database')
+const db = require('../../config/database')
 const {Base64} = require('js-base64')
 
 
