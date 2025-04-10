@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-
+import axios from 'axios'
 
 export default function Signup() {
 
@@ -15,9 +15,21 @@ export default function Signup() {
         mode: 'all',
     })
 
-    const { register, formState, trigger } = form
-
+    const { register, formState, handleSubmit, reset, trigger } = form
     const { errors } = formState
+    const nevigate = useNavigate()
+
+    const CreateNewUser = async (data) => {
+        try {
+            await axios.post('http://localhost:5000/signup', data, {
+                withCredentials: true
+            })
+            nevigate('/signin')
+        } catch (error) {
+            console.log("Signup failed");
+        }
+    }
+
     return (
         <div className="flex flex-col md:flex-row h-screen items-center justify-center -my-10 px-6 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
@@ -32,7 +44,7 @@ export default function Signup() {
                 <div className="w-full max-w-md space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">Create an account</h1>
                     <h2 className="text-3xs text-gray-600">Enter your details below</h2>
-                    <form className="space-y-2.5">
+                    <form onSubmit={handleSubmit(CreateNewUser)} className="space-y-2.5">
                         <div className='w-full flex justify-center items-center mb-4'>
                             <div className="w-full me-2">
                                 <input
@@ -80,12 +92,11 @@ export default function Signup() {
                             name="password"
                             id="password"
                             {...register("password", { required: "Password is required" })}
-                            placeholder="Set Password"
+                            placeholder="Set New Password"
                             required
                             className="w-full p-3 bg-gray-100 rounded focus:outline-none "
                         /><p className="error ml-2 text-red-500">{errors.password?.message}</p>
                         <button
-                            type="submit"
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-2 rounded-lg transition duration-300"
                         >
                             Create Account

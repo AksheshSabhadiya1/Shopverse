@@ -5,8 +5,9 @@ const app = express()
 const port = 5000
 const path = require('path')
 const adminRouter = require('./routes/admin/adminRouter')
-const userRouter = require('./routes/admin/userRouter')
-const productRouter = require('./routes/admin/productRouter')
+const adminUserRouter = require('./routes/admin/userRouter')
+const adminProductRouter = require('./routes/admin/productRouter')
+const userRouter = require('./routes/user/userRouter')
 
 const corsOptions = {
     origin: 'http://localhost:5173',
@@ -19,8 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/admin', adminRouter)
-app.use('/admin/users', userRouter)
-app.use('/admin/products', productRouter)
+app.use('/admin/users', adminUserRouter)
+app.use('/admin/products', adminProductRouter)
+app.use(userRouter)
 
 
 app.get('/', (req, res)=>{

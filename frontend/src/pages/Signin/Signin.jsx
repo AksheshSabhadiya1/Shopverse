@@ -1,6 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+import axios from 'axios'
+import UserDataContext from "../../context/UserData/UserDataContext";
 
 
 export default function Signin(){
@@ -15,9 +17,27 @@ export default function Signin(){
             mode: 'all',
         })
     
-        const { register, formState, trigger } = form
-    
+        const { register, handleSubmit, formState, reset, trigger } = form
         const { errors } = formState
+        const nevigate = useNavigate()
+        const {setCurrentUser} = useContext(UserDataContext)
+
+
+        const validateUser = async(data) => {
+            try {
+                const result =await axios.post('http://localhost:5000/signin', data, {
+                    withCredentials: true,
+                })
+                console.log(result.data[0]);
+                result.data ? setCurrentUser(result.data[0]) : null
+                nevigate('/')
+            } catch (error) {
+                console.error("Signin failed", error);
+                reset();
+            }
+        }
+
+
 
   return (
     <div className="flex flex-col md:flex-row h-screen items-center -mt-10 justify-center px-4 md:px-12 lg:px-24">
@@ -33,7 +53,7 @@ export default function Signin(){
                 <div className="w-full max-w-md space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">Signin to ShopVerse</h1>
                     <h2 className="text-lg text-gray-600">Enter your details below</h2>
-                    <form className="space-y-2.5">
+                    <form onSubmit={handleSubmit(validateUser)} className="space-y-2.5">
                         
                         <input
                             type="email"
@@ -42,7 +62,7 @@ export default function Signin(){
                             required
                             {...register('email', { required: "Email is required"})}
                             placeholder="Email"
-                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DB4444]"
                         /><p className="error ml-2 text-red-500">{errors.email?.message}</p>
                         <input
                             type="password"
@@ -51,10 +71,10 @@ export default function Signin(){
                             required
                             placeholder="Password"
                             {...register('password', { required: "Password is required"})}
-                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DB4444]"
                         /><p className="error ml-2 text-red-500">{errors.password?.message}</p>
                         <button
-                            type="submit"
+                            onClick={()=> trigger()}
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-3 rounded-lg transition duration-300"
                         >
                             Sign in

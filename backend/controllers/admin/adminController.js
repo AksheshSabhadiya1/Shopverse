@@ -19,7 +19,7 @@ const postSignin = async (req, res)=>{
     const {email,password} = req.body
     const [admindata] = await db.execute('SELECT * FROM admin WHERE email=? and password=?',[email, password])
 
-    admindata.length > 0 ? res.json(admindata) : res.status(401).json({ message: "Invalid credentials" })
+    admindata.length > 0 ? res.json(admindata) : res.status(401).json({ message: "Invalid Email or Password" })
 }
 
 const postSignup = async (req, res)=>{

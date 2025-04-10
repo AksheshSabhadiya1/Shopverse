@@ -6,8 +6,9 @@ import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
 import SaleClock from "../../components/Clock/SaleClock";
 import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
 import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
-import FilterContext from "../../context/FilterContext";
+import FilterContext from "../../context/FilterDropDown/FilterContext";
 import {ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react'
+import UserDataContext from "../../context/UserData/UserDataContext";
 
 export default function Home() {
 
@@ -37,10 +38,9 @@ export default function Home() {
 
   const {filterMenu} = useContext(FilterContext)
 
-
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10" >
-      <div className={`flex mt-5 flex-col lg:flex-row gap-6 lg:gap-8 ${filterMenu ? "ml-70" : "w-full"}`}>
+      <div className={`flex flex-col lg:flex-row gap-6 lg:gap-8 ${filterMenu ? "ml-70" : "w-full"}`}>
         <div className="w-full flex flex-col sm:flex-row justify-center items-center bg-black text-white p-4 sm:p-10 lg:flex-grow">
           <div className="text-center sm:text-left">
             <div className="flex items-center text-center py-2">
@@ -58,7 +58,7 @@ export default function Home() {
       </div>
 
 
-      <div className="mt-10 lg:mt-16">
+      <div className="mt-10 lg:mt-20">
         <div className="flex items-center">
           <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
           <span className="ml-4 text-[#DB4444] font-semibold">Today's</span>
