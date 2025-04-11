@@ -100,7 +100,7 @@ export default function Home() {
       <BestSellProduct />
 
 
-      <div className=" mt-20 mb-10 flex flex-col lg:flex-row items-center justify-between bg-black text-white p-6 lg:p-12">
+      <div className=" mt-15 mb-10 flex flex-col lg:flex-row items-center justify-between bg-black text-white p-6 lg:p-12">
         <div className="flex flex-col text-center lg:text-left max-w-lg">
           <span className="text-[#DB4444] text-lg font-semibold">Categories</span>
           <p className="text-3xl lg:text-5xl font-bold mt-2">Enhance Your Music Experience</p>
@@ -141,7 +141,7 @@ export default function Home() {
           </div>
         </div></div>
       <ExpolreProductSlider />
-      <div className="mb-25 flex justify-center lg:mt-4">
+      <div className="flex justify-center lg:mt-2">
         <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 

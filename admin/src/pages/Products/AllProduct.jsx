@@ -37,8 +37,8 @@ export default function AllProduct() {
 
   return (
     <div className={`pt-20 ${sliderOpen ? "pl-64" : "pl-0"} transition-all duration-300`}>
-      <div className="min-h-screen bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex flex-col items-center px-4 py-10">
-        <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center px-4 py-10">
+        <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
           {products ? (
             products.map((product) => (
               <div

@@ -8,7 +8,6 @@ import { Heart, Eye } from 'lucide-react';
 
 export default function ExpolreProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
-    const sliderRef = useRef(null);
 
     const {data, isLoading, isError, error} = useQuery({
         queryKey: ['exploreProduct'],
@@ -22,10 +21,8 @@ export default function ExpolreProductSlider() {
 
     return (
         <div>
-            
-
             <div className="relative overflow-hidden">
-                <div ref={sliderRef} className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-12 py-6 overflow-x-auto whitespace-wrap">
+                <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-12 py-6 overflow-x-auto whitespace-wrap">
                     {data?.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
                             <div className="">
@@ -37,18 +34,19 @@ export default function ExpolreProductSlider() {
                                 </div>
                             </div>
                             <div className="h-50 w-50 flex flex-col items-center">
-                                <img src={product.image} alt={product.title} className="w-45 h-35 relative -top-10 object-contain" />
+                                <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.productname} className="w-45 h-35 relative -top-13 object-contain" />
+
                                 {cartBtnVisible === product.id && (
-                                    <button className="w-full mt-2 bg-black relative -top-10 text-white py-2 cursor-pointer rounded-b hover:bg-red-600">Add to Cart</button>
+                                    <button className="w-full -mt-2 bg-black relative -top-10 text-white py-2 cursor-pointer rounded-b hover:bg-red-600">Add to Cart</button>
                                 )}
                             </div>
-                            <div className="-mt-6 w-50">
-                                <p className="font-semibold text-base truncate">{product.title}</p>
-                                <p className="text-[#DB4444] font-bold text-base">₹{product.price} &nbsp;
+                            <div className="-mt-15 w-50">
+                                <p className="font-semibold text-base truncate">{product.productname}</p>
+                                <p className="text-[#DB4444] font-bold text-base">₹{product.sellingprice} &nbsp;
                                     {Array.from({ length: 5 }, (_, index) => (
-                                        <span key={index} className={index < product.rating.rate ? "text-yellow-500" : "text-gray-500"}>★</span>
+                                        <span key={index} className={index < product.rating ? "text-yellow-500" : "text-gray-500"}>★</span>
                                     ))}
-                                    <span className="text-base ml-2 text-gray-400">({product.rating.count})</span>
+                                    <span className="text-base font-semibold ml-2 text-gray-400">({product.rate_count})</span>
                                 </p>
                             </div>
                         </div>

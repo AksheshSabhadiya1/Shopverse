@@ -53,7 +53,7 @@ export default function AllUser() {
 
   return (
     <div className={`pt-15 ${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex flex-col items-center p-6">
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center p-6">
         <div className="w-full mt-10 max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {users ? (
             users.map((user) => (

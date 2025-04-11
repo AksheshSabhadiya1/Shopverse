@@ -19,7 +19,7 @@ export default function ProductDetails() {
 
     return (
         <div className={`pt-0 ${sliderOpen ? "pl-64" : "pl-0"}`}>
-            <div className="min-h-screen pt-10 w-full bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex justify-center items-center p-6">
+            <div className="min-h-screen pt-10 w-full bg-gradient-to-br from-black via-gray-900 to-black flex justify-center items-center p-6">
                 {product?.map((product) => (
                     <div key={product.id} className="max-w-5xl w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-8">
 

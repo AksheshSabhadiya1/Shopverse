@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   return (
     <div className={`pt-20 transition-all duration-300 ${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen bg-gradient-to-br from-[#DB4444] via-gray-900 to-black px-4 sm:px-8 py-10 flex flex-col items-center">
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-4 sm:px-8 py-10 flex flex-col items-center">
         <h1 className="text-4xl font-extrabold text-white mb-10 tracking-wide">Admin Dashboard</h1>
         
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">

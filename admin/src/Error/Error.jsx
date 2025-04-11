@@ -7,7 +7,7 @@ export default function Error() {
     console.log(path);
 
     return (
-        <div className="flex flex-col bg-gradient-to-br from-[#DB4444] via-gray-900 to-black items-center justify-center h-screen text-center">
+        <div className="flex flex-col bg-gradient-to-br from-black via-gray-900 to-black items-center justify-center h-screen text-center">
             <div className="w-full rounded-2xl">
                 <h1 className="text-5xl font-bold text-white mb-4">404 Page Not Found</h1>
                 <p className="text-white/60 mb-5">

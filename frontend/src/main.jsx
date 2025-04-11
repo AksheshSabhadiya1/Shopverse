@@ -57,9 +57,10 @@ const router = createBrowserRouter([
         element: <ProductDetails />
       },
       {
-        path: '/:other',
+        path: '*',
         element: <Error />
-      }
+      },
+      
     ]
   }
 ])

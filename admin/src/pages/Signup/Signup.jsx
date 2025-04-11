@@ -36,7 +36,7 @@ export default function Signup() {
     };
 
     return (
-        <div className="flex flex-col pt-20 md:flex-row h-screen items-center justify-center bg-gradient-to-br from-[#DB4444] via-gray-900 to-black px-4 md:px-12">
+        <div className="flex flex-col pt-20 md:flex-row h-screen items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black px-4 md:px-12">
             <div className="hidden lg:flex justify-center md:block md:w-1/2">
                 <img
                     src="/icons/signinpage-image.png"

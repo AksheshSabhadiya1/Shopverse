@@ -88,7 +88,7 @@ export default function AddEditProduct() {
 
   return (
     <div className={`${sliderOpen ? "pl-64" : "pl-0"}`}>
-      <div className="min-h-screen pt-20 bg-gradient-to-br from-[#DB4444] via-gray-900 to-black flex items-center justify-center">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center">
         <div className="bg-white/10 backdrop-blur-lg shadow-xl p-8 rounded-2xl border border-white/20 w-full max-w-5xl">
           <h2 className="text-3xl font-bold text-white text-center mb-6">
             {isEdit ? `Edit Product: ${getValues("productname")}` : "Add New Product"}
