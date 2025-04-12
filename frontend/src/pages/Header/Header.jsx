@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, Heart, ShoppingCart, User, Search } from 'lucide-react';
+import { Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon } from 'lucide-react';
 import FilterContext from "../../context/FilterDropDown/FilterContext";
 import UserDataContext from "../../context/UserData/UserDataContext";
 
@@ -136,28 +136,28 @@ export default function Header() {
 
 
                         <div
-                            className={`absolute right-0 md:right-30 top-26 w-48 sm:w-56 md:w-64 bg-black/50 text-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
+                            className={`absolute right-0 md:right-30 top-26 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-300 rounded-lg border border-gray-300 shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
                                 }`}
                         >
                             <div className="px-4 py-3 text-sm">
                                 <div className="font-semibold">{currentUser && currentUser.firstname} {currentUser && currentUser.lastname}</div>
-                                <div className="font-medium truncate text-gray-300">{currentUser && currentUser.email}</div>
+                                <div className="font-medium truncate text-gray-500">{currentUser && currentUser.email}</div>
                             </div>
                             <div className="py-1 space-y-1">
-                                <Link to="/my-account" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
-                                    <img src="/icons/white-user.png" alt="Account" className="w-5 h-5 mr-3" /> Manage My Account
+                                <Link to="/my-account" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <User2 className="me-4" />Manage My Account
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
-                                    <img src="/icons/bag-icon.png" alt="Orders" className="w-5 h-5 mr-3" /> My Order
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <ShoppingBag className="me-4" /> My Order
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
-                                    <img src="/icons/cancel-icon.png" alt="Cancellations" className="w-5 h-5 mr-3" /> My Cancellations
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <X className="me-4"/> My Cancellations
                                 </Link>
-                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] transition">
-                                    <img src="/icons/star-icon.png" alt="Reviews" className="w-5 h-5 mr-3" /> My Reviews
+                                <Link to="#" className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition">
+                                    <Star className="me-4"/> My Reviews
                                 </Link>
-                                <Link onClick={()=> logoutUser()} className="flex items-center px-4 py-2 rounded-lg hover:bg-red-700 transition">
-                                    <img src="/icons/logout-icon.png" alt="Logout" className="w-5 h-5 mr-3" /> Logout
+                                <Link onClick={()=> logoutUser()} className="flex items-center px-4 py-2 rounded-lg hover:text-white hover:bg-red-700 transition">
+                                    <LogOutIcon className="me-4" /> Logout
                                 </Link>
                             </div>
                         </div>

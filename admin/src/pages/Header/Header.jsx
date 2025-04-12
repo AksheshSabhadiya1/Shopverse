@@ -95,16 +95,16 @@ export default function Header() {
                                 </div>
 
                                 <div
-                                    className={`absolute right-0 md:right-0 top-12 w-28 sm:w-46 md:w-54 bg-black/50 text-white divide-y divide-gray-100 rounded-lg shadow-lg transition-all duration-300 ${adminDropDown ? "block" : "hidden"
+                                    className={`absolute right-0 md:right-0 top-12 w-28 sm:w-46 md:w-54 bg-white text-black divide-y divide-gray-100 rounded shadow-lg transition-all duration-300 ${adminDropDown ? "block" : "hidden"
                                         }`}
                                 >
                                     <div className="px-4 py-3 text-sm">
                                         <div className="font-semibold">{adminData && adminData.firstname} {adminData && adminData.lastname}</div>
-                                        <div className="font-medium truncate text-gray-300">{adminData && adminData.email}</div>
+                                        <div className="font-medium truncate text-gray-500">{adminData && adminData.email}</div>
                                     </div>
                                     <div className="mt-auto">
                                         <Link to="/admin/signin">
-                                            <button className="w-full flex items-center gap-4 px-4 py-3 hover:bg-red-600 text-white rounded-b transition-all">
+                                            <button className="w-full flex items-center gap-4 px-4 py-3 bg-red-500 hover:bg-red-700 hover:text-white rounded-b transition-all">
                                                 <LogOut className="sidebar-icon" /> <span>Logout</span>
                                             </button>
                                         </Link>

@@ -4,6 +4,7 @@ import { RingLoader } from 'react-spinners';
 import { wishlist } from "../../API/API";
 import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
+import { ShoppingCart, Trash2 } from "lucide-react";
 
 export default function Wishlist() {
     const sliderRef = useRef(null);
@@ -34,21 +35,19 @@ export default function Wishlist() {
                 <div ref={sliderRef} className="mt-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 py-6 overflow-x-auto">
                     {data?.map((product) => (
                         <div key={product.id} className="bg-white rounded p-4 min-w-[250px]">
-                            <div className="relative flex justify-end">
-                                <button className="absolute top-2 right-2 bg-gray-200 rounded-full w-8 p-1.5 hover:bg-gray-300 transition">
-                                    <img src="/icons/trash.png" alt="Remove" />
-                                </button>
+                            <div className="relative right-8 flex justify-end">
+                                <Trash2 className="hover:text-red-500" />
                             </div>
                             <div className="h-50 w-50 flex flex-col items-center">
-                                <img src={product.image} alt={product.title} className="w-40 h-40 object-contain" />
+                                <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.productname} className="w-40 h-40 object-contain" />
                                 <button className="w-full flex justify-center items-center mt-2 bg-black text-white py-2 cursor-pointer rounded-b hover:bg-red-600 transition">
-                                    <img src="/icons/shopping-cart-white.png" alt="Cart" className="w-6 h-6 mx-2" />
+                                    <ShoppingCart className="me-2" />
                                     Add to Cart
                                 </button>
                             </div>
-                            <div className="mt-2">
-                                <p className="font-semibold text-base truncate">{product.title}</p>
-                                <p className="text-[#DB4444] font-bold text-base">₹{product.price}</p>
+                            <div className="mt-4">
+                                <p className="font-semibold text-base truncate">{product.productname}</p>
+                                <p className="text-[#DB4444] font-bold text-base">₹{product.sellingprice}</p>
                             </div>
                         </div>
                     ))}

@@ -5,7 +5,7 @@ const api = axios.create({
 })
 
 
-export const fetchProducts = async () => {
+export const FetchProducts = async () => {
     try {
         const {data} = await api.get('/products',{
             withCredentials: true
@@ -42,7 +42,7 @@ export const CartData = async () => {
 }
 
 
-export const FindProductDetails = async (id) => {
-    const res = await api.get(`/products/${id}`)
-    return Array(res.data)
+export const FindProductById = async (id) => {
+    const {data} = await api.get(`/products/${id}`)
+    return data
 }

@@ -3,11 +3,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { ExploreProducts } from "../../API/API";
 import {RingLoader} from 'react-spinners';
 import { Heart, Eye } from 'lucide-react';
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 export default function ExpolreProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
+    const nevigate = useNavigate()
 
     const {data, isLoading, isError, error} = useQuery({
         queryKey: ['exploreProduct'],
@@ -30,14 +32,16 @@ export default function ExpolreProductSlider() {
                                     <Heart className="hover:text-red-500" />
                                 </div>
                                 <div className="relative left-44 -top-10 cursor-pointer w-8 p-1.5">
-                                    <Eye className="hover:text-blue-500" />
+                                <button onClick={()=> nevigate(`/products/${product.id}`)}>
+                                    <Eye className="hover:text-blue-500"  />
+                                </button>
                                 </div>
                             </div>
                             <div className="h-50 w-50 flex flex-col items-center">
                                 <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.productname} className="w-45 h-35 relative -top-13 object-contain" />
 
                                 {cartBtnVisible === product.id && (
-                                    <button className="w-full -mt-2 bg-black relative -top-10 text-white py-2 cursor-pointer rounded-b hover:bg-red-600">Add to Cart</button>
+                                    <button className="w-full -mt-2 bg-black relative -top-10 text-white py-2 cursor-pointer rounded-b hover:bg-[#DB4444]">Add to Cart</button>
                                 )}
                             </div>
                             <div className="-mt-15 w-50">

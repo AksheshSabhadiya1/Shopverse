@@ -60,7 +60,7 @@ export default function AllProduct() {
                     className="w-full h-40 object-contain mx-auto mb-4"
                   />
                   <h3 className="text-lg text-center font-semibold capitalize">{product.productname}</h3>
-                  <p className="mt-2 text-xl text-center font-bold text-yellow-400">₹{product.price}</p>
+                  <p className="mt-2 text-xl text-center font-bold text-yellow-400">₹{product.sellingprice}</p>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-2 mt-4">

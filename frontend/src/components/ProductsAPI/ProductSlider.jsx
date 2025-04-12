@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Clock from "../Clock/Clock";
 import { useQuery } from '@tanstack/react-query'
-import { fetchProducts } from "../../API/API";
+import { FetchProducts, FindProductById } from "../../API/API";
 import { RingLoader } from 'react-spinners';
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { Heart, Eye, ArrowRight, ArrowLeft } from 'lucide-react';
 
 
@@ -11,6 +11,7 @@ export default function ProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const sliderRef = useRef(null);
     const { pathname } = useLocation()
+    const nevigate = useNavigate()
     const path = pathname.split('/')[1]
 
 
@@ -20,8 +21,9 @@ export default function ProductSlider() {
 
     const { data, isError, isLoading, error } = useQuery({
         queryKey: ['products'],
-        queryFn: () => fetchProducts()
+        queryFn: () => FetchProducts()
     })
+
 
 
     if (isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
@@ -32,7 +34,7 @@ export default function ProductSlider() {
 
         <div>
             {
-                path !== 'product' &&
+                path !== 'products' &&
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
                     <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center md:text-left">
                         Flash Sales
@@ -69,7 +71,9 @@ export default function ProductSlider() {
                                     <Heart className="hover:text-red-500" />
                                 </div>
                                 <div className="relative left-44 -top-8 w-8 p-1.5" title="View details">
-                                    <Eye className="hover:text-blue-500" />
+                                    <button onClick={()=> nevigate(`/products/${product.id}`)}>
+                                        <Eye className="hover:text-blue-500" />
+                                    </button>
                                 </div>
                             </div>
                             <div className="h-50 w-full flex flex-col items-center">
@@ -79,7 +83,7 @@ export default function ProductSlider() {
                                     className="w-40 h-40 relative -top-10 object-contain"
                                 />
                                 {cartBtnVisible === product.id && (
-                                    <button className="w-full mt-2 bg-black relative -top-10 transition-all duration-300 ease-in-out text-white py-2 rounded-b hover:bg-red-600 hover:scale-105">
+                                    <button className="w-full mt-2 bg-black relative -top-10 transition-all duration-300 ease-in-out text-white py-2 rounded-b hover:bg-[#DB4444] hover:scale-105">
                                         Add to Cart
                                     </button>
                                 )}

@@ -17,26 +17,30 @@ const getSlugProduct = async(req, res)=>{
 const addProduct =  async(req, res)=>{
 
     try {
-        const {productname, price, description, category, rating, rate_count, stock_count, brand} = req.body
+        const {productname, originalprice, sellingprice, description, category, rating, rate_count, stock_count, brand, productcolor, productsize} = req.body
+        const size = JSON.parse(productsize)
+        const color = JSON.parse(productcolor)
         const slug = productname.toLowerCase().replaceAll(' ','_')
         const image = Base64.encode(`${req.uniqueNumber}-${req.file?.originalname}`)
 
-        await db.execute('INSERT INTO products (productname, price, description, category, image, rating, rate_count, stock_count, brand, slug) VALUES (?,?,?,?,?,?,?,?,?,?)' ,[productname, price, description, category, image, rating,  rate_count, stock_count, brand, slug])
+        await db.execute('INSERT INTO products (productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, productcolor, productsize) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,[productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, JSON.stringify(color), JSON.stringify(size)])
         return res.json("Product Succesfully Inserted")
         
     } catch (error) {
-        console.log("Error generated during product added");
+        console.log("Error generated during product added", error);
     }
 }
 
 const editProduct = async(req, res)=>{
     try {
-        const {productname, price, description, category, rating, rate_count, stock_count, brand} = req.body
+        const {productname, originalprice, sellingprice, description, category, rating, rate_count, stock_count, brand, productcolor, productsize} = req.body
+        const size = JSON.parse(productsize)
+        const color = JSON.parse(productcolor)
         const [[oldimage]] = await db.execute('SELECT image FROM products WHERE slug=?',[req.params.id])
         const image = req.file ? Base64.encode(`${req.uniqueNumber}-${req.file?.originalname}`) : oldimage.image
         const slug = productname.toLowerCase().replaceAll(' ','_')
 
-        await db.execute('UPDATE products SET productname=?, price=?, description=?, category=?, image=?, rating=?, rate_count=?, stock_count=?, brand=?, slug=? WHERE slug=? ' ,[productname, price, description, category, image, rating,  rate_count, stock_count, brand, slug, req.params.id])
+        await db.execute('UPDATE products SET productname=?, originalprice=?, sellingprice=?, description=?, category=?, image=?, rating=?, rate_count=?, stock_count=?, brand=?, slug=?, productcolor=?, productsize=? WHERE slug=? ' ,[productname, originalprice, sellingprice, description, category, image, rating,  rate_count, stock_count, brand, slug, JSON.stringify(color), JSON.stringify(size), req.params.id])
         return res.json("Product Succesfully Updated")
 
     } catch (error) {
