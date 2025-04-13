@@ -1,28 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect, useRef } from "react";
-import { ExploreProducts } from "../../API/API";
-import { RingLoader } from 'react-spinners';
-import { Heart, Eye, ShoppingCart } from 'lucide-react';
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { FetchProducts } from "../../API/API";
+import { RingLoader } from "react-spinners";
+import { Heart, Eye, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 
-
-export default function ExpolreProductSlider() {
+export default function AllProductsPage() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
-    const nevigate = useNavigate()
+    const nevigate = useNavigate();
 
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['exploreProduct'],
-        queryFn: () => ExploreProducts()
-    })
+        queryKey: ["exploreProduct"],
+        queryFn: () => FetchProducts(),
+    });
 
-
-    if (isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
-    if (isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
-
+    if (isLoading)
+        return (
+            <div className="flex justify-center items-center m-50">
+                <RingLoader color="#DB4444" />
+            </div>
+        );
+    if (isError)
+        return (
+            <div>
+                <h1>Error : {error.message || "Something Went Wrong!!"}</h1>
+            </div>
+        );
 
     return (
-        <div>
+        <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10">
             <div className="relative overflow-hidden">
                 <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 py-6">
                     {data?.map((product) => (
@@ -49,7 +56,7 @@ export default function ExpolreProductSlider() {
                                     className="w-55 h-33 relative -top-15 object-contain"
                                 />
                                 {cartBtnVisible === product.id && (
-                                    <button className="w-58 bg-black flex items-center justify-center relative left-4 -top-10 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444]">
+                                    <button className="w-58 bg-black flex items-center justify-center relative left-3 -top-10 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444]">
                                     <ShoppingCart className="me-2" />
                                     Add to Cart
                                     </button>

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductSlider from "../../components/ProductsAPI/ProductSlider";
 import CategorySlider from "../../components/ProductsAPI/CategorySlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
@@ -13,6 +13,7 @@ import UserDataContext from "../../context/UserData/UserDataContext";
 export default function Home() {
 
   const [isvisible, setIsVisible] = useState(false)
+  const nevigate = useNavigate()
 
   const handleScroll = () => {
     if (window.scrollY > 800) {
@@ -67,7 +68,7 @@ export default function Home() {
       <ProductSlider />
 
       <div className="mb-15 flex justify-center lg:mt-4">
-        <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 
       <div className="border-t border-gray-300">
@@ -93,7 +94,7 @@ export default function Home() {
             Best Selling Products
           </p>
           <div className="flex justify-center">
-            <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
           </div>
         </div>
       </div>
@@ -137,12 +138,12 @@ export default function Home() {
             Explore Our Products
           </p>
           <div className="flex justify-center">
-            <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
           </div>
         </div></div>
       <ExpolreProductSlider />
-      <div className="flex justify-center lg:mt-2">
-        <button className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+      <div className="flex justify-center lg:mt-5">
+        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 
 

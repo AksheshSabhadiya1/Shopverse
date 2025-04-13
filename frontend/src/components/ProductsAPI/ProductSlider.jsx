@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FetchProducts, FindProductById } from "../../API/API";
 import { RingLoader } from 'react-spinners';
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { Heart, Eye, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Heart, Eye, ArrowRight, ArrowLeft, ShoppingCart } from 'lucide-react';
 
 
 export default function ProductSlider() {
@@ -62,41 +62,57 @@ export default function ProductSlider() {
             <div className="relative overflow-hidden">
                 <div ref={sliderRef} className="flex gap-12 py-6 overflow-hidden">
                     {data?.map((product) => (
-                        <div key={product.id} className="bg-white rounded p-4 min-w-[250px] transition duration-300 ease-in-out" onMouseEnter={() => setCartBtnVisible(product.id)} onMouseLeave={() => setCartBtnVisible(null)}>
+                        <div
+                            key={product.id}
+                            className="bg-white/80 shadow-md hover:scale-110 duration-300 rounded p-4 min-w-[250px]"
+                            onMouseEnter={() => setCartBtnVisible(product.id)}
+                            onMouseLeave={() => setCartBtnVisible(null)}
+                        >
                             <div className="">
-                                <div className="relative -left-4 top-0 bg-[#DB4444] text-white rounded w-12 text-center p-1">
-                                    <p className="font-light">-{(((product.originalprice - product.sellingprice)/product.originalprice)*100).toFixed(0)}%</p>
-                                </div>
-                                <div className="relative left-44 -top-8 w-8 p-1.5" title="Add to wishlist">
+                                <div className="relative left-50 cursor-pointer -top-2 w-8 p-1.5">
                                     <Heart className="hover:text-red-500" />
                                 </div>
-                                <div className="relative left-44 -top-8 w-8 p-1.5" title="View details">
-                                    <button onClick={()=> nevigate(`/products/${product.id}`)}>
+                                <div className="relative left-50 -top-2 cursor-pointer w-8 p-1.5">
+                                    <button onClick={() => nevigate(`/products/${product.id}`)}>
                                         <Eye className="hover:text-blue-500" />
                                     </button>
                                 </div>
                             </div>
-                            <div className="h-50 w-full flex flex-col items-center">
+                            <div className="h-50 w-50 flex flex-col items-center">
                                 <img
                                     src={`http://localhost:5000/uploads/products/${product.image}`}
                                     alt={product.productname}
-                                    className="w-40 h-40 relative -top-10 object-contain"
+                                    className="w-55 h-33 relative -top-15 object-contain"
                                 />
                                 {cartBtnVisible === product.id && (
-                                    <button className="w-full mt-2 bg-black relative -top-10 transition-all duration-300 ease-in-out text-white py-2 rounded-b hover:bg-[#DB4444] hover:scale-105">
+                                    <button className="w-58 bg-black flex items-center justify-center relative left-2.5 -top-10 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444]">
+                                        <ShoppingCart className="me-2" />
                                         Add to Cart
                                     </button>
                                 )}
                             </div>
-
-                            <div className="-mt-6 w-50">
-                                <p className="font-semibold text-base truncate">{product.productname}</p>
-                                <p className="text-[#DB4444] font-bold text-base">₹{product.sellingprice} <span className="text-gray-500 line-through text-sm ml-2">₹{product.originalprice}</span></p>
-                                {
-                                    Array.from({ length: 5 }, (_, index) => (
-                                        <span key={index} className={index < product.rating ? "text-yellow-500" : "text-gray-500"}>★</span>
-                                    ))
-                                }<span className="text-base ml-2 font-semibold text-gray-400">({product.rate_count})</span>
+                            <div className="-mt-15 w-50">
+                                <p className="font-semibold text-base truncate">
+                                    {product.productname}
+                                </p>
+                                <p className="text-[#DB4444] font-bold text-base">
+                                    ₹{product.sellingprice} &nbsp;
+                                    {Array.from({ length: 5 }, (_, index) => (
+                                        <span
+                                            key={index}
+                                            className={
+                                                index < product.rating
+                                                    ? "text-yellow-500"
+                                                    : "text-gray-500"
+                                            }
+                                        >
+                                            ★
+                                        </span>
+                                    ))}
+                                    <span className="text-base font-semibold ml-2 text-gray-400">
+                                        ({product.rate_count})
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     ))}

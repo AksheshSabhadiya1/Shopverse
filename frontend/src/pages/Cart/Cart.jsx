@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CartData } from "../../API/API";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
+
 export default function Cart() {
     const queryClient = useQueryClient();
 
@@ -60,8 +61,8 @@ export default function Cart() {
                         </button>
                     </div>
                     <span className="text-[#DB4444] text-lg font-semibold">₹{getSubtotal(product)}</span>
-                    <button onClick={() => deleteProduct(product.id)} className="mx-auto p-2 rounded-full">
-                        <Trash2 className="hover:text-red-500" />
+                    <button onClick={() => deleteProduct(product.id)} className="mx-auto hover:text-red-500 border flex p-2 rounded-full">
+                        <Trash2 className=" me-2" /> Delete
                     </button>
                 </div>
             ))}
