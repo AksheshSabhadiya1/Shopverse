@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import SliderContext from "./Slidercontext";
+import SliderContext from "./SliderContext";
+
 
 const SliderContextProvider = ({children}) => {
 

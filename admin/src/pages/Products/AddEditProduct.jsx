@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import SliderContext from "../../context/Slidercontext";
-import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
@@ -10,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { Input } from "@mui/material";
+import SliderContext from "../../context/SliderData/SliderContext";
 
 
 

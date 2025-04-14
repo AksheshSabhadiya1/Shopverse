@@ -1,19 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import {
-    Menu,
-    X,
-    Heart,
-    ShoppingCart,
-    User,
-    Search,
-    User2,
-    ShoppingBag,
-    Star,
-    LogOutIcon,
-} from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon } from "lucide-react";
 import FilterContext from "../../context/FilterDropDown/FilterContext";
 import UserDataContext from "../../context/UserData/UserDataContext";
+import axios from "axios";
+
+
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -21,18 +13,16 @@ export default function Header() {
 
     const { filterMenu, setFilterMenu } = useContext(FilterContext);
     const { currentUser, setCurrentUser } = useContext(UserDataContext);
-
+    const navigate = useNavigate()
     const { pathname } = useLocation();
-    const path = pathname
-        .split("/")
-        .filter((x) => x)
-        .toString();
+    const path = pathname.split("/").filter(Boolean).toString();
 
-    const logoutUser = () => {
-        setCurrentUser(null);
-        setUserDropDown(false);
-        console.log("Logout Successfully");
-    };
+    const logoutUser = async() => {
+        await axios.get('http://localhost:5000/user/logout',{ withCredentials: true })
+        .then(() => setCurrentUser(null))
+        .catch(()=> console.log("Logout not Done"))
+        .finally(()=> {setUserDropDown(false),navigate('/')})
+    }
 
     useEffect(() => {
         const time = setTimeout(() => {

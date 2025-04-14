@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaBox, FaUsers } from "react-icons/fa";
-import SliderContext from "../../context/Slidercontext";
 import { NavLink } from "react-router-dom";
 import {useQuery} from '@tanstack/react-query'
 import { fetchAllProductData, fetchTotalUsers } from "../../API/API";
-import {RingLoader} from 'react-spinners'
+import SliderContext from "../../context/SliderData/SliderContext";
 
 
 

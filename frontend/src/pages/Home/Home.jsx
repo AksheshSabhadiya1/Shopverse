@@ -8,7 +8,7 @@ import FeatureProducts from "../../components/ProductsAPI/FeatureProducts";
 import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import FilterContext from "../../context/FilterDropDown/FilterContext";
 import {ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react'
-import UserDataContext from "../../context/UserData/UserDataContext";
+
 
 export default function Home() {
 
@@ -68,7 +68,7 @@ export default function Home() {
       <ProductSlider />
 
       <div className="mb-15 flex justify-center lg:mt-4">
-        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-black duration-300">View All Products</button>
       </div>
 
       <div className="border-t border-gray-300">

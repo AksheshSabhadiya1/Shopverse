@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import UserDataContext from "../../context/UserData/UserDataContext";
-
+import Cookies from 'js-cookie';
 
 export default function Signin(){
 
@@ -25,11 +25,9 @@ export default function Signin(){
 
         const validateUser = async(data) => {
             try {
-                const result =await axios.post('http://localhost:5000/signin', data, {
-                    withCredentials: true,
-                })
-                console.log(result.data[0]);
-                result.data ? setCurrentUser(result.data[0]) : null
+                await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
+                const {data: result} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
+                result ? setCurrentUser(result) : null
                 nevigate('/')
             } catch (error) {
                 console.error("Signin failed", error);
@@ -39,7 +37,7 @@ export default function Signin(){
 
 
 
-  return (
+return (
     <div className="flex flex-col md:flex-row h-screen items-center -mt-10 justify-center px-4 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
                 <img

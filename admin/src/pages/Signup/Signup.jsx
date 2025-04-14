@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import SliderContext from "../../context/Slidercontext";
+import SliderContext from "../../context/SliderData/SliderContext";
 import axios from "axios";
 
 export default function Signup() {

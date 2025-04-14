@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import SliderContext from "../../context/Slidercontext";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductData } from "../../API/API";
+import SliderContext from "../../context/SliderData/SliderContext";
 
 
 export default function ProductDetails() {

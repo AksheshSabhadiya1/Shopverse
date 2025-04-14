@@ -1,26 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useLocation, Link } from "react-router-dom";
+import { NavLink, useLocation, Link, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { LogOut, Menu, User, X } from "lucide-react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import SliderContext from "../../context/Slidercontext";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAdminData } from "../../API/API";
-
+import SliderContext from "../../context/SliderData/SliderContext";
+import AdminDataContext from "../../context/AdminData/AdminDataContext";
+import axios from "axios";
 
 export default function Header() {
     const { sliderOpen, setSliderOpen } = useContext(SliderContext);
     const [adminDropDown, setAdminDropDown] = useState(false)
     const { pathname } = useLocation();
-    const path = pathname.split("/").filter(Boolean)[1];
+    const navigate = useNavigate()
+    const path = pathname.split("/").filter(Boolean)[1]
 
+    const {currentAdmin, setCurrentAdmin} = useContext(AdminDataContext)
 
-    const { data: adminData, isError, isLoading } = useQuery({
-        queryKey: ["adminData"],
-        queryFn: () => fetchAdminData()
-    })
-
-    if(isError) return <div><h1> Error : Admin Not Found </h1></div>
+    const logoutAdmin = async() => {
+        await axios.get('http://localhost:5000/admin/logout',{ withCredentials: true })
+        .then(() => setCurrentAdmin(null))
+        .catch(()=> console.log("Logout not Done"))
+        .finally(()=> {setAdminDropDown(false), navigate('/admin/signin')} )
+    }
 
 
     return (
@@ -93,23 +94,23 @@ export default function Header() {
                                         <User className="text-white" />
                                     </button>
                                 </div>
-
+                                {
+                                    currentAdmin &&
                                 <div
                                     className={`absolute right-0 md:right-0 top-12 w-28 sm:w-46 md:w-54 bg-white text-black divide-y divide-gray-100 rounded shadow-lg transition-all duration-300 ${adminDropDown ? "block" : "hidden"
                                         }`}
                                 >
                                     <div className="px-4 py-3 text-sm">
-                                        <div className="font-semibold">{adminData && adminData.firstname} {adminData && adminData.lastname}</div>
-                                        <div className="font-medium truncate text-gray-500">{adminData && adminData.email}</div>
+                                        <div className="font-semibold">{currentAdmin.firstname} {currentAdmin.lastname}</div>
+                                        <div className="font-medium truncate text-gray-500">{currentAdmin.email}</div>
                                     </div>
                                     <div className="mt-auto">
-                                        <Link to="/admin/signin">
-                                            <button className="w-full flex items-center gap-4 px-4 py-3 bg-red-500 hover:bg-red-700 hover:text-white rounded-b transition-all">
+                                        <button onClick={()=> logoutAdmin()} className="w-full cursor-pointer flex items-center gap-4 px-4 py-3 bg-red-500 hover:bg-red-700 hover:text-white rounded-b transition-all">
                                                 <LogOut className="sidebar-icon" /> <span>Logout</span>
-                                            </button>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
+                                }
                             </div>
                         )}
                     </nav>

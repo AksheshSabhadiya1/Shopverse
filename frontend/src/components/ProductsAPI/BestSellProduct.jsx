@@ -43,24 +43,28 @@ export default function BestSellProduct() {
                                 </button>
                             </div>
                         </div>
-                        <div className="h-50 w-50 flex flex-col items-center">
+                        
+                        <div className="h-50 w-50 flex flex-col transition-all duration-500 ease-in-out items-center">
                             <img
                                 src={`http://localhost:5000/uploads/products/${product.image}`}
                                 alt={product.productname}
                                 className="w-55 h-33 relative -top-15 object-contain"
                             />
                             {
-                                path === 'wishlist' && <button className="w-58 bg-black relative flex justify-center items-center py-2 left-3 -top-10 text-white cursor-pointer rounded hover:bg-[#DB4444]">
-                                <ShoppingCart className="me-2" />
+                                path === 'wishlist' && <button
+                                className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out opacity-100 -top-10" `}
+                            > <ShoppingCart className="me-2 duration-300" />
                                 Add to Cart
                             </button>
                             }
-                            {(cartBtnVisible === product.id && path !== 'wishlist') && (
-                                <button className="w-58 bg-black flex items-center justify-center relative left-4 -top-10 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444]">
-                                    <ShoppingCart className="me-2" />
-                                    Add to Cart
-                                </button>
-                            )}
+
+                            <button
+                                className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out
+                                                            ${cartBtnVisible === product.id ? "opacity-100 -top-10" : "opacity-0 -top-8 pointer-events-none"}
+                                                            `}
+                            > <ShoppingCart className="me-2 duration-300" />
+                                Add to Cart
+                            </button>
                         </div>
                         <div className="-mt-12 w-50">
                             <p className="font-semibold text-base truncate">{product.productname}</p>

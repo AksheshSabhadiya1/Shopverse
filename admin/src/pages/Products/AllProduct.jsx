@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import SliderContext from "../../context/Slidercontext";
 import { Trash2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllProductData } from "../../API/API";
+import SliderContext from "../../context/SliderData/SliderContext";
 
 
 

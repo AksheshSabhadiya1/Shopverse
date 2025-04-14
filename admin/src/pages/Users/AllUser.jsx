@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import SliderContext from "../../context/Slidercontext";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import SliderContext from "../../context/SliderData/SliderContext";
 
 
 

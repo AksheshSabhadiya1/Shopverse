@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import SliderContext from "../../context/Slidercontext";
+import SliderContext from "../../context/SliderData/SliderContext";
 import axios from 'axios';
+import AdminDataContext from "../../context/AdminData/AdminDataContext";
 
 export default function Signin() {
     const { sliderOpen, setSliderOpen } = useContext(SliderContext);
@@ -19,12 +20,15 @@ export default function Signin() {
     const { register, handleSubmit, formState, trigger, reset } = form;
     const { errors } = formState;
     const navigate = useNavigate();
+    const {setCurrentAdmin} = useContext(AdminDataContext)
 
     const validateAdmin = async (data) => {
         try {
             await axios.post('http://localhost:5000/admin/signin', data, {
                 withCredentials: true,
             });
+            const {data: result} = await axios.get('http://localhost:5000/admin/currentAdmin',{withCredentials:true})
+            result ? setCurrentAdmin(result) : null
             navigate('/admin');
         } catch (error) {
             console.error("Signin failed", error);

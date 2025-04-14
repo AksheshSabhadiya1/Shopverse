@@ -49,18 +49,20 @@ export default function AllProductsPage() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="h-50 w-50 flex flex-col items-center">
+                            <div className="h-50 w-50 flex flex-col transition-all duration-500 ease-in-out items-center">
                                 <img
                                     src={`http://localhost:5000/uploads/products/${product.image}`}
                                     alt={product.productname}
                                     className="w-55 h-33 relative -top-15 object-contain"
                                 />
-                                {cartBtnVisible === product.id && (
-                                    <button className="w-58 bg-black flex items-center justify-center relative left-3 -top-10 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444]">
-                                    <ShoppingCart className="me-2" />
+
+                                <button
+                                    className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out
+                                                                ${cartBtnVisible === product.id ? "opacity-100 -top-10" : "opacity-0 -top-8 pointer-events-none"}
+                                                                `}
+                                > <ShoppingCart className="me-2 duration-300" />
                                     Add to Cart
-                                    </button>
-                                )}
+                                </button>
                             </div>
                             <div className="-mt-15 w-50">
                                 <p className="font-semibold text-base truncate">
