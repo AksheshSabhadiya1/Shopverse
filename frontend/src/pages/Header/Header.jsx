@@ -4,6 +4,7 @@ import {Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, Lo
 import FilterContext from "../../context/FilterDropDown/FilterContext";
 import UserDataContext from "../../context/UserData/UserDataContext";
 import axios from "axios";
+import CartContext from "../../context/Cart/CartContextProvider";
 
 
 
@@ -13,16 +14,20 @@ export default function Header() {
 
     const { filterMenu, setFilterMenu } = useContext(FilterContext);
     const { currentUser, setCurrentUser } = useContext(UserDataContext);
+    const {cartItem, setCartItem, setSessionItem, addToCart, sessionItem} = useContext(CartContext)
     const navigate = useNavigate()
     const { pathname } = useLocation();
     const path = pathname.split("/").filter(Boolean).toString();
+    const sessionData = JSON.parse(sessionStorage.getItem('cartitem'))
+    const currentCart = cartItem.length === 0 ? sessionItem : cartItem
 
     const logoutUser = async() => {
         await axios.get('http://localhost:5000/user/logout',{ withCredentials: true })
         .then(() => setCurrentUser(null))
         .catch(()=> console.log("Logout not Done"))
-        .finally(()=> {setUserDropDown(false),navigate('/')})
+        .finally(()=> {setUserDropDown(false),setCartItem([]),setSessionItem([]), sessionStorage.removeItem('cartitem'),navigate('/')})
     }
+
 
     useEffect(() => {
         const time = setTimeout(() => {
@@ -161,7 +166,7 @@ export default function Header() {
                                     <Link to="/cart" className="relative flex items-center">
                                         <ShoppingCart className="hover:text-blue-500 w-6 h-6 sm:w-7 sm:h-7" />
                                         <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                            0
+                                            {currentCart.length}
                                         </span>
                                     </Link>
                                 </div>

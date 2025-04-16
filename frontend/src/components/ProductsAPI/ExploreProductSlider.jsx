@@ -1,15 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { ExploreProducts } from "../../API/API";
 import { RingLoader } from 'react-spinners';
 import { Heart, Eye, ShoppingCart } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
+import CartContext from "../../context/Cart/CartContextProvider";
 
 
 
 export default function ExpolreProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const nevigate = useNavigate()
+
+    const {addToCart} = useContext(CartContext)
+
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['exploreProduct'],
@@ -49,7 +53,7 @@ export default function ExpolreProductSlider() {
                                     className="w-55 h-33 relative -top-15 object-contain"
                                 />
 
-                                <button
+                                <button onClick={()=> addToCart(product)}
                                     className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out
                                                                 ${cartBtnVisible === product.id ? "opacity-100 -top-10" : "opacity-0 -top-8 pointer-events-none"}
                                                                 `}

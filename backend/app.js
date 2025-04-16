@@ -12,6 +12,7 @@ const productRouter = require('./routes/user/productRouter')
 const { checkAuthCookie, checkAuthAdminCookie } = require('./middleware/authToken')
 const cookieParser = require('cookie-parser')
 const db = require('./config/database')
+const cartRouter = require('./routes/user/cartRouter')
 
 const corsOptions = {
     origin: ['http://localhost:5173', 'http://localhost:5174'],
@@ -31,6 +32,7 @@ app.use('/admin/users', adminUserRouter)
 app.use('/admin/products', adminProductRouter)
 app.use(userRouter)
 app.use(productRouter)
+app.use(cartRouter)
 
 
 app.listen(port, ()=>{

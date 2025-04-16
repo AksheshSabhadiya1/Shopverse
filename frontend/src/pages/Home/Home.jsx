@@ -13,6 +13,7 @@ import {ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react'
 export default function Home() {
 
   const [isvisible, setIsVisible] = useState(false)
+  const {filterMenu} = useContext(FilterContext)
   const nevigate = useNavigate()
 
   const handleScroll = () => {
@@ -37,7 +38,6 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   })
 
-  const {filterMenu} = useContext(FilterContext)
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10" >

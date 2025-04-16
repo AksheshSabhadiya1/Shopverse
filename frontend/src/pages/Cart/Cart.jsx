@@ -1,42 +1,62 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"; 
-import React, { useState } from "react";
-import { CartData } from "../../API/API";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import CartContext from "../../context/Cart/CartContextProvider";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Cart() {
-    const queryClient = useQueryClient();
 
-    const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["cartData"],
-        queryFn: () => CartData(),
-    });
+    const { cartItem, clearCart, setSessionItem, sessionItem, updateCart, removeFromCart } = useContext(CartContext)
+    const navigate = useNavigate()
+    const currentCart = cartItem.length === 0 ? sessionItem : cartItem  
 
-    const [quantities, setQuantities] = useState({});
+    const handleQuantityChange = async (id, value) => {
+        try {
+            if(cartItem.length > 0){
+                updateCart(id, value)
+            }
+            console.log("id:",id);
+            const updatedCart = sessionItem.map(product => {
+                if (product.id === id) {
+                    return { ...product, quantity: Math.max(product.quantity + value, 1) }
+                }
+                return product
+            })
+            setSessionItem(updatedCart);
+            sessionStorage.setItem('cartitem', JSON.stringify(updatedCart))
+            console.log("Quantity Update");
+        } catch (error) {
+            console.log("Quantity Not Update");
+        }
+    }
+    
+    const getTotal = () => {
+        if(cartItem.length > 0){
+            return cartItem?.reduce((count, product) => {
+                return count + Math.max(product.quantity || 1) * product.sellingprice
+            }, 0)
+        }
 
-    const handleQuantityChange = (id, delta) => {
-        setQuantities(prev => ({
-            ...prev,
-            [id]: Math.max((prev[id] || 1) + delta, 1)
-        }));
-    };
+        if(sessionItem.length > 0){
+            return sessionItem?.reduce((count, product) => {
+                return count + Math.max(product.quantity || 1) * product.sellingprice
+            }, 0)
+        }
+    }
+    
 
-    const getQuantity = (id) => quantities[id] || 1;
+    return currentCart.length > 0 ? (
+        <div className="px-4 py-6 sm:px-6 lg:px-8 lg:ml-30 lg:mr-30 lg:mb-10">
+            <div className="flex justify-between items-center">
+                <button onClick={() => navigate('/products')} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
+                    Contine Shopping
+                </button>
+                <button onClick={() => clearCart()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
+                    Clear Cart
+                </button>
+            </div>
 
-    const getSubtotal = (product) => getQuantity(product.id) * product.sellingprice;
-
-    const total = data?.reduce((acc, product) => acc + getSubtotal(product), 0) || 0;
-
-    const deleteProduct = (id) => {
-        // Here you'd call your delete API endpoint
-        console.log("Delete product with id:", id);
-        // Example: delete from backend and refetch cart data
-        // await api.delete(`/cart/${id}`);
-        queryClient.invalidateQueries(["cartData"]);
-    };
-
-    return (
-        <div className="px-4 py-6 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 sm:grid-cols-5 font-bold text-center border-b-2 py-4 border-gray-300 text-lg">
                 <span>Product</span>
                 <span>Price</span>
@@ -45,27 +65,31 @@ export default function Cart() {
                 <span>Action</span>
             </div>
 
-            {data?.map(product => (
-                <div key={product.id} className="grid grid-cols-2 sm:grid-cols-5 items-center text-center py-6 border-b border-gray-200">
-                    <div className="flex justify-center">
+            {currentCart.length > 0 && currentCart?.map(product => (
+                <div key={product.id} className="grid grid-cols-2 sm:grid-cols-5 items-center text-center py-2 border-b border-gray-200">
+                    <div className="flex justify-start items-center space-x-4">
                         <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.productname} className="w-16 h-16 object-contain" />
+                        <div className="text-start">
+                            <span>{product.productname}</span>
+                        </div>
                     </div>
                     <span className="text-lg">₹{product.sellingprice}</span>
                     <div className="flex justify-center items-center space-x-2">
-                        <button onClick={() => handleQuantityChange(product.id, -1)} className="p-1 rounded bg-gray-200 hover:bg-[#DB4444] hover:text-white">
-                            <Minus  />
+                        <button onClick={() => handleQuantityChange(cartItem.length === 0 ? product.id : product.product_id, -1)} disabled={product.quantity === 1} className="p-1 rounded-full bg-gray-200 hover:bg-[#DB4444] hover:text-white">
+                            <Minus />
                         </button>
-                        <span>{getQuantity(product.id)}</span>
-                        <button onClick={() => handleQuantityChange(product.id, 1)} className="p-1 rounded bg-gray-200 hover:bg-[#DB4444] hover:text-white">
-                            <Plus  />
+                        <span>{product.quantity || 1}</span>
+                        <button onClick={() => handleQuantityChange(cartItem.length === 0 ? product.id : product.product_id , 1)} disabled={product.quantity === product.stock_count} className="p-1 rounded-full bg-gray-200 hover:bg-[#DB4444] hover:text-white">
+                            <Plus />
                         </button>
                     </div>
-                    <span className="text-[#DB4444] text-lg font-semibold">₹{getSubtotal(product)}</span>
-                    <button onClick={() => deleteProduct(product.id)} className="mx-auto hover:text-red-500 border flex p-2 rounded-full">
+                    <span className="text-[#DB4444] text-lg font-semibold">₹{product.sellingprice * product.quantity}</span>
+                    <button onClick={() => removeFromCart(cartItem.length === 0 ? product.id : product.product_id)} className="mx-auto hover:text-red-500 border flex p-2 rounded-full">
                         <Trash2 className=" me-2" /> Delete
                     </button>
                 </div>
-            ))}
+            ))
+            }
 
 
             <div className="flex flex-col lg:flex-row justify-between items-start mt-12 gap-6">
@@ -85,7 +109,7 @@ export default function Cart() {
                     <h3 className="text-xl font-semibold border-b pb-2">Cart Total</h3>
                     <div className="flex justify-between py-2">
                         <span>Subtotal:</span>
-                        <span>₹{total}</span>
+                        <span>₹{getTotal()}</span>
                     </div>
                     <div className="flex justify-between py-2">
                         <span>Shipping:</span>
@@ -93,7 +117,7 @@ export default function Cart() {
                     </div>
                     <div className="flex justify-between border-t pt-3 mt-3 text-lg font-semibold">
                         <span>Total:</span>
-                        <span className="text-[#DB4444]">₹{total}</span>
+                        <span className="text-[#DB4444]">₹{getTotal()}</span>
                     </div>
 
                     <button className="w-full mt-4 px-6 py-3 bg-[#DB4444] text-white rounded hover:bg-red-600 transition">
@@ -102,5 +126,10 @@ export default function Cart() {
                 </div>
             </div>
         </div>
-    );
+    )
+: <div className="flex flex-col justify-center items-center">
+    <img src="/images/empty cart image.png" alt="Empty cart" className="w-250 transition-all duration-500" />
+    <button onClick={() => navigate('/products')} className=" mb-4 px-6 py-3 bg-[#DB4444] cursor-pointer text-white rounded hover:bg-red-600 transition">Contine Shopping
+    </button>
+</div>
 }

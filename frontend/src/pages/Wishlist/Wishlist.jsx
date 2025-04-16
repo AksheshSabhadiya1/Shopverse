@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { RingLoader } from 'react-spinners';
 import { wishlist } from "../../API/API";
-import ExpolreProductSlider from "../../components/ProductsAPI/ExploreProductSlider";
 import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";

@@ -17,32 +17,42 @@ export const FetchProducts = async () => {
 }
 
 
+
 export const BestProduct = async () => {
-    const res = await api.get('/products')
-    return res.data.filter(item => item.rate_count >= 300).sort((a, b) => b.rate_count - a.rate_count).slice(0,4);
+    try {
+        const res = await api.get('/products')
+        return res.data.filter(item => item.rate_count >= 300).sort((a, b) => b.rate_count - a.rate_count).slice(0,4);
+    } catch (error) {
+        console.log("BestProduct Not Found", error);
+    }
 }
 
 
 export const ExploreProducts = async () => {
-    const res = await api.get('/products')
-    return res.data.reverse().slice(0,8)
+    try {
+        const res = await api.get('/products')
+        return res.data.reverse().slice(0,8)
+    } catch (error) {
+        console.log("Explore Products Not Found", error);
+    }
 }
-
 
 
 export const wishlist = async() =>{
-    const res = await api.get('/products')
-    return res.data.slice(0,4)
-}
-
-
-export const CartData = async () => {
-    const res = await api.get('/products')
-    return res.data.slice(0,2)
+    try {
+        const res = await api.get('/products')
+        return res.data.slice(0,4)
+    } catch (error) {
+        console.log("Wishlist Not Found", error);
+    }
 }
 
 
 export const FindProductById = async (id) => {
-    const {data} = await api.get(`/products/${id}`)
-    return data
+    try {
+        const {data} = await api.get(`/products/${id}`)
+        return data
+    } catch (error) {
+        console.log("Product Not Found", error);
+    }
 }

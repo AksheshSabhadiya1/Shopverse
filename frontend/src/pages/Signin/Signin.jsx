@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import UserDataContext from "../../context/UserData/UserDataContext";
-import Cookies from 'js-cookie';
+import CartContext from "../../context/Cart/CartContextProvider";
+
 
 export default function Signin(){
 
@@ -21,13 +22,19 @@ export default function Signin(){
         const { errors } = formState
         const nevigate = useNavigate()
         const {setCurrentUser} = useContext(UserDataContext)
+        const {setCartItem, addToCart} = useContext(CartContext)
+        const sessionData = JSON.parse(sessionStorage.getItem('cartitem'))
 
 
         const validateUser = async(data) => {
             try {
                 await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
-                const {data: result} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
-                result ? setCurrentUser(result) : null
+                .finally(()=> sessionStorage.removeItem('cartitem') )
+                const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
+                const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
+                userData ? setCurrentUser(userData) : null
+                cartData ? setCartItem(cartData) : []
+                sesstionDataAddToCart()
                 nevigate('/')
             } catch (error) {
                 console.error("Signin failed", error);
@@ -35,9 +42,14 @@ export default function Signin(){
             }
         }
 
+        const sesstionDataAddToCart = () => {
+            sessionData.map((product)=> addToCart(product))
+            sessionStorage.removeItem('cartitem')
+        }
 
 
-return (
+
+    return (
     <div className="flex flex-col md:flex-row h-screen items-center -mt-10 justify-center px-4 md:px-12 lg:px-24">
             <div className="hidden md:block md:w-1/2 lg:w-2/5">
                 <img

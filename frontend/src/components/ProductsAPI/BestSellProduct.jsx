@@ -1,16 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { BestProduct } from '../../API/API'
 import { RingLoader } from 'react-spinners';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Heart, Eye, ShoppingCart } from "lucide-react";
+import CartContext from "../../context/Cart/CartContextProvider";
 
 
 export default function BestSellProduct() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const { pathname } = useLocation()
     const nevigate = useNavigate()
-    const path = pathname.split('/').filter(x => x).toString()
+    const path = pathname.split('/').filter(Boolean).toString()
+
+    const {addToCart} = useContext(CartContext)
+
 
     const { data, isError, isLoading, error } = useQuery({
         queryKey: ['BestProducts'],
@@ -52,13 +56,14 @@ export default function BestSellProduct() {
                             />
                             {
                                 path === 'wishlist' && <button
+                                onClick={()=> addToCart(product)}
                                 className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out opacity-100 -top-10" `}
                             > <ShoppingCart className="me-2 duration-300" />
                                 Add to Cart
                             </button>
                             }
 
-                            <button
+                            <button onClick={()=> addToCart(product)}
                                 className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out
                                                             ${cartBtnVisible === product.id ? "opacity-100 -top-10" : "opacity-0 -top-8 pointer-events-none"}
                                                             `}

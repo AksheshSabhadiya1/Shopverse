@@ -12,7 +12,7 @@ const UserDataContextProvider = ({children}) => {
 
         if(token){
             axios.get('http://localhost:5000/user',{ withCredentials: true })
-            .then(res => setCurrentUser(res.data))
+            .then(res => setCurrentUser(res.data || []))
             .catch(()=> setCurrentUser(null))
         }
     },[])

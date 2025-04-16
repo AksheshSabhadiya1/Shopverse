@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FindProductById } from "../../API/API";
 import { useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ProductSlider from "../../components/ProductsAPI/ProductSlider";
 import { Heart, Minus, Plus } from "lucide-react";
+import CartContext from "../../context/Cart/CartContextProvider";
 
 export default function ProductDetails() {
     const [quantity, setQuantity] = useState(1);
@@ -36,7 +37,6 @@ export default function ProductDetails() {
                                 <Heart className="hover:text-red-500"/>
                             </div>
                             <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.produtname} className="w-full max-h-[500px] object-contain" />
-                            
                         </div>
                         <div className="flex gap-4 justify-center mt-5 order-2">
                             {[1, 2, 3, 4].map((item) => (

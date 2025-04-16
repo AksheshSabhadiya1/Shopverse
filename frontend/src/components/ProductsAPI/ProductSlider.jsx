@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Clock from "../Clock/Clock";
 import { useQuery } from "@tanstack/react-query";
 import { FetchProducts, FindProductById } from "../../API/API";
 import { RingLoader } from "react-spinners";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { Heart, Eye, ArrowRight, ArrowLeft, ShoppingCart } from "lucide-react";
+import CartContext from "../../context/Cart/CartContextProvider";
 
 export default function ProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
@@ -12,6 +13,8 @@ export default function ProductSlider() {
     const { pathname } = useLocation();
     const nevigate = useNavigate();
     const path = pathname.split("/")[1];
+    const {addToCart} = useContext(CartContext)
+
 
     const ProductSliderScrollLeft = () =>
         sliderRef.current?.scrollBy({ left: -300, behavior: "smooth" });
@@ -88,7 +91,7 @@ export default function ProductSlider() {
                                     className="w-55 h-33 relative -top-15 object-contain"
                                 />
 
-                                <button
+                                <button onClick={()=> addToCart(product)}
                                     className={`w-58 bg-black flex items-center justify-center relative left-2.5 text-white py-2 cursor-pointer rounded hover:bg-[#DB4444] transition-all duration-500 ease-in-out
                                     ${cartBtnVisible === product.id ? "opacity-100 -top-10" : "opacity-0 -top-8 pointer-events-none" }
                                     `}
