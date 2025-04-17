@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
@@ -9,7 +9,8 @@ export default function Signup() {
         defaultValues: {
             firstname: '',
             lastname: '',
-            email_phone: '',
+            email: '',
+            mobile: '',
             password: '',
         },
         mode: 'all',
@@ -29,6 +30,13 @@ export default function Signup() {
             console.log("Signup failed");
         }
     }
+
+    useEffect(()=>{
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+    },[])
 
     return (
         <div className="flex flex-col md:flex-row h-screen items-center justify-center -my-10 px-6 md:px-12 lg:px-24">

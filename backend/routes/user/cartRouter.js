@@ -16,8 +16,8 @@ cartRouter.get('/cart', async(req, res)=>{
 
 cartRouter.post('/cart/addToCart', async(req, res)=>{   
     
-    const {id} = req.body
     if(req.user){
+        const {id} = req.body
         const [cartItem] = await db.execute('SELECT * FROM cart WHERE user_id=? AND product_id=?',[req.user.id,id])
 
         if(cartItem.length > 0){
@@ -48,6 +48,13 @@ cartRouter.get('/cart/remove/:id', async(req, res)=>{
     }
 
     return res.json()
+})
+
+cartRouter.get('/cart/clearCart', async(req, res)=>{
+    if(req.user){
+        await db.execute('DELETE FROM cart WHERE user_id=?',[req.user.id])
+        return res.send("Deleted All")
+    }
 })
 
 

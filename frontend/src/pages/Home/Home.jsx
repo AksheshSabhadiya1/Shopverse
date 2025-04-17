@@ -38,6 +38,13 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   })
 
+  useEffect(()=>{
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+  },[])
+
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10" >
@@ -46,10 +53,10 @@ export default function Home() {
           <div className="text-center sm:text-left">
             <div className="flex items-center text-center py-2">
               <img src="/icons/apple_logo 1.png" alt="Apple Logo" className="w-10 sm:w-12" />
-              <p className="ml-4 text-sm sm:text-base">iPhone 14 Series</p>
+              <p className="ml-4 text-sm sm:text-base">iPhone 16 Series</p>
             </div>
             <p className="text-3xl sm:text-4xl lg:text-5xl font-semibold">Up to 10% off Voucher</p>
-            <Link to="/" className="mt-4 flex items-center group">
+            <Link to="/products/apple_iphone_16" className="mt-4 flex items-center group">
               <span className="ml-2 underline group-hover:text-gray-300">Shop Now</span>
               <span className="group-hover:translate-x-1"><ArrowRight /></span>
             </Link>

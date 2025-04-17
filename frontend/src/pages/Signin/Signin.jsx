@@ -25,28 +25,34 @@ export default function Signin(){
         const {setCartItem, addToCart} = useContext(CartContext)
         const sessionData = JSON.parse(sessionStorage.getItem('cartitem'))
 
+        const sesstionDataAddToCart = () => {
+            if(sessionData){
+                sessionData.map((product)=> addToCart(product))
+                sessionStorage.removeItem('cartitem')
+            }
+        }
 
         const validateUser = async(data) => {
             try {
                 await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
-                .finally(()=> sessionStorage.removeItem('cartitem') )
+                .finally(()=> {sesstionDataAddToCart(), sessionStorage.removeItem('cartitem')} )
                 const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
                 const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
                 userData ? setCurrentUser(userData) : null
                 cartData ? setCartItem(cartData) : []
-                sesstionDataAddToCart()
                 nevigate('/')
             } catch (error) {
                 console.error("Signin failed", error);
                 reset();
             }
         }
-
-        const sesstionDataAddToCart = () => {
-            sessionData.map((product)=> addToCart(product))
-            sessionStorage.removeItem('cartitem')
-        }
-
+    
+        useEffect(()=>{
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                })
+            },[])
 
 
     return (

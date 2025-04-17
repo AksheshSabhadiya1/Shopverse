@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -13,9 +13,15 @@ export default function About() {
     { name: "Robert Downey", position: "CEO & Co-founder", image: "/images/person-2.png" },
   ];
 
+  useEffect(()=>{
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+  },[])
+
   return (
     <div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="flex flex-col lg:flex-row items-center justify-end gap-4 lg:gap-10">
           <div className="w-full lg:w-1/2 xl:w-[45%]">

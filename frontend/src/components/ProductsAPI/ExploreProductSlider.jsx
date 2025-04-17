@@ -20,6 +20,13 @@ export default function ExpolreProductSlider() {
         queryFn: () => ExploreProducts()
     })
 
+    useEffect(()=>{
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        },[])
+
 
     if (isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
     if (isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
@@ -41,7 +48,7 @@ export default function ExpolreProductSlider() {
                                     <Heart className="hover:text-red-500" />
                                 </div>
                                 <div className="relative left-50 -top-2 cursor-pointer w-8 p-1.5">
-                                    <button onClick={() => nevigate(`/products/${product.id}`)}>
+                                    <button onClick={() => nevigate(`/products/${product.slug}`)}>
                                         <Eye className="hover:text-blue-500" />
                                     </button>
                                 </div>

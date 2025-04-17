@@ -109,8 +109,8 @@ export default function AddEditProduct() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        });
-        console.log("Product Updated Successfully");
+        }).then(res => console.log("Product Updated Successfully"))
+        
       } else {
         formData.append("image", data.image[0]);
         await axios.post("http://localhost:5000/admin/products/addproduct", formData, {
@@ -118,8 +118,8 @@ export default function AddEditProduct() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        });
-        console.log("New Product added Successfully");
+        }).then(res => console.log("New Product added Successfully"))
+        
       }
       navigate("/admin/products");
     } catch (error) {

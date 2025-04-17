@@ -11,7 +11,7 @@ productRouter.get('/products', async(req, res)=>{
 })
 
 productRouter.get('/products/:id', async(req, res)=>{
-    const [products] = await db.execute('SELECT * FROM products WHERE id=?',[req.params.id])
+    const [products] = await db.execute('SELECT * FROM products WHERE slug=?',[req.params.id])
     const result = products.map(product => ({...product, image: Base64.decode(product.image)}))
     return res.json(result)
 })

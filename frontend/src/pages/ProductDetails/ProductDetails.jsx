@@ -1,18 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FindProductById } from "../../API/API";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ProductSlider from "../../components/ProductsAPI/ProductSlider";
-import { Heart, Minus, Plus } from "lucide-react";
+import { CircleCheck, CircleX, Heart, Minus, Plus } from "lucide-react";
+import { SendHorizontal } from 'lucide-react';
+import axios from "axios";
 import CartContext from "../../context/Cart/CartContextProvider";
+
 
 export default function ProductDetails() {
     const [quantity, setQuantity] = useState(1);
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedSize, setSelectedSize] = useState("");
-    const [pincodeBox, SetPincodeBox] = useState(false)
+    const [pincodeFound, SetPincodeFound] = useState('')
     const {id} = useParams()
+    const {addToCart} = useContext(CartContext)
 
 
     const { data } = useQuery({
@@ -20,12 +24,27 @@ export default function ProductDetails() {
         queryFn: () => FindProductById(id)
     });
 
+    const checkValidPincode = async() => {
+        const pincode = document.getElementById('pincode').value
+        const {data} = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`)
+
+        const result = data[0].Status
+        SetPincodeFound(result)
+    }
+
     const handleQuantityChange = (value) => {
         const newQuantity = quantity + value;
         if (newQuantity >= 1) {
             setQuantity(newQuantity);
         }
     };
+
+    useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    },[])
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -50,8 +69,9 @@ export default function ProductDetails() {
 
                     <div className="lg:w-1/3 space-y-6 order-3">
                         <div className="space-y-4">
-                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{product.productname}</h1>
-
+                            <h1 className="text-2xl md:text-3xl uppercase font-bold text-gray-900">{product.productname}</h1>
+                            <p className="text-gray-600">{product.description}</p>
+                            <p className="text-2xl font-semibold text-gray-900">₹{product.sellingprice * quantity}</p>
                             <div className="flex items-center">
                                 <div className="flex">
                                     {Array.from({ length: 5 }, (_, index) => (
@@ -68,11 +88,7 @@ export default function ProductDetails() {
                                     product.stock_count > 0 ? <span className="text-green-500 ml-4">In Stock</span>: <span className="text-red-500 ml-4">Out of Stock</span>
                                 }
                             </div>
-
-                            <p className="text-2xl font-semibold text-gray-900">₹{product.sellingprice * quantity}</p>
-                            <p className="text-gray-600">{product.description}</p>
                         </div>
-
                         
                         {
                             product.productcolor && 
@@ -145,7 +161,7 @@ export default function ProductDetails() {
                                 </button>
                             </div>
 
-                            <button className="md:flex-1 bg-[#DB4444] sm:flex-1 text-white py-2 px-6 rounded hover:bg-[#c33a3a] transition-colors">
+                            <button onClick={() => addToCart(product)} className="md:flex-1 bg-[#DB4444] sm:flex-1 text-white py-2 px-6 rounded hover:bg-[#c33a3a] transition-colors">
                                 Buy Now
                             </button>
 
@@ -157,12 +173,27 @@ export default function ProductDetails() {
                                 <img src="/icons/delivery-icon.png" alt="Delivery" className="w-6 h-6 sm:w-8 sm:h-8 mt-1" />
                                 <div>
                                     <p className="font-medium text-base sm:text-lg">Free Delivery</p>
-                                    <Link onClick={() => SetPincodeBox(!pincodeBox)} className="text-[#DB4444] border-b border-[#DB4444] text-sm sm:text-base">
+                                    <Link className="text-[#DB4444] border-b border-[#DB4444] text-sm sm:text-base">
                                         Enter your postal code for Delivery Availability
                                     </Link>
-                                    {
-                                        pincodeBox && <input type="text" placeholder="Enter pincode" className="w-full p-2 mt-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-[#DB4444]" />
-                                    }
+                                    
+                                    <div>
+                                            <div className="flex">
+                                            <input type="text" id="pincode" placeholder="Enter pincode" className="w-full p-2 mt-2 bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-[#DB4444]" />
+                                            <SendHorizontal onClick={()=> checkValidPincode()} className="relative right-8 top-4 text-gray-600 hover:text-[#DB4444] transition-all duration-300 hover:scale-115" />
+                                            </div>
+                                            <div name="pincodeResult" className="">
+                                                {
+                                                    pincodeFound === 'Success' &&
+                                                    <span className='text-green-500 transition-all duration-300 flex items-center mt-1 ml-1'>Delivery Availabile <CircleCheck className="mx-1 w-5 h-5" /> </span> 
+                                                }
+                                                {
+                                                    pincodeFound === 'Error' &&
+                                                    <span className='text-red-500 transition-all duration-300 flex items-center mt-1 ml-1'>Delivery Not Availabile <CircleX className="mx-1 w-5 h-5" /> </span>
+                                                }
+                                            </div>
+                                            
+                                        </div>
                                 </div>
                             </div>
 

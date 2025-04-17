@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Contact() {
+
+  useEffect(()=>{
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+},[])
+
   return (
     <div className="flex flex-wrap justify-center items-center py-10 px-4 md:px-10 lg:px-16 max-w-screen-lg mx-auto">
       <div className="w-full md:w-1/2 lg:w-1/3 p-4">

@@ -18,7 +18,6 @@ export default function Header() {
     const navigate = useNavigate()
     const { pathname } = useLocation();
     const path = pathname.split("/").filter(Boolean).toString();
-    const sessionData = JSON.parse(sessionStorage.getItem('cartitem'))
     const currentCart = cartItem.length === 0 ? sessionItem : cartItem
 
     const logoutUser = async() => {
@@ -246,7 +245,7 @@ export default function Header() {
                             </div>
                             <div className="py-1 space-y-1">
                                 <Link
-                                    to="/my-account"
+                                    to="/my_account"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
                                     <User2 className="me-4" />

@@ -26,6 +26,13 @@ export default function ProductSlider() {
         queryFn: () => FetchProducts(),
     });
 
+    useEffect(()=>{
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        },[])
+
     if (isLoading)
         return (
             <div className="flex justify-center items-center m-50">
@@ -75,11 +82,11 @@ export default function ProductSlider() {
                             onMouseLeave={() => setCartBtnVisible(null)}
                         >
                             <div className="">
-                                <div className="relative left-50 cursor-pointer -top-2 w-8 p-1.5">
+                                <div className="relative left-48 cursor-pointer -top-2 w-8 p-1.5">
                                     <Heart className="hover:text-red-500" />
                                 </div>
-                                <div className="relative left-50 -top-2 cursor-pointer w-8 p-1.5">
-                                    <button onClick={() => nevigate(`/products/${product.id}`)}>
+                                <div className="relative left-48 -top-2 cursor-pointer w-8 p-1.5">
+                                    <button onClick={() => nevigate(`/products/${product.slug}`)}>
                                         <Eye className="hover:text-blue-500" />
                                     </button>
                                 </div>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react"; 
+import React, { useEffect, useRef } from "react"; 
 import { useQuery } from "@tanstack/react-query";
 import { RingLoader } from 'react-spinners';
 import { wishlist } from "../../API/API";
@@ -14,6 +14,11 @@ export default function Wishlist() {
         queryKey: ['wishlist'],
         queryFn: () => wishlist()
     });
+
+    useEffect(()=>{
+            fetchCart()
+            setSessionItem(tempArr)
+    },[])
 
     if (isLoading) return <div className="flex justify-center items-center m-20"><RingLoader color="#DB4444" /></div>;
     if (isError) return <div className="text-center"><h1 className="text-red-500">Error: {error.message || "Something Went Wrong!!"}</h1></div>;

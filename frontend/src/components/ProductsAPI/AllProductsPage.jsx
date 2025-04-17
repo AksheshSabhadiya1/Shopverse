@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FetchProducts } from "../../API/API";
 import { RingLoader } from "react-spinners";
 import { Heart, Eye, ShoppingCart } from "lucide-react";
@@ -10,8 +10,14 @@ import CartContext from "../../context/Cart/CartContextProvider";
 export default function AllProductsPage() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const nevigate = useNavigate();
-
     const {addToCart} = useContext(CartContext)
+
+    useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    },[])
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["exploreProduct"],
@@ -31,6 +37,7 @@ export default function AllProductsPage() {
             </div>
         );
 
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-10">
             <div className="relative overflow-hidden">
@@ -47,7 +54,7 @@ export default function AllProductsPage() {
                                     <Heart className="hover:text-red-500" />
                                 </div>
                                 <div className="relative left-50 -top-2 cursor-pointer w-8 p-1.5">
-                                    <button onClick={() => nevigate(`/products/${product.id}`)}>
+                                    <button onClick={() => nevigate(`/products/${product.slug}`)}>
                                         <Eye className="hover:text-blue-500" />
                                     </button>
                                 </div>

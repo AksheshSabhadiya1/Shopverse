@@ -27,16 +27,18 @@ export const CartContextProvider = ({children}) => {
     const addToCart = async(product) => {
         try {
             const {data} = await axios.post('http://localhost:5000/cart/addToCart', product , {withCredentials:true})
-            const item = tempArr.find(item => item.id === data.id)
-            if(!item){  
-                tempArr.push({...data, quantity: 1})
-            }else{
-                if(tempArr.includes(item)){
-                    item.quantity += 1
+            if(data){
+                const item = tempArr.find(item => item.id === data.id)
+                if(!item){  
+                    tempArr.push({...data, quantity: 1})
+                }else{
+                    if(tempArr.includes(item)){
+                        item.quantity += 1
+                    }
                 }
+                setSessionItem(tempArr)
+                sessionStorage.setItem('cartitem', JSON.stringify(tempArr))
             }
-            setSessionItem(tempArr)
-            sessionStorage.setItem('cartitem', JSON.stringify(tempArr))
             fetchCart()
         } catch (error) {
             console.log("Add to cart failed", error);
@@ -69,7 +71,10 @@ export const CartContextProvider = ({children}) => {
         fetchCart()
     }
 
-    const clearCart = () => setCartItem([])
+    const clearCart = async() => {
+        await axios.get('http://localhost:5000/cart/clearCart',{withCredentials:true})
+        .then(res => setCartItem([]))
+    } 
 
     return (
         <CartContext.Provider value={{cartItem, setCartItem, sessionItem, setSessionItem, updateCart, addToCart, removeFromCart, clearCart}} >

@@ -15,6 +15,15 @@ import Wishlist from './pages/Wishlist/Wishlist.jsx'
 import Cart from './pages/Cart/Cart.jsx'
 import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
 import AllProductsPage from './components/ProductsAPI/AllProductsPage.jsx'
+import Checkout from './pages/Checkout/Checkout.jsx'
+import EditProfile from './pages/Accountpage/EditProfile.jsx'
+import AddressBook from './pages/Accountpage/AddressBook.jsx'
+import PaymentOptions from './pages/Accountpage/PaymentOptions.jsx'
+import Wishlistpage from './pages/Accountpage/Wishlistpage.jsx'
+import Cancellations from './pages/Accountpage/Cancellations.jsx'
+import Returns from './pages/Accountpage/Returns.jsx'
+import MyProfile from './pages/Accountpage/MyProfile.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -42,9 +51,18 @@ const router = createBrowserRouter([
         element: <Signup />
       },
       {
-        path: '/my-account',
-        element: <Accountpage />
-      },
+        path: '/my_account',
+        element: <Accountpage />,
+        children: [
+          { path: '', element: <MyProfile /> },
+          { path: 'edit_profile', element: <EditProfile /> },
+          { path: 'addressbook', element: <AddressBook /> },
+          { path: 'payments', element: <PaymentOptions /> },
+          { path: 'wishlist', element: <Wishlistpage />},
+          { path: 'returns', element: <Returns />},
+          { path: 'cancellations', element: <Cancellations />},
+        ],
+      },      
       {
         path: '/wishlist',
         element: <Wishlist />
@@ -60,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: '/products/:id',
         element: <ProductDetails />
+      },
+      {
+        path: '/checkout',
+        element: <Checkout />
       },
       {
         path: '*',
