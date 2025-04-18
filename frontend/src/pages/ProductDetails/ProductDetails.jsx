@@ -69,7 +69,7 @@ export default function ProductDetails() {
 
                     <div className="lg:w-1/3 space-y-6 order-3">
                         <div className="space-y-4">
-                            <h1 className="text-2xl md:text-3xl uppercase font-bold text-gray-900">{product.productname}</h1>
+                            <h1 className="text-2xl md:text-3xl uppercase font-bold text-gray-900">{product.brand}{" "}{product.productname}</h1>
                             <p className="text-gray-600">{product.description}</p>
                             <p className="text-2xl font-semibold text-gray-900">₹{product.sellingprice * quantity}</p>
                             <div className="flex items-center">

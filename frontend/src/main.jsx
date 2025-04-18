@@ -23,6 +23,7 @@ import Wishlistpage from './pages/Accountpage/Wishlistpage.jsx'
 import Cancellations from './pages/Accountpage/Cancellations.jsx'
 import Returns from './pages/Accountpage/Returns.jsx'
 import MyProfile from './pages/Accountpage/MyProfile.jsx'
+import Orders from './pages/Accountpage/Orders.jsx'
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
           { path: 'addressbook', element: <AddressBook /> },
           { path: 'payments', element: <PaymentOptions /> },
           { path: 'wishlist', element: <Wishlistpage />},
+          { path: 'orders', element: <Orders />},
           { path: 'returns', element: <Returns />},
           { path: 'cancellations', element: <Cancellations />},
         ],

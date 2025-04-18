@@ -4,10 +4,15 @@ import EditProfile from "./EditProfile";
 import AddressBook from "./AddressBook";
 import PaymentOptions from "./PaymentOptions";
 import MyProfile from "./MyProfile";
+import Orders from "./Orders";
+import Cancellations from "./Cancellations";
+import Wishlistpage from "./Wishlistpage";
+import Returns from "./Returns";
 
 export default function AccountPage() {
 
-    const [currentPage, setCurrentPage] = useState('my_account')
+    const {pathname} = useLocation()
+    const path = pathname.split('/')[2] || 'my_Profile'
 
     useEffect(() => {
         window.scrollTo({
@@ -26,9 +31,8 @@ export default function AccountPage() {
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink
                                 to="/my_account"
-                                onClick={()=> setCurrentPage('my_account')}
                                 className={({ isActive }) =>
-                                    `${(isActive && currentPage === 'my_account') ?  "text-[#DB4444]" : "text-gray-700"} font-medium`
+                                    `${(isActive && path === 'my_Profile') ?  "text-[#DB4444]" : "text-gray-700"} font-medium`
                                 }
                             >
                                 My Profile
@@ -37,7 +41,6 @@ export default function AccountPage() {
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink
                                 to="/my_account/edit_profile"
-                                onClick={()=> setCurrentPage('edit_profile')}
                                 className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
                                 }
@@ -47,35 +50,37 @@ export default function AccountPage() {
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/addressbook'
-                                    onClick={()=> setCurrentPage('addressbook')}
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
                                 }>Address Book</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/payments' 
-                                    onClick={()=> setCurrentPage('payments')}
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>My Payment Options</NavLink>
+                                }>Payment Options</NavLink>
                         </li>
                     </ul>
 
                     <h2 className="text-xl font-semibold mt-6 mb-4">My Orders</h2>
                     <ul className="space-y-2 border-l-1 px-2 border-gray-500 text-gray-500  ml-2">
                         <li className="hover:text-red-500 cursor-pointer">
-                            <NavLink to='/my_account/returns' 
-                                    onClick={()=> setCurrentPage('returns')}
+                            <NavLink to='/my_account/orders' 
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>My Returns</NavLink>
+                                }>Orders</NavLink>
+                        </li>
+                        <li className="hover:text-red-500 cursor-pointer">
+                            <NavLink to='/my_account/returns' 
+                                    className={({ isActive }) =>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
+                                }>Returns</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/cancellations' 
-                                    onClick={()=> setCurrentPage('cancellations')}
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>My Cancellations</NavLink>
+                                }>Cancellations</NavLink>
                         </li>
                     </ul>
 
@@ -83,34 +88,36 @@ export default function AccountPage() {
                     <ul className="space-y-2 border-l-1 px-2 border-gray-500 text-gray-500  ml-2">
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to="/my_account/wishlist" 
-                                    onClick={()=> setCurrentPage('wishlist')}
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>My Wishlist</NavLink>
+                                }>Wishlist</NavLink>
                         </li>
                     </ul>
                 </div>
                 
                 {
-                    currentPage === 'my_account' && <MyProfile />
+                    path === 'my_Profile' &&  <MyProfile />
                 }
                 {
-                    currentPage === 'edit_profile' && <EditProfile props={currentPage}  />
+                    path === 'edit_profile' && <EditProfile props={path}  />
                 }
                 {
-                    currentPage === 'addressbook' && <AddressBook props={currentPage} />
+                    path === 'addressbook' && <AddressBook props={path} />
                 }
                 {
-                    currentPage === 'payments' && <PaymentOptions props={currentPage}  />
+                    path === 'payments' && <PaymentOptions props={path}  />
                 }
                 {
-                    currentPage === 'returns' && <EditProfile props={currentPage}  />
+                    path === 'orders' && <Orders props={path}  />
                 }
                 {
-                    currentPage === 'cancellations' && <EditProfile props={currentPage}  />
+                    path === 'returns' && <Returns props={path}  />
+                }   
+                {
+                    path === 'cancellations' && <Cancellations props={path}  />
                 }
                 {
-                    currentPage === 'wishlist' && <EditProfile props={currentPage}  />
+                    path === 'wishlist' && <Wishlistpage props={path}  />
                 }
             </div>
         </div>

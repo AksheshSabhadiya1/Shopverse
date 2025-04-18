@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -22,15 +22,23 @@ export default function AddressBook(props) {
 
     const { register, formState, reset, watch, trigger } = form;
     const { errors } = formState;
+    
+    useEffect(() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    })
+    }, [])
 
     return (
-        <div className="w-full lg:w-3/4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Address Book</h2>
-
+        <div className={`${propsValue.includes('addressbook') ? 'w-full bg-white p-6 rounded-lg shadow-md' : ''}`}>
+            {
+                propsValue.includes('addressbook') && <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Address Book</h2>
+            }
             <form className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-gray-700 font-medium m-1">
+                    <div className="w-full">
+                        <label className="block text-gray-700 font-medium m-1 mt-2">
                             Default Address <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -38,6 +46,7 @@ export default function AddressBook(props) {
                             {...register("address", {
                                 required: "Address is required",
                             })}
+                            disabled={!(propsValue.includes('addressbook'))}
                             required
                             className="w-full p-3 bg-gray-100 focus:ring-2 focus:ring-red-400 outline-none rounded-md"
                         />

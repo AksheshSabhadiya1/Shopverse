@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { wishlist } from "../../API/API";
 
 
-export default function Wishlistpage({props}) {
+export default function Wishlistpage(props) {
     const propsValue = Object.values(props)
 
     const form = useForm({
@@ -23,46 +25,60 @@ export default function Wishlistpage({props}) {
     const { register, formState, reset, watch, trigger } = form;
     const { errors } = formState;
 
+    useEffect(() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    })
+                }, [])
+
+                const { data } = useQuery({
+                    queryKey: ["Orders"],
+                    queryFn: () => wishlist()
+                })
+
     return (
-        <div className="w-full lg:w-3/4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Payment Options</h2>
-
-            <form className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-gray-700 font-medium m-1">
-                            Default payment type <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            {...register("address", {
-                                required: "Address is required",
-                            })}
-                            required
-                            className="w-full p-3 bg-gray-100 focus:ring-2 focus:ring-red-400 outline-none rounded-md"
-                        />
-                        <p className="text-sm text-red-500">{errors.address?.message}</p>
-                    </div>
-                </div>
-
-                <div className="flex justify-end space-x-4">
-                    <NavLink to="/my_account">
-                        <button
-                            type="button"
-                            className="text-black border border-gray-300 px-6 py-2 rounded hover:bg-gray-100 transition"
+        <div className={`${propsValue.includes('wishlist') ? 'w-full bg-white p-6 rounded-lg shadow-md' : ''}`}>
+            <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Wishlist</h2>
+            
+            <div className="grid gap-3">
+                {
+                    data?.map((product) => (
+                        <div
+                            key={product.id}
+                            className="flex flex-col sm:flex-row justify-between items-center bg-gray-50 border border-gray-200 p-4 rounded-lg shadow-sm transition hover:shadow-md"
                         >
-                            Cancel
-                        </button>
-                    </NavLink>
-                    <button
-                        type="button"
-                        onClick={() => trigger()}
-                        className="bg-[#DB4444] text-white px-6 py-2 rounded hover:bg-red-600 transition"
-                    >
-                        Save Changes
-                    </button>
-                </div>
-            </form>
+                            <div
+                                onClick={() => navigate(`/products/${product.slug}`)}
+                                className="flex items-center w-full sm:w-auto cursor-pointer gap-4"
+                            >
+                                <img
+                                    src={`http://localhost:5000/uploads/products/${product.image}`}
+                                    alt={product.productname}
+                                    className="w-20 h-20 object-contain rounded-md bg-white"
+                                />
+                                <div className="text-left max-w-xs">
+                                    <div className="text-gray-800 font-semibold text-base truncate">{product.brand}{" "}{product.productname}</div>
+                                    <div className="text-gray-500 text-sm line-clamp-2">{product.description}</div>
+                                    <div className="mt-2 flex gap-4 text-sm text-gray-600">
+                                        <span>Color: {product.productcolor}</span>
+                                        <span>Size: {product.productsize}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-right sm:text-left mt-4 sm:mt-0">
+                                <div className="text-[#DB4444] font-bold text-xl">
+                                    ₹{product.sellingprice}
+                                </div>
+                                <div className="line-through text-gray-500 text-sm">
+                                    ₹{product.originalprice}
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     )
 }

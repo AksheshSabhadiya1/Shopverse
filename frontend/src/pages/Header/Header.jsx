@@ -252,19 +252,19 @@ export default function Header() {
                                     Manage My Account
                                 </Link>
                                 <Link
-                                    to="#"
+                                    to="/my_account/orders"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
                                     <ShoppingBag className="me-4" /> My Order
                                 </Link>
                                 <Link
-                                    to="#"
+                                    to="/my_account/cancellations"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
                                     <X className="me-4" /> My Cancellations
                                 </Link>
                                 <Link
-                                    to="#"
+                                    to="/my_account/"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
                                     <Star className="me-4" /> My Reviews
