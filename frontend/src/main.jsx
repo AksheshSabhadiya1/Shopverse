@@ -18,12 +18,14 @@ import AllProductsPage from './components/ProductsAPI/AllProductsPage.jsx'
 import Checkout from './pages/Checkout/Checkout.jsx'
 import EditProfile from './pages/Accountpage/EditProfile.jsx'
 import AddressBook from './pages/Accountpage/AddressBook.jsx'
-import PaymentOptions from './pages/Accountpage/PaymentOptions.jsx'
 import Wishlistpage from './pages/Accountpage/Wishlistpage.jsx'
 import Cancellations from './pages/Accountpage/Cancellations.jsx'
 import Returns from './pages/Accountpage/Returns.jsx'
 import MyProfile from './pages/Accountpage/MyProfile.jsx'
 import Orders from './pages/Accountpage/Orders.jsx'
+import PasswordChange from './pages/Accountpage/PasswordChange.jsx'
+import PaymentMethods from './pages/Accountpage/PaymentMethods.jsx'
+import OrderDetails from './pages/Orders/OrderDetails.jsx'
 
 
 const router = createBrowserRouter([
@@ -58,7 +60,8 @@ const router = createBrowserRouter([
           { path: '', element: <MyProfile /> },
           { path: 'edit_profile', element: <EditProfile /> },
           { path: 'addressbook', element: <AddressBook /> },
-          { path: 'payments', element: <PaymentOptions /> },
+          { path: 'edit_password', element: <PasswordChange /> },
+          { path: 'payments', element: <PaymentMethods /> },
           { path: 'wishlist', element: <Wishlistpage />},
           { path: 'orders', element: <Orders />},
           { path: 'returns', element: <Returns />},
@@ -68,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: '/wishlist',
         element: <Wishlist />
+      },
+      {
+        path: '/orders',
+        element: <OrderDetails />
+      },
+      {
+        path: '/orders/:id',
+        element: <OrderDetails />
       },
       {
         path: '/cart',

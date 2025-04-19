@@ -264,10 +264,10 @@ export default function Header() {
                                     <X className="me-4" /> My Cancellations
                                 </Link>
                                 <Link
-                                    to="/my_account/"
+                                    to="/my_account/wishlist"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
-                                    <Star className="me-4" /> My Reviews
+                                    <Star className="me-4" /> My Wishlist
                                 </Link>
                                 <Link
                                     onClick={() => logoutUser()}

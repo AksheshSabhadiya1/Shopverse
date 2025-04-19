@@ -8,11 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
 
-    const { cartItem, setCartItem, sessionItem } = useContext(CartContext)
+    const { cartItem, setCartItem, sessionItem, clearCart } = useContext(CartContext)
     const { currentUser } = useContext(UserDataContext)
     const currentCart = cartItem.length === 0 ? sessionItem : cartItem
     const navigate = useNavigate()
-   
 
     const form = useForm({
         defaultValues: {
@@ -69,8 +68,9 @@ export default function Checkout() {
 
     const submitOrderData = async (data) => {
         try {
-            await axios.post('http://localhost:5000/checkout', { ...data, 'subtotal': getTotal(), 'shippingCharge': 0, 'total': getTotal() }, { withCredentials: true })
-            .then(res => console.log("Your Order Successfully Placed"), setCartItem([]) , navigate('/'))
+            const productIDs = currentCart.map(product => product.product_id)
+            await axios.post('http://localhost:5000/checkout', { ...data, productIDs, 'subtotal': getTotal(), 'shippingCharge': 0, 'total': getTotal() }, { withCredentials: true })
+            .then(res => console.log("Your Order Successfully Placed"), clearCart() , setCartItem([]) , navigate('/'))
 
         } catch (error) {
             console.log("Your Order Not Placed");

@@ -2,6 +2,7 @@ const {Router} = require('express')
 const userRouter = Router()
 const db = require('../../config/database')
 const {Base64} = require('js-base64')
+const {createHmac} = require('crypto')
 const { generateSalt } = require('../../services/generateSalt')
 const { matchPasswordAndCreateToken } = require('../../services/matchPasswordAndCreateToken')
 
@@ -52,11 +53,58 @@ userRouter.post('/signin', async(req, res)=>{
 
 userRouter.post('/signup', async(req, res)=>{
     const {firstname, lastname, email, mobile, password} = req.body
-    const {salt, hashPassword} = await generateSalt(password)
-    await db.execute('INSERT INTO users (firstname,lastname,email,mobile,password,salt) VALUES (?,?,?,?,?,?)',[firstname, lastname, email, mobile, hashPassword, salt])
-    return res.end()
+    const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
+    const uniqueID = Math.floor(Math.random() * 1e16)
+    if(userData){
+        const {gender, address} = req.body
+        await db.execute('UPDATE users SET firstname=? ,lastname=?, email=?, mobile=?, gender=?, address=? WHERE email=?',[firstname, lastname, email, mobile, gender, address, email])
+        return res.end()
+    } else {
+        const {salt, hashPassword} = await generateSalt(password)
+        await db.execute('INSERT INTO users (id, firstname,lastname,email,mobile,password,salt) VALUES (?,?,?,?,?,?,?)',[uniqueID, firstname, lastname, email, mobile, hashPassword, salt])
+        return res.end()
+    }
 })
 
+userRouter.post('/updatePassword', async(req, res)=>{
+    const {current_password, new_password, salt, password, email} = req.body
+    
+    const currentPassword = createHmac("sha256",salt).update(current_password).digest('hex')
+    if(currentPassword !== password) return res.end('Incorrect Password')
+
+    const [[userData]] = await db.execute('SELECT * FROM users WHERE email=? and password=?',[email, currentPassword])
+    if(!userData) return res.status(401).end('User Not Found!')
+
+    if(userData){
+        const {salt: newSalt, hashPassword: newHashPassword} = await generateSalt(new_password)
+        await db.execute('UPDATE users SET password=?, salt=? WHERE email=?',[newHashPassword, newSalt, email])
+        return res.end()
+    }
+})
+
+userRouter.post('/updatePayment', async(req, res)=>{
+    const {payment, email} = req.body
+    const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
+
+    if(!userData) return res.status(401).end('User Not Found!')
+
+    if(userData){
+        await db.execute('UPDATE users SET payment_method=? WHERE email=?',[payment, email])
+        return res.end()
+    }
+})
+
+userRouter.post('/updateAddress', async(req, res)=>{
+    const {defaultAddress, email} = req.body
+    const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
+
+    if(!userData) return res.status(401).end('User Not Found!')
+
+    if(userData){
+        await db.execute('UPDATE users SET address=? WHERE email=?',[defaultAddress, email])
+        return res.end()
+    }
+})
 
 userRouter.get('/user/logout', async(req, res)=>{
     return res.clearCookie('userToken').redirect('/')

@@ -22,10 +22,10 @@ export default function Signup() {
 
     const CreateNewUser = async (data) => {
         try {
-            await axios.post('http://localhost:5000/signup', data, {
-                withCredentials: true
-            })
-            nevigate('/signin')
+            await axios.post('http://localhost:5000/signup', data, { withCredentials: true })
+            .then(()=> nevigate('/signin'))
+            .catch(error=> console.log(error))
+
         } catch (error) {
             console.log("Signup failed");
         }

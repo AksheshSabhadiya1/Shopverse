@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import EditProfile from "./EditProfile";
 import AddressBook from "./AddressBook";
-import PaymentOptions from "./PaymentOptions";
+import PaymentMethods from "./PaymentMethods";
 import MyProfile from "./MyProfile";
 import Orders from "./Orders";
 import Cancellations from "./Cancellations";
 import Wishlistpage from "./Wishlistpage";
 import Returns from "./Returns";
+import PasswordChange from "./PasswordChange";
 
 export default function AccountPage() {
 
@@ -47,6 +48,12 @@ export default function AccountPage() {
                             >
                                 Edit Profile
                             </NavLink>
+                        </li>
+                        <li className="hover:text-red-500 cursor-pointer">
+                            <NavLink to='/my_account/edit_password'
+                                    className={({ isActive }) =>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
+                                }>Edit Password</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/addressbook'
@@ -105,7 +112,10 @@ export default function AccountPage() {
                     path === 'addressbook' && <AddressBook props={path} />
                 }
                 {
-                    path === 'payments' && <PaymentOptions props={path}  />
+                    path === 'edit_password' && <PasswordChange props={path} />
+                }
+                {
+                    path === 'payments' && <PaymentMethods props={path}  />
                 }
                 {
                     path === 'orders' && <Orders props={path}  />

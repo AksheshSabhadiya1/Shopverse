@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./config/database')
 const cartRouter = require('./routes/user/cartRouter')
 const checkoutRouter = require('./routes/user/checkoutRouter')
+const orderRouter = require('./routes/user/orderRouter')
 
 const corsOptions = {
     origin: [process.env.frontend_url, process.env.admin_url],
@@ -35,6 +36,7 @@ app.use(userRouter)
 app.use(productRouter)
 app.use(cartRouter)
 app.use(checkoutRouter)
+app.use(orderRouter)
 
 
 app.listen(port, ()=>{
