@@ -2,7 +2,6 @@ const db = require('../../config/database')
 
 
 const getAllUsers = async(req, res)=>{
-
     const [users] = await db.execute('SELECT * FROM users')
     return res.json(users)
 }
@@ -10,6 +9,14 @@ const getAllUsers = async(req, res)=>{
 const getUserById = async(req, res)=>{
     const [users] = await db.execute('SELECT * FROM users WHERE id=?',[req.params.id])
     return res.json(users)
+}
+
+const getToggleApprovedStatus = async(req, res) => {
+    const [users] = await db.execute('SELECT * FROM users WHERE id=?',[req.params.userid])
+    if(users){
+        await db.execute('UPDATE users SET approved_status=? WHERE id=?',[!(users.approved_status),req.params.userid])
+    }
+    return res.end()
 }
 
 const deleteUserById = async(req, res)=>{
@@ -27,4 +34,4 @@ const deleteUserById = async(req, res)=>{
     }
 }
 
-module.exports = {getAllUsers, getUserById, deleteUserById}
+module.exports = {getAllUsers, getUserById, deleteUserById, getToggleApprovedStatus}

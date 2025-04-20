@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./config/database')
 const cartRouter = require('./routes/user/cartRouter')
 const checkoutRouter = require('./routes/user/checkoutRouter')
+const adminOrderRouter = require('./routes/admin/orderRouter')
 const orderRouter = require('./routes/user/orderRouter')
 
 const corsOptions = {
@@ -32,6 +33,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/admin', adminRouter)
 app.use('/admin/users', adminUserRouter)
 app.use('/admin/products', adminProductRouter)
+app.use('/admin/orders', adminOrderRouter)
 app.use(userRouter)
 app.use(productRouter)
 app.use(cartRouter)

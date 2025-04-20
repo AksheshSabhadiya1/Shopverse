@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { FaHome, FaBox, FaUsers, FaSignOutAlt } from "react-icons/fa";
+import { PiPackageDuotone } from "react-icons/pi";
+
 
 export default function Sidebar() {
     const [productDropDown, setProductDropDown] = useState(false);
+    const [orderDropDown, setOrderDropDown] = useState(false);
     const [userDropDown, setUserDropDown] = useState(false);
 
     useEffect(() => {
@@ -13,6 +16,9 @@ export default function Sidebar() {
             }
             if (!event.target.closest(".dropdown-container2")) {
                 setUserDropDown(false);
+            }
+            if (!event.target.closest(".dropdown-container3")) {
+                setOrderDropDown(false);
             }
         }
 
@@ -112,6 +118,67 @@ export default function Sidebar() {
                                 className="block px-4 py-2 text-white rounded-md hover:bg-red-500 hover:text-white transition-all"
                             >
                                 Not Approved Users
+                            </NavLink>
+                        </div>
+                    )}
+                </div>
+
+                <div className="relative dropdown-container3">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setOrderDropDown(!orderDropDown);
+                        }}
+                        className="w-full flex items-center justify-between px-4 py-2 rounded bg-white/5 hover:bg-white/10 transition-all duration-200 backdrop-blur-lg border border-white/10"
+                    >
+                        <div className="flex items-center gap-3">
+                            <PiPackageDuotone className="text-blue-400 text-lg" />
+                            <span className="text-white font-medium">Orders</span>
+                        </div>
+                        <img
+                            src="/icons/arrow-down-white.png"
+                            alt="Dropdown"
+                            className={`w-4 h-4 transform transition-transform duration-300 ${orderDropDown ? "rotate-180" : ""}`}
+                        />
+                    </button>
+
+                    {orderDropDown && (
+                        <div className="mt-2 ml-2 pl-2 border-l border-blue-500 space-y-1 transition-all duration-300 ease-in-out">
+                            <NavLink
+                                to="/admin/orders"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-blue-500 hover:text-white transition-all"
+                            >
+                                View All Orders
+                            </NavLink>
+                            <NavLink
+                                to="/admin/orders/pending"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-yellow-500 hover:text-white transition-all"
+                            >
+                                Pending
+                            </NavLink>
+                            <NavLink
+                                to="/admin/orders/processing"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-blue-500 hover:text-white transition-all"
+                            >
+                                Processing
+                            </NavLink>
+                            <NavLink
+                                to="/admin/orders/shipped"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-purple-500 hover:text-white transition-all"
+                            >
+                                Shipped
+                            </NavLink>
+                            <NavLink
+                                to="/admin/orders/delivered"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-green-500 hover:text-white transition-all"
+                            >
+                                Delivered
+                            </NavLink>
+                            <NavLink
+                                to="/admin/orders/returns"
+                                className="block px-4 py-2 text-white rounded-md hover:bg-red-500 hover:text-white transition-all"
+                            >
+                                Returns
                             </NavLink>
                         </div>
                     )}

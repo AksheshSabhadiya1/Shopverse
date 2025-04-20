@@ -28,7 +28,7 @@ export default function Signup() {
             await axios.post("http://localhost:5000/admin/signup", data, {
                 withCredentials: true,
             });
-            navigate("/admin");
+            navigate("/admin/signin");
         } catch (error) {
             console.error("New Admin not Created", error);
             reset();

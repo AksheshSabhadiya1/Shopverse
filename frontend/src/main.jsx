@@ -20,7 +20,6 @@ import EditProfile from './pages/Accountpage/EditProfile.jsx'
 import AddressBook from './pages/Accountpage/AddressBook.jsx'
 import Wishlistpage from './pages/Accountpage/Wishlistpage.jsx'
 import Cancellations from './pages/Accountpage/Cancellations.jsx'
-import Returns from './pages/Accountpage/Returns.jsx'
 import MyProfile from './pages/Accountpage/MyProfile.jsx'
 import Orders from './pages/Accountpage/Orders.jsx'
 import PasswordChange from './pages/Accountpage/PasswordChange.jsx'
@@ -64,7 +63,6 @@ const router = createBrowserRouter([
           { path: 'payments', element: <PaymentMethods /> },
           { path: 'wishlist', element: <Wishlistpage />},
           { path: 'orders', element: <Orders />},
-          { path: 'returns', element: <Returns />},
           { path: 'cancellations', element: <Cancellations />},
         ],
       },      

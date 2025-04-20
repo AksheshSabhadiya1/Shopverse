@@ -12,6 +12,8 @@ import Error from './Error/Error.jsx'
 import ProductDetails from './pages/Products/ProductDetails.jsx'
 import AddEditProduct from './pages/Products/AddEditProduct.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import AllOrders from './pages/Orders/AllOrders.jsx'
+import OrderTrackingPage from './pages/Orders/OrderTrackingPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -59,7 +61,22 @@ const router = createBrowserRouter([
         element: <AllUser />
       },
       {
-        path: ':other',
+        path: 'orders',
+        element: <AllOrders />,
+        children: [
+          { path: 'pending', element: <AllOrders /> },
+          { path: 'processing', element: <AllOrders /> },
+          { path: 'shipped', element: <AllOrders /> },
+          { path: 'delivered', element: <AllOrders /> },
+          { path: 'returns', element: <AllOrders /> },
+        ]
+      },
+      {
+        path: 'orders/:orderid',
+        element: <OrderTrackingPage />
+      },
+      {
+        path: '*',
         element: <Error />
       }
       

@@ -7,18 +7,26 @@ const UserDataContextProvider = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState(null)
 
-    useEffect(()=>{
-        const token = Cookies.get('userToken')
+    const fetchCurrentUserData = () => {
+        try {
+            const token = Cookies.get('userToken')
 
-        if(token){
-            axios.get('http://localhost:5000/user',{ withCredentials: true })
-            .then(res => setCurrentUser(res.data || []))
-            .catch(()=> setCurrentUser(null))
+            if(token){
+                axios.get('http://localhost:5000/user',{ withCredentials: true })
+                .then(res => setCurrentUser(res.data || []))
+                .catch(()=> setCurrentUser(null))
+            }
+        } catch (error) {
+            console.log("User Not Found!!");
         }
+    }
+
+    useEffect(()=>{
+        fetchCurrentUserData()
     },[])
 
     return(
-        <UserDataContext.Provider value={{currentUser, setCurrentUser}} >
+        <UserDataContext.Provider value={{currentUser, setCurrentUser, fetchCurrentUserData}} >
             {children}
         </UserDataContext.Provider>
     )

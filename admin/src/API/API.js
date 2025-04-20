@@ -46,3 +46,20 @@ export const fetchProductData = async (id) => {
   }
 };
 
+export const fetchTotalOrders = async() => {
+  try {
+    const {data} = await api.get('/admin/orders', {withCredentials:true})
+    return data
+  } catch (error) {
+    console.log("Order Data Fetching Error", error);
+  }
+}
+
+export const fetchAllOrdersData = async() => {
+  try {
+    const {data} = await api.get('/admin/orders/all', {withCredentials:true})
+    return data
+  } catch (error) {
+    console.log("Order Data Fetching Error", error);
+  }
+}

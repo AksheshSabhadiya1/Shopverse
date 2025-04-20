@@ -1,33 +1,37 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
-import { wishlist } from "../../API/API";
+import React, { useEffect, useState } from "react";
 
 
 export default function Cancellations(props) {
 
     const propsValue = Object.values(props)
+    const [cancelProducts, setCancelProducts] = useState([])
+    
 
     useEffect(() => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         })
+        fetchCancelOrderData()
     }, [])
 
-    const { data } = useQuery({
-        queryKey: ["Orders"],
-        queryFn: () => wishlist()
-    })
+    const fetchCancelOrderData = async () => {
+        try {
+            await axios.get('http://localhost:5000/cancellations', { withCredentials: true })
+                .then((res) => setCancelProducts(res.data))
+                .catch((error) => console.log(error))
+        } catch (error) {
+            console.log("Order Not Found");
+        }
+    }
 
     return (
         <div className={`${propsValue.includes('cancellations') ? 'w-full bg-white p-6 rounded-lg shadow-md' : ''}`}>
             <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Cancellations</h2>
             
             <div className="grid gap-3">
-                {
-                    data?.map((product) => (
+                { cancelProducts.length > 0 ?
+                    cancelProducts?.map((product) => (
                         <div
                             key={product.id}
                             className="flex flex-col sm:flex-row justify-between items-center bg-gray-50 border border-gray-200 p-4 rounded-lg shadow-sm transition hover:shadow-md"
@@ -60,7 +64,7 @@ export default function Cancellations(props) {
                                 </div>
                             </div>
                         </div>
-                    ))
+                    )) : <div>Cancel Product Not Found</div>
                 }
             </div>
         </div>

@@ -51,6 +51,20 @@ export default function AllUser() {
     }
   }, [pathname]);
 
+  const ToggleApprovedStatus = async(id) => {
+    const userData = users?.find(user => user.id === id)
+    if(userData){
+      const updatedUser = users.map(user => {
+        if(user.id === userData.id){
+          return {...userData, approved_status: !(userData.approved_status)}
+        }
+        return user
+      })
+      setUsers(updatedUser)
+      axios.get(`http://localhost:5000/admin/users/toggle/${userData.id}`, {withCredentials:true})
+    }
+  }
+
   return (
     <div className={`pt-15 ${sliderOpen ? "pl-64" : "pl-0"}`}>
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center p-6">
@@ -79,6 +93,7 @@ export default function AllUser() {
                 <p className="mt-2 text-sm">{user.login_status ? "Logged In" : "Not Logged In"}</p>
 
                 <button
+                onClick={()=> ToggleApprovedStatus(user.id)} title="Click to Toggle"
                   className={`mt-4 px-4 py-2 rounded transition ${user.approved_status ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"}`}
                 >
                   {user.approved_status ? "Approved" : "Not Approved"}

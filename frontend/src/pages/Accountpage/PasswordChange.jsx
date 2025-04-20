@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 export default function PasswordChange(props) {
-    const { currentUser } = useContext(UserDataContext)
+    const { currentUser, fetchCurrentUserData } = useContext(UserDataContext)
     const navigate = useNavigate()
     const propsValue = Object.values(props)
     
@@ -39,6 +39,7 @@ export default function PasswordChange(props) {
                     top: 0,
                     behavior: 'smooth'
                 })
+        fetchCurrentUserData()
         }, [])
 
     return(

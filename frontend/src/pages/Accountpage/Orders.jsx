@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 export default function Orders(props) {
 
     const propsValue = Object.values(props)
-    const [orderedProducts, setOrderedProducts] = useState([])
     const [orderData, setOrderData] = useState([])
     const navigate = useNavigate()
 
@@ -18,16 +17,11 @@ export default function Orders(props) {
         fetchOrderData()
     }, [])
 
-    const fetchOrderData = async() => {
+    const fetchOrderData = async () => {
         try {
-            await axios.get('http://localhost:5000/orderedProduct', {withCredentials:true})
-            .then((res)=> setOrderedProducts(res.data))
-            .catch((error)=> console.log(error))
-
             await axios.get('http://localhost:5000/orders')
-            .then((res)=> setOrderData(res.data))
-            .catch((error)=> console.log(error))
-
+                .then((res) => setOrderData(res.data))
+                .catch((error) => console.log(error))
         } catch (error) {
             console.log("Order Not Found");
         }
@@ -35,17 +29,15 @@ export default function Orders(props) {
 
     return (
         <div className="container mx-auto pt-4">
-    <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Orders</h2>
+            <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Orders</h2>
 
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {orderData?.map(order =>
-            orderedProducts?.map((product) =>
-                product.checkout_id === order.checkout_id && (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {orderData?.map(product =>
                     <div
                         key={product.id}
                         className="group flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:-translate-y-1"
                     >
-                        <div className="flex items-center gap-4 p-4">
+                        <div className="flex max-w-30 h-40 items-center gap-4 p-4 cursor-pointer" onClick={() => navigate(`/products/${product.slug}`)}>
                             <img
                                 src={`http://localhost:5000/uploads/products/${product.image}`}
                                 alt={product.productname}
@@ -67,23 +59,21 @@ export default function Orders(props) {
 
                         <div className="p-2 border-t border-gray-200 text-right sm:text-left">
                             <div className="text-base text-gray-600">Order Status:
-                            <span className={`ml-2 font-bold capitalize text-xl ${order.order_status === 'shipped' ? 'text-green-500' : order.order_status === 'delivered' ? 'text-purple-600' : order.order_status === 'processing' ? 'text-blue-500' : 'text-yellow-500'} bg-${order.order_status === 'shipped' ? 'green' : order.order_status === 'delivered' ? 'purple' : order.order_status === 'processing' ? 'blue' : 'yellow'}-100 px-2 py-1 rounded-full inline-block`}>
-                                {order.order_status}
-                            </span> </div>
-                            <div className="text-gray-500 text-sm mt-1">Order Date: {order.order_date}</div>
-                            {order.delivery_date && (
-                                <div className="text-gray-500 text-sm">Delivered On: {order.delivery_date}</div>
+                                <span className={`ml-2 font-bold capitalize text-xl ${product.order_status === 'shipped' ? 'text-green-500' : product.order_status === 'delivered' ? 'text-purple-600' : product.order_status === 'processing' ? 'text-blue-500' : 'text-yellow-500'} bg-${product.order_status === 'shipped' ? 'green' : product.order_status === 'delivered' ? 'purple' : product.order_status === 'processing' ? 'blue' : 'yellow'}-100 px-2 py-1 rounded-full inline-block`}>
+                                    {product.order_status}
+                                </span> </div>
+                            <div className="text-gray-500 text-sm mt-1">Order Date: {product.order_date}</div>
+                            {product.delivery_date && (
+                                <div className="text-gray-500 text-sm">Delivered On: {product.delivery_date}</div>
                             )}
-                            {order.tracking_number && (
-                                <div className="text-gray-500 text-sm">Tracking: <a href="#" className="text-blue-500 hover:underline">{order.tracking_number}</a></div>
+                            {product.tracking_number && (
+                                <div className="text-gray-500 text-sm">Tracking: <a href="#" className="text-blue-500 hover:underline">{product.tracking_number}</a></div>
                             )}
                         </div>
                     </div>
-                )
-            )
-        )}
-    </div>
-</div>
+                )}
+            </div>
+        </div>
 
 
     )

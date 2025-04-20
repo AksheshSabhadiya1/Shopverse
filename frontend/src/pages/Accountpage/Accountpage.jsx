@@ -7,7 +7,6 @@ import MyProfile from "./MyProfile";
 import Orders from "./Orders";
 import Cancellations from "./Cancellations";
 import Wishlistpage from "./Wishlistpage";
-import Returns from "./Returns";
 import PasswordChange from "./PasswordChange";
 
 export default function AccountPage() {
@@ -36,7 +35,7 @@ export default function AccountPage() {
                                     `${(isActive && path === 'my_Profile') ?  "text-[#DB4444]" : "text-gray-700"} font-medium`
                                 }
                             >
-                                My Profile
+                                Your Profile
                             </NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
@@ -78,12 +77,6 @@ export default function AccountPage() {
                                 }>Orders</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
-                            <NavLink to='/my_account/returns' 
-                                    className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Returns</NavLink>
-                        </li>
-                        <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/cancellations' 
                                     className={({ isActive }) =>
                                     `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
@@ -119,10 +112,7 @@ export default function AccountPage() {
                 }
                 {
                     path === 'orders' && <Orders props={path}  />
-                }
-                {
-                    path === 'returns' && <Returns props={path}  />
-                }   
+                } 
                 {
                     path === 'cancellations' && <Cancellations props={path}  />
                 }

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaBox, FaUsers } from "react-icons/fa";
+import { PiPackageDuotone } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import {useQuery} from '@tanstack/react-query'
-import { fetchAllProductData, fetchTotalUsers } from "../../API/API";
+import { fetchAllProductData, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
 import SliderContext from "../../context/SliderData/SliderContext";
 
 
@@ -20,8 +21,14 @@ export default function Dashboard() {
     queryFn: ()=> fetchTotalUsers()
   })
 
+  const {data: orderdata, isError: isOrderError, isLoading: isOrderLoading} = useQuery({
+    queryKey: ["orders"],
+    queryFn: ()=> fetchTotalOrders()
+  })
+
   if(isProductError) return <div><h1> Error : Product not found </h1></div>
   if(isUserError) return <div><h1> Error : User not found </h1></div>
+  if(isOrderError) return <div><h1> Error : Order not found </h1></div>
 
 
   return (
@@ -46,6 +53,16 @@ export default function Dashboard() {
               <div>
                 <h2 className="text-xl font-semibold text-white">Total Users</h2>
                 <p className="text-3xl font-bold text-green-300">{userdata ? userdata.length : 0}</p>
+              </div>
+            </div>
+          </NavLink>
+
+          <NavLink to="/admin/orders" className="transform transition-all hover:scale-105">
+            <div className="bg-white/10 backdrop-blur-md shadow-lg p-6 rounded-2xl flex items-center gap-6 border border-white/20 hover:border-purple-400 hover:shadow-purple-400/30 transition-all duration-300">
+              <PiPackageDuotone className="text-purple-400 text-5xl" />
+              <div>
+                <h2 className="text-xl font-semibold text-white">Total Orders</h2>
+                <p className="text-3xl font-bold text-purple-300">{orderdata ? orderdata.length : 0}</p>
               </div>
             </div>
           </NavLink>

@@ -7,7 +7,7 @@ import UserDataContext from "../../context/UserData/UserDataContext";
 
 export default function PaymentMethods(props) {
     const propsValue = Object.values(props)
-    const {currentUser} = useContext(UserDataContext)
+    const {currentUser, fetchCurrentUserData} = useContext(UserDataContext)
 
 
     const form = useForm({
@@ -42,6 +42,7 @@ export default function PaymentMethods(props) {
             top: 0,
             behavior: 'smooth'
         })
+        fetchCurrentUserData()
     }, [])
 
     return (

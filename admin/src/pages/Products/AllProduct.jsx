@@ -27,12 +27,6 @@ export default function AllProduct() {
     queryFn: () => fetchAllProductData()
   })
 
-  // useQuery({
-  //   queryKey: ['deleteProduct'],
-  //   queryFn: () => handleDelete(id)
-  // })
-  
-  
   if(isError) return <div><h1> Error : "Product not Found" </h1></div>
 
   return (

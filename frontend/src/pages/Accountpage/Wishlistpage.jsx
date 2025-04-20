@@ -26,21 +26,21 @@ export default function Wishlistpage(props) {
     const { errors } = formState;
 
     useEffect(() => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    })
-                }, [])
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    }, [])
 
-                const { data } = useQuery({
-                    queryKey: ["Orders"],
-                    queryFn: () => wishlist()
-                })
+    const { data } = useQuery({
+        queryKey: ["Orders"],
+        queryFn: () => wishlist()
+    })
 
     return (
         <div className={`${propsValue.includes('wishlist') ? 'w-full bg-white p-6 rounded-lg shadow-md' : ''}`}>
             <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Wishlist</h2>
-            
+
             <div className="grid gap-3">
                 {
                     data?.map((product) => (
