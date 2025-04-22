@@ -4,6 +4,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import CartContext from "../../context/Cart/CartContextProvider";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie'
+import EmptyCart from "../Error/EmptyCart";
 
 
 
@@ -11,13 +12,13 @@ export default function Cart() {
 
     const { cartItem, clearCart, setSessionItem, sessionItem, updateCart, removeFromCart } = useContext(CartContext)
     const navigate = useNavigate()
-    const currentCart = cartItem.length === 0 ? sessionItem : cartItem  
+    const currentCart = cartItem.length === 0 ? sessionItem : cartItem
     const userToken = Cookies.get('userToken') || null
 
 
     const handleQuantityChange = async (id, value) => {
         try {
-            if(cartItem.length > 0){
+            if (cartItem.length > 0) {
                 updateCart(id, value)
             }
             const updatedCart = sessionItem.map(product => {
@@ -32,28 +33,28 @@ export default function Cart() {
             console.log("Quantity Not Update", error);
         }
     }
-    
+
     const getTotal = () => {
-        if(cartItem.length > 0){
+        if (cartItem.length > 0) {
             return cartItem?.reduce((count, product) => {
                 return count + Math.max(product.quantity, 1) * product.sellingprice
             }, 0)
         }
 
-        if(sessionItem.length > 0){
+        if (sessionItem.length > 0) {
             return sessionItem?.reduce((count, product) => {
                 return count + Math.max(product.quantity, 1) * product.sellingprice
             }, 0)
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         })
-    },[])
-    
+    }, [])
+
 
     return currentCart.length > 0 ? (
         <div className="px-4 py-6 sm:px-6 lg:px-8 lg:ml-30 lg:mr-30 lg:mb-10">
@@ -88,13 +89,13 @@ export default function Cart() {
                             <Minus />
                         </button>
                         <span>{product.quantity || 1}</span>
-                        <button onClick={() => handleQuantityChange(cartItem.length === 0 ? product.id : product.product_id , 1)} disabled={product.stock_count < product.quantity || product.quantity === product.stock_count} className="p-1 rounded-full bg-gray-200 disabled:opacity-50 hover:bg-[#DB4444] hover:text-white ">
+                        <button onClick={() => handleQuantityChange(cartItem.length === 0 ? product.id : product.product_id, 1)} disabled={product.stock_count < product.quantity || product.quantity === product.stock_count} className="p-1 rounded-full bg-gray-200 disabled:opacity-50 hover:bg-[#DB4444] hover:text-white ">
                             <Plus />
                         </button>
                     </div>
                     <span className="text-[#DB4444] text-lg font-semibold">₹{product.sellingprice * product.quantity}</span>
-                    <button onClick={() => removeFromCart(cartItem.length === 0 ? product.id : product.product_id)} className="mx-auto hover:bg-red-500 hover:text-white transition-all duration-300 flex p-2 rounded-full">    
-                    <Trash2 className=" hover:scale-105" />
+                    <button onClick={() => removeFromCart(cartItem.length === 0 ? product.id : product.product_id)} className="mx-auto hover:bg-red-500 hover:text-white transition-all duration-300 flex p-2 rounded-full">
+                        <Trash2 className=" hover:scale-105" />
                     </button>
                 </div>
             ))
@@ -129,16 +130,12 @@ export default function Cart() {
                         <span className="text-[#DB4444]">₹{getTotal()}</span>
                     </div>
 
-                    <button onClick={()=> userToken ? navigate('/checkout') : navigate('/signin')} className="w-full mt-4 px-6 py-3 bg-[#DB4444] text-white rounded hover:bg-red-600 transition">
+                    <button onClick={() => userToken ? navigate('/checkout') : navigate('/signin')} className="w-full mt-4 px-6 py-3 bg-[#DB4444] text-white rounded hover:bg-red-600 transition">
                         Proceed to Checkout
                     </button>
                 </div>
             </div>
         </div>
     )
-: <div className="flex flex-col justify-center items-center">
-    <img src="/images/empty cart image.png" alt="Empty cart" className="w-250 transition-all duration-500" />
-    <button onClick={() => navigate('/products')} className=" mb-4 px-6 py-3 bg-[#DB4444] cursor-pointer text-white rounded hover:bg-red-600 transition">Start Shopping
-    </button>
-</div>
+        : <EmptyCart />
 }

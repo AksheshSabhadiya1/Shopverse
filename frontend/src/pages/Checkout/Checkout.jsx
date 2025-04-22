@@ -66,10 +66,12 @@ export default function Checkout() {
         }
     }
 
+    let products = [{}]
+
     const submitOrderData = async (data) => {
         try {
-            const productIDs = currentCart.map(product => product.product_id)
-            await axios.post('http://localhost:5000/checkout', { ...data, productIDs, 'subtotal': getTotal(), 'shippingCharge': 0, 'total': getTotal() }, { withCredentials: true })
+            currentCart.map(product => products.push({product_id: product.product_id, quantity: product.quantity}) )
+            await axios.post('http://localhost:5000/checkout', { ...data, products, 'subtotal': getTotal(), 'shippingCharge': 0, 'total': getTotal() }, { withCredentials: true })
             .then(res => console.log("Your Order Successfully Placed"), clearCart() , setCartItem([]) , navigate('/'))
 
         } catch (error) {

@@ -5,6 +5,7 @@ import FilterContext from "../../context/FilterDropDown/FilterContext";
 import UserDataContext from "../../context/UserData/UserDataContext";
 import axios from "axios";
 import CartContext from "../../context/Cart/CartContextProvider";
+import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 
 
 
@@ -15,6 +16,7 @@ export default function Header() {
     const { filterMenu, setFilterMenu } = useContext(FilterContext);
     const { currentUser, setCurrentUser } = useContext(UserDataContext);
     const {cartItem, setCartItem, setSessionItem, addToCart, sessionItem} = useContext(CartContext)
+    const {wishlistItem} = useContext(WishlistContext)
     const navigate = useNavigate()
     const { pathname } = useLocation();
     const path = pathname.split("/").filter(Boolean).toString();
@@ -42,7 +44,7 @@ export default function Header() {
                 <p className="font-light sm:text-base mb-2 sm:mb-0 max-w-[60%] sm:max-w-full">
                     Summer Sale For All Swim Suits And Free Express Delivery -{" "}
                     <span className="font-bold">50% OFF!</span>
-                    <Link to="#" className="flex-shrink-0">
+                    <Link to="/products" className="flex-shrink-0">
                         <span className="ms-2 border-b font-bold hover:text-[#DB4444] transition-all">
                             Shop Now
                         </span>
@@ -159,13 +161,13 @@ export default function Header() {
                                     <Link to="/wishlist" className="relative flex items-center">
                                         <Heart className="hover:text-red-500 w-6 h-6 sm:w-7 sm:h-7" />
                                         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                            0
+                                            {wishlistItem.length || 0}
                                         </span>
                                     </Link>
                                     <Link to="/cart" className="relative flex items-center">
                                         <ShoppingCart className="hover:text-blue-500 w-6 h-6 sm:w-7 sm:h-7" />
                                         <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                            {currentCart.length}
+                                            {currentCart.length || 0}
                                         </span>
                                     </Link>
                                 </div>
@@ -211,11 +213,12 @@ export default function Header() {
                         <div className="lg:hidden md:hidden flex justify-center items-center">
                             <Link to="/wishlist">
                                 <Heart className="hover:text-red-500" />
+                                <span className="w-auto bg-red-400">{wishlistItem.length || 0}</span>
                             </Link>
                             <Link to="/cart">
                                 <div className="flex">
                                     <ShoppingCart className="hover:text-blue-500" />
-                                    <span className="w-auto bg-red-400">0</span>
+                                    <span className="w-auto bg-red-400">{currentCart.length || 0}</span>
                                 </div>
                             </Link>
                             <button
@@ -267,7 +270,7 @@ export default function Header() {
                                     to="/my_account/wishlist"
                                     className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                                 >
-                                    <Star className="me-4" /> My Wishlist
+                                    <Heart className="me-4" /> My Wishlist
                                 </Link>
                                 <Link
                                     onClick={() => logoutUser()}

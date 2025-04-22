@@ -40,8 +40,8 @@ export const ExploreProducts = async () => {
 
 export const wishlist = async() =>{
     try {
-        const res = await api.get('/products')
-        return res.data.slice(0,4)
+        const res = await api.get('/wishlist')
+        return res.data
     } catch (error) {
         console.log("Wishlist Not Found", error);
     }
@@ -51,6 +51,16 @@ export const wishlist = async() =>{
 export const FindProductById = async (id) => {
     try {
         const {data} = await api.get(`/products/${id}`)
+        return data
+    } catch (error) {
+        console.log("Product Not Found", error);
+    }
+}
+
+
+export const FindProductByCategory = async (props) => {
+    try {
+        const {data} = await api.get(`/products/category/${props}`)
         return data
     } catch (error) {
         console.log("Product Not Found", error);

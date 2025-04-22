@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import UserDataContext from "../../context/UserData/UserDataContext";
+import Swal from "sweetalert2";
 
 
 export default function PaymentMethods(props) {
     const propsValue = Object.values(props)
-    const {currentUser, fetchCurrentUserData} = useContext(UserDataContext)
+    const { currentUser, fetchCurrentUserData } = useContext(UserDataContext)
+    const navigate = useNavigate()
 
 
     const form = useForm({
@@ -20,22 +22,37 @@ export default function PaymentMethods(props) {
     const { register, handleSubmit, formState, reset, watch, trigger } = form;
     const { errors } = formState;
 
-    const updatePayment = async(data) => {
+    const updatePayment = async (data) => {
         try {
-            await axios.post('http://localhost:5000/updatePayment', {...data, ...currentUser}, {withCredentials: true})
-            .then(()=> console.log("Payment Method Updated"))
-            .catch(error => console.log(error))
+            Swal.fire({
+                title: "Do you want to change payment method?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('http://localhost:5000/updatePayment', { ...data, ...currentUser }, { withCredentials: true })
+                        .then(() => {navigate('/my_account'),Swal.fire("Payment Method Updated!", "", "success")})
+                        .catch(error => console.log(error))
+                } else if (result.isDenied) {
+                    Swal.fire("Payment Method Not Updated", "", "info");
+                    fetchCurrentUserData()
+                } else {
+                    Swal.fire("Cancel Operation", "", "error");
+                }
+            });
 
         } catch (error) {
             console.log("Payment Method Not Updated");
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         reset({
             payment: currentUser?.payment_method
         })
-    },[currentUser])
+    }, [currentUser])
 
     useEffect(() => {
         window.scrollTo({

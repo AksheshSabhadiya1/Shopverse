@@ -24,7 +24,7 @@ export default function FeatureProducts() {
                         <div className="text-white absolute bottom-0 left-5">
                             <h3 className="text-2xl font-bold">PlayStation 5</h3>
                             <p className="w-70">Black and White version of the PS5 coming out on sale.</p>
-                            <Link href="#" className="text-white border-b">Shop Now</Link>
+                            <Link to="/products/ps5_playstation_large" className="text-white border-b">Shop Now</Link>
                         </div>
                     </div>
                 </div>

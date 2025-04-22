@@ -7,11 +7,13 @@ import UserDataContextProvider from './context/UserData/UserDataContextProvider'
 import FilterContextProvider from './context/FilterDropDown/FilterContextProvider'
 import { CartContextProvider } from './context/Cart/CartContextProvider'
 import { useEffect } from 'react'
+import { WishlistContextProvider } from './context/Wishlist/WishlistContextProvider'
 
 function App() {
 
   return (
     <UserDataContextProvider>
+      <WishlistContextProvider>
       <CartContextProvider>
         <FilterContextProvider>
           <Header />
@@ -20,6 +22,7 @@ function App() {
           <Footer />
         </FilterContextProvider>
       </CartContextProvider>
+      </WishlistContextProvider>
     </UserDataContextProvider>
   )
 }

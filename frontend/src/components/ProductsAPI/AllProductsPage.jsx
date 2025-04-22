@@ -5,12 +5,14 @@ import { RingLoader } from "react-spinners";
 import { Heart, Eye, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CartContext from "../../context/Cart/CartContextProvider";
+import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 
 
 export default function AllProductsPage() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
     const nevigate = useNavigate();
     const {addToCart} = useContext(CartContext)
+    const {addToWishlist} = useContext(WishlistContext)
 
     useEffect(()=>{
         window.scrollTo({
@@ -51,7 +53,9 @@ export default function AllProductsPage() {
                         >
                             <div className="">
                                 <div className="relative left-50 cursor-pointer -top-2 w-8 p-1.5">
-                                    <Heart className="hover:text-red-500" />
+                                    <button onClick={() => addToWishlist(product)}>
+                                        <Heart className="hover:text-red-500" />
+                                    </button>
                                 </div>
                                 <div className="relative left-50 -top-2 cursor-pointer w-8 p-1.5">
                                     <button onClick={() => nevigate(`/products/${product.slug}`)}>

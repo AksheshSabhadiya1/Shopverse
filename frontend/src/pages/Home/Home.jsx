@@ -14,7 +14,7 @@ export default function Home() {
 
   const [isvisible, setIsVisible] = useState(false)
   const {filterMenu} = useContext(FilterContext)
-  const nevigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleScroll = () => {
     if (window.scrollY > 800) {
@@ -37,13 +37,6 @@ export default function Home() {
 
     return () => window.removeEventListener('scroll', handleScroll)
   })
-
-  useEffect(()=>{
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    })
-  },[])
 
 
   return (
@@ -75,7 +68,7 @@ export default function Home() {
       <ProductSlider />
 
       <div className="mb-15 flex justify-center lg:mt-4">
-        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-black duration-300">View All Products</button>
+        <button onClick={()=> navigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-black duration-300">View All Products</button>
       </div>
 
       <div className="border-t border-gray-300">
@@ -101,7 +94,7 @@ export default function Home() {
             Best Selling Products
           </p>
           <div className="flex justify-center">
-            <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={()=> navigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
           </div>
         </div>
       </div>
@@ -114,7 +107,7 @@ export default function Home() {
           <p className="text-3xl lg:text-5xl font-bold mt-2">Enhance Your Music Experience</p>
           <SaleClock />
           <div className="mt-6">
-            <button className="px-8 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded-lg hover:bg-red-700">
+            <button onClick={()=> navigate('/products/wireless_speakaers')}  className="px-8 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded-lg hover:bg-red-700">
               Buy Now
             </button>
           </div>
@@ -145,12 +138,12 @@ export default function Home() {
             Explore Our Products
           </p>
           <div className="flex justify-center">
-            <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={()=> navigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
           </div>
         </div></div>
       <ExpolreProductSlider />
       <div className="flex justify-center lg:mt-5">
-        <button onClick={()=> nevigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+        <button onClick={()=> navigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
       </div>
 
 

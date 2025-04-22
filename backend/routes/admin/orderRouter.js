@@ -11,13 +11,13 @@ orderRouter.get('/', async(req, res)=>{
 })
 
 orderRouter.get('/all', async(req, res)=>{
-    const [allOrders] = await db.execute('SELECT *, orders.id as order_id from (select distinct id,allProducts_id from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
+    const [allOrders] = await db.execute('SELECT *, orders.id as order_id from (select distinct id,allProducts_id_qty from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id_qty, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
     const result = await allOrders.map(product => ( {...product, image: Base64.decode(product.image)}) )
     return res.json(result)
 })
 
 orderRouter.get('/:orderid', async(req, res)=>{
-    const [allOrders] = await db.execute('SELECT *, p.id as product_id ,orders.id as order_id from (select distinct id,allProducts_id from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
+    const [allOrders] = await db.execute('SELECT *, p.id as product_id ,orders.id as order_id from (select distinct id,allProducts_id_qty from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id_qty, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
     const result = await allOrders.map(product => ( {...product, image: Base64.decode(product.image)}) )
     const filterData = await result.filter(product => product.order_id === parseInt(req.params.orderid))
     return res.json(filterData)

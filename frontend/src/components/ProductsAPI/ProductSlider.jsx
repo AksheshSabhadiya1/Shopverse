@@ -6,6 +6,7 @@ import { RingLoader } from "react-spinners";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { Heart, Eye, ArrowRight, ArrowLeft, ShoppingCart } from "lucide-react";
 import CartContext from "../../context/Cart/CartContextProvider";
+import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 
 export default function ProductSlider() {
     const [cartBtnVisible, setCartBtnVisible] = useState(null);
@@ -14,6 +15,7 @@ export default function ProductSlider() {
     const nevigate = useNavigate();
     const path = pathname.split("/")[1];
     const {addToCart} = useContext(CartContext)
+    const {addToWishlist} = useContext(WishlistContext)
 
 
     const ProductSliderScrollLeft = () =>
@@ -83,7 +85,9 @@ export default function ProductSlider() {
                         >
                             <div className="">
                                 <div className="relative left-48 cursor-pointer -top-2 w-8 p-1.5">
-                                    <Heart className="hover:text-red-500" />
+                                    <button onClick={() => addToWishlist(product)}>
+                                        <Heart className="hover:text-red-500" />
+                                    </button>
                                 </div>
                                 <div className="relative left-48 -top-2 cursor-pointer w-8 p-1.5">
                                     <button onClick={() => nevigate(`/products/${product.slug}`)}>

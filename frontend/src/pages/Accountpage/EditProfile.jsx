@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import UserDataContext from "../../context/UserData/UserDataContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import Swal from "sweetalert2";
+
 
 export default function EditProfile(props) {
     const { currentUser, fetchCurrentUserData } = useContext(UserDataContext)
@@ -27,12 +29,26 @@ export default function EditProfile(props) {
 
     const updateUserData = async (data) => {
         try {
-            await axios.post('http://localhost:5000/signup', data, { withCredentials: true })
-                .then(() => navigate('/my_account'))
-                .catch(error => console.log(error))
-
+            Swal.fire({
+                title: "Do you want to Update Profile?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('http://localhost:5000/signup', data, { withCredentials: true })
+                        .then(() => {navigate('/my_account'), Swal.fire("Profile Updated Successfully!", "", "success")})
+                        .catch(error => console.log(error))
+                } else if (result.isDenied) {
+                    Swal.fire("Profile Not Updated", "", "info");
+                    fetchCurrentUserData()
+                } else {
+                    Swal.fire("Cancel Operation", "", "error");
+                }
+            });
         } catch (error) {
-            console.log("Update failed", error);
+            console.log("Profile Updated failed", error);
         }
     }
 

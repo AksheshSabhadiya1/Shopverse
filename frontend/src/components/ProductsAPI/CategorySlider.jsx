@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
-import {RingLoader} from 'react-spinners';
 import {ArrowRight, ArrowLeft, LaptopMinimal, Smartphone, Watch, Camera, Headphones, Gamepad, Tablet, Speaker,  } from 'lucide-react'
 
 

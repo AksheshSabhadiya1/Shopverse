@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ShoppingCart, Trash2 } from "lucide-react";
 
 
 export default function Orders(props) {
 
     const propsValue = Object.values(props)
-    const [orderData, setOrderData] = useState([])
+    const [orderDetails, setOrderDetails] = useState([])
+    const [orderItems, setOrderItems] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -16,64 +18,118 @@ export default function Orders(props) {
         })
         fetchOrderData()
     }, [])
-
+    
     const fetchOrderData = async () => {
         try {
-            await axios.get('http://localhost:5000/orders')
-                .then((res) => setOrderData(res.data))
-                .catch((error) => console.log(error))
+            const { data } = await axios.get('http://localhost:5000/orders').catch((error) => console.log(error))
+            setOrderDetails(data.ordersDetails)
+            setOrderItems(getQuantity(data.ordersDetails,data.orderItems))
         } catch (error) {
             console.log("Order Not Found");
         }
     }
 
-    return (
-        <div className="container mx-auto pt-4">
-            <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Your Orders</h2>
+    const getQuantity = (ordersDetails,orderItems) => {
+        const quantityMap = {};
+        ordersDetails[0]?.allProducts_id_qty?.forEach(item => {
+            quantityMap[item.product_id] = item.quantity;
+        });
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {orderData?.map(product =>
-                    <div
-                        key={product.id}
-                        className="group flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:-translate-y-1"
-                    >
-                        <div className="flex max-w-30 h-40 items-center gap-4 p-4 cursor-pointer" onClick={() => navigate(`/products/${product.slug}`)}>
-                            <img
-                                src={`http://localhost:5000/uploads/products/${product.image}`}
-                                alt={product.productname}
-                                className="w-20 h-20 object-contain rounded-md bg-gray-100"
-                            />
-                            <div className="flex-1">
-                                <div className="font-semibold text-lg text-gray-800">{product.brand} {product.productname}</div>
-                                <div className="text-sm text-gray-500 truncate">{product.description}</div>
-                                <div className="mt-2 flex gap-4 text-xs text-gray-600">
-                                    <span>Color: {product.productcolor}</span>
-                                    <span>Size: {product.productsize}</span>
-                                </div>
-                                <div className="mt-2 text-right sm:text-left">
-                                    <span className="text-red-600 font-bold text-xl">₹{product.sellingprice}</span>
-                                    <span className="line-through text-gray-500 text-sm">₹{product.originalprice}</span>
+        const productsWithQuantity = orderItems.map(product => ({
+            ...product,
+            quantity: quantityMap[product.id] || 1
+        }));
+
+        if(productsWithQuantity) return productsWithQuantity
+    }
+
+    return (
+        <div className="container mx-auto pt-4 px-4">
+            <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">
+                Your Orders
+            </h2>
+
+            {orderItems.length > 0 && (
+                <>
+                    <div className="hidden sm:grid grid-cols-5 font-bold text-gray-600 text-center border-b-2 py-2 border-gray-300 text-lg">
+                        <span>Product</span>
+                        <span>Price</span>
+                        <span>Order Details</span>
+                        <span>Order Status</span>
+                        <span>Track</span>
+                    </div>
+
+                    {orderItems.map((product) => (
+                        <div
+                            key={product.id}
+                            className="grid grid-cols-1 sm:grid-cols-5 gap-y-4 items-center text-center py-4 border-b border-gray-200"
+                        > 
+                            <div
+                                onClick={() => navigate(`/products/${product.slug}`)}
+                                className="flex justify-center sm:justify-start items-center space-x-4 cursor-pointer"
+                            >
+                                <img
+                                    src={`http://localhost:5000/uploads/products/${product.image}`}
+                                    alt={product.productname}
+                                    className="w-15 h-15 object-contain"
+                                />
+                                <div className="text-start flex-col w-30">
+                                    <p className="font-medium">{product.productname}</p>
+                                    <p className="font-semibold text-gray-500">Qty: {product.quantity}</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="p-2 border-t border-gray-200 text-right sm:text-left">
-                            <div className="text-base text-gray-600">Order Status:
-                                <span className={`ml-2 font-bold capitalize text-xl ${product.order_status === 'shipped' ? 'text-green-500' : product.order_status === 'delivered' ? 'text-purple-600' : product.order_status === 'processing' ? 'text-blue-500' : 'text-yellow-500'} bg-${product.order_status === 'shipped' ? 'green' : product.order_status === 'delivered' ? 'purple' : product.order_status === 'processing' ? 'blue' : 'yellow'}-100 px-2 py-1 rounded-full inline-block`}>
-                                    {product.order_status}
-                                </span> </div>
-                            <div className="text-gray-500 text-sm mt-1">Order Date: {product.order_date}</div>
-                            {product.delivery_date && (
-                                <div className="text-gray-500 text-sm">Delivered On: {product.delivery_date}</div>
-                            )}
-                            {product.tracking_number && (
-                                <div className="text-gray-500 text-sm">Tracking: <a href="#" className="text-blue-500 hover:underline">{product.tracking_number}</a></div>
-                            )}
+                            <div className="text-center">
+                                <span className="text-green-600 font-bold text-lg block">
+                                    ₹{product.sellingprice * product.quantity}
+                                </span>
+                                <span className="line-through text-gray-500 text-sm">
+                                    ₹{product.originalprice * product.quantity}
+                                </span>
+                            </div>
+                            {
+                                orderDetails.map(order => (<>
+                                    <div key={Math.floor(Math.random() * 1e8)} className="flex flex-col text-xs text-gray-600 items-center text-center">
+                                        <div className="flex">
+                                            <span className="font-semibold">Ordered On:</span>
+                                            <p className="truncate">{new Date(order.created_at).toLocaleDateString()}</p>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="font-semibold">Delivery On:</span>
+                                            <p className="truncate">{new Date(order.created_at).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
+
+                                    <div key={Math.floor(Math.random() * 1e8)} className="text-center">
+                                        <span
+                                            className={`capitalize font-bold text-sm px-3 py-1 rounded-full inline-block ${order.order_status === 'shipped'
+                                                ? 'bg-purple-100 text-purple-600'
+                                                : order.order_status === 'delivered'
+                                                    ? 'bg-green-100 text-green-600'
+                                                    : order.order_status === 'processing'
+                                                        ? 'bg-blue-100 text-blue-600'
+                                                        : 'bg-yellow-100 text-yellow-600'
+                                                }`}
+                                        >
+                                            {order.order_status}
+                                        </span>
+                                    </div> </>
+                                ))
+                            }
+
+                            <div className="flex justify-center">
+                                <button
+                                    className="bg-white border px-4 py-2 rounded hover:bg-[#DB4444] hover:text-white transition-all"
+                                >
+                                    Track Order
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    ))}
+                </>
+            )}
         </div>
+
 
 
     )

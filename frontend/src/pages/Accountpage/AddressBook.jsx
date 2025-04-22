@@ -3,12 +3,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import UserDataContext from "../../context/UserData/UserDataContext";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 
 export default function AddressBook(props) {
     const propsValue = Object.values(props)
     const navigate = useNavigate()
-    const { currentUser } = useContext(UserDataContext)
+    const { currentUser, fetchCurrentUserData } = useContext(UserDataContext)
 
     const form = useForm({
         defaultValues: {
@@ -23,11 +24,27 @@ export default function AddressBook(props) {
         })
     }, [currentUser])
 
-    const updateAddress = async(data) => {
+    const updateAddress = async (data) => {
+
         try {
-            await axios.post('http://localhost:5000/updateAddress', {...data, ...currentUser}, {withCredentials:true})
-            .then(()=> navigate('/my_account'))
-            .catch(error => console.log("Address Not Updated"))
+            Swal.fire({
+                title: "Do you want to change Address?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('http://localhost:5000/updateAddress', { ...data, ...currentUser }, { withCredentials: true })
+                        .then(() => {navigate('/my_account'),Swal.fire("Address Updated Successfully!", "", "success")})
+                        .catch(error => console.log(error))
+                } else if (result.isDenied) {
+                    Swal.fire("Address not updated!", "", "info");
+                    fetchCurrentUserData()
+                } else {
+                    Swal.fire("Cancel Operation", "", "error");
+                }
+            });
         } catch (error) {
             console.log("Address not Updated", error);
         }
@@ -82,7 +99,7 @@ export default function AddressBook(props) {
                         >
                             Save Address
                         </button>
-                        
+
                     </div>
                 }
             </form>

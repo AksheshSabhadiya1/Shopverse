@@ -25,6 +25,7 @@ import Orders from './pages/Accountpage/Orders.jsx'
 import PasswordChange from './pages/Accountpage/PasswordChange.jsx'
 import PaymentMethods from './pages/Accountpage/PaymentMethods.jsx'
 import OrderDetails from './pages/Orders/OrderDetails.jsx'
+import OrderTrackingPage from './pages/Orders/OrderTrackingPage.jsx'
 
 
 const router = createBrowserRouter([
@@ -71,12 +72,16 @@ const router = createBrowserRouter([
         element: <Wishlist />
       },
       {
+        path: '/orders/:orderId',
+        element: <OrderDetails />
+      },
+      {
         path: '/orders',
         element: <OrderDetails />
       },
       {
-        path: '/orders/:id',
-        element: <OrderDetails />
+        path: '/orders/track',
+        element: <OrderTrackingPage />
       },
       {
         path: '/cart',

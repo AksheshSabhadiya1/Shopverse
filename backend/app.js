@@ -16,6 +16,7 @@ const cartRouter = require('./routes/user/cartRouter')
 const checkoutRouter = require('./routes/user/checkoutRouter')
 const adminOrderRouter = require('./routes/admin/orderRouter')
 const orderRouter = require('./routes/user/orderRouter')
+const wishlistRouter = require('./routes/user/wishlistRouter')
 
 const corsOptions = {
     origin: [process.env.frontend_url, process.env.admin_url],
@@ -39,6 +40,7 @@ app.use(productRouter)
 app.use(cartRouter)
 app.use(checkoutRouter)
 app.use(orderRouter)
+app.use(wishlistRouter)
 
 
 app.listen(port, ()=>{

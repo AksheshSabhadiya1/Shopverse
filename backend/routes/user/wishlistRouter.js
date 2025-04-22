@@ -1,0 +1,51 @@
+const {Router} = require('express')
+const wishlistRouter = Router()
+const db = require('../../config/database')
+const {Base64} = require('js-base64')
+
+
+wishlistRouter.get('/wishlist', async(req, res)=>{
+    try {
+        const [wishlist] = await db.execute('SELECT * FROM wishlist join products on wishlist.product_id = products.id')
+        const result = wishlist.map(product => ({...product, image: Base64.decode(product.image) }))
+        return res.json(result)
+    } catch (error) {
+        return res.status(404).end()
+    }
+})
+
+wishlistRouter.post('/wishlist/addToWishlist', async(req, res)=>{
+        const {id} = req.body
+        const [wishlistItem] = await db.execute('SELECT * FROM wishlist WHERE user_id=? AND product_id=?',[req.user.id, id])
+        const [products] = await db.execute('SELECT * FROM products WHERE id=?',[id])
+        const uniqueID = Math.floor(Math.random() * 1e16)
+
+        if(wishlistItem.length > 0) {
+            console.log("Already wishlisted");
+            return res.json("Already wishlisted")
+        } else {
+            await db.execute('INSERT INTO wishlist (id, user_id, product_id) VALUES (?,?,?)',[uniqueID, req.user.id, id])
+            await db.execute('UPDATE products SET isFavourite=? WHERE id=?',[!(products.isFavourite), id])
+            console.log("wishlist inserted");
+            return res.status(201).json("wishlist inserted")
+        }
+})
+
+wishlistRouter.get('/wishlist/remove/:id', async(req, res)=>{
+    const [products] = await db.execute('SELECT * FROM products WHERE id=?',[req.params.id])
+    if(req.user) {
+        await db.execute('DELETE FROM wishlist WHERE user_id=? AND product_id=?',[req.user.id, req.params.id])
+        await db.execute('UPDATE products SET isFavourite=? WHERE id=?',[!(products.isFavourite), req.params.id])
+        return res.send("Deleted done")
+    }
+})
+
+wishlistRouter.get('/wishlist/clearWishlist', async(req, res)=>{
+    if(req.user) {
+        await db.execute('DELETE FROM wishlist WHERE user_id=?',[req.user.id])
+        await db.execute('UPDATE products SET isFavourite=?',[0])
+        return res.send("Deleted all")
+    }
+})
+
+module.exports = wishlistRouter

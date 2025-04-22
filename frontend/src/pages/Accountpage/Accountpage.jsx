@@ -8,6 +8,7 @@ import Orders from "./Orders";
 import Cancellations from "./Cancellations";
 import Wishlistpage from "./Wishlistpage";
 import PasswordChange from "./PasswordChange";
+import { BookMarked, Heart, IndianRupee, KeyRound, Package, User, UserPen, X } from "lucide-react";
 
 export default function AccountPage() {
 
@@ -25,46 +26,45 @@ export default function AccountPage() {
     return (
         <div className="container mx-auto px-4 sm:px-8 lg:px-30 mt-2 mb-16">
             <div className="flex flex-col-reverse lg:flex-row gap-10">
-                <div className="w-full lg:h-120 lg:w-1/4 bg-white p-6 rounded-lg shadow-md">
+                <div className="w-full lg:h-auto lg:w-1/4 bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold mb-4">Manage My Account</h2>
                     <ul className="space-y-2 border-l-1 px-2 border-gray-500 text-gray-500 ml-2">
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink
                                 to="/my_account"
                                 className={({ isActive }) =>
-                                    `${(isActive && path === 'my_Profile') ?  "text-[#DB4444]" : "text-gray-700"} font-medium`
+                                    `${(isActive && path === 'my_Profile') ?  "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
                                 }
-                            >
-                                Your Profile
+                            > <User className="me-2" />Your Profile
                             </NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink
                                 to="/my_account/edit_profile"
                                 className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
                                 }
-                            >
-                                Edit Profile
+                            > <UserPen className="me-2" />Edit Profile
                             </NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/edit_password'
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Edit Password</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><KeyRound className="me-2" />
+                                    Edit Password</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/addressbook'
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Address Book</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><BookMarked className="me-2" />Address Book</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/payments' 
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Payment Options</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><IndianRupee className="me-2" />Payment Options</NavLink>
                         </li>
                     </ul>
 
@@ -73,14 +73,14 @@ export default function AccountPage() {
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/orders' 
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Orders</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><Package className="me-2" />Orders</NavLink>
                         </li>
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to='/my_account/cancellations' 
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Cancellations</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><X className="me-2" />Cancellations</NavLink>
                         </li>
                     </ul>
 
@@ -89,8 +89,8 @@ export default function AccountPage() {
                         <li className="hover:text-red-500 cursor-pointer">
                             <NavLink to="/my_account/wishlist" 
                                     className={({ isActive }) =>
-                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} font-medium`
-                                }>Wishlist</NavLink>
+                                    `${isActive ? "text-[#DB4444]" : "text-gray-700"} bg-gray-100 p-2 rounded flex px-2 font-medium`
+                                }><Heart className="me-2" />Wishlist</NavLink>
                         </li>
                     </ul>
                 </div>
