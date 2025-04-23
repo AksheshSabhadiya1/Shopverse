@@ -33,7 +33,11 @@ userRouter.post('/signin', async(req, res)=>{
 
     try {
         const userToken = await matchPasswordAndCreateToken(email,password)
+<<<<<<< HEAD
         return res.cookie('userToken', userToken, { maxAge: 12 * 60 * 60 * 1000 }).redirect('/')
+=======
+        return res.cookie('userToken', userToken, { maxAge: 24 * 60 * 60 * 1000 }).redirect('/')
+>>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
     } catch (error) {
         console.log("Error While UserCookie generted");
     }

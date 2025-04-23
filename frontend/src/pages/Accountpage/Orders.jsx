@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
 import { Mail, Phone, User } from "lucide-react";
+=======
+>>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function Orders(props) {

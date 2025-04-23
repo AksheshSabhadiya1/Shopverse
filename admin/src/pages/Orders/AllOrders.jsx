@@ -3,8 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import SliderContext from "../../context/SliderData/SliderContextProvider";
+<<<<<<< HEAD
 import EmptyOrders from "../../Error/EmptyOrders";
 import { User, Mail, Phone } from 'lucide-react'
+=======
+>>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function AllOrders() {

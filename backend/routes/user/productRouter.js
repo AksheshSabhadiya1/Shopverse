@@ -11,12 +11,16 @@ productRouter.get('/products', async(req, res)=>{
 })
 
 productRouter.get('/products/:id', async(req, res)=>{
+
+    if(!req.user) return res.status(401).end()
+
     const [products] = await db.execute('SELECT * FROM products WHERE slug=?',[req.params.id])
     const result = products.map(product => ({...product, image: Base64.decode(product.image)}))
     return res.json(result)
 })
 
 productRouter.get('/products/category/:props', async(req, res)=>{
+
     const [products] = await db.execute('SELECT * FROM products WHERE category=?',[req.params.props])
     const result = products.map(product => ({...product, image: Base64.decode(product.image)}))
     return res.json(result)

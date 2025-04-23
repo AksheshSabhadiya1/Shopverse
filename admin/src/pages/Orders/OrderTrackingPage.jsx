@@ -1,9 +1,15 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { useLocation, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import SliderContext from '../../context/SliderData/SliderContextProvider';
 import { Mail, Phone, User } from 'lucide-react';
+=======
+import { useLocation, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import SliderContext from '../../context/SliderData/SliderContextProvider';
+>>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 const OrderTrackingPage = () => {
     const [orderItem, setOrderItem] = useState([]);
