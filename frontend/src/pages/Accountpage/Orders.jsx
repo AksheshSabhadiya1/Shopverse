@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ShoppingCart, Trash2 } from "lucide-react";
 
 
 export default function Orders(props) {
 
-    const propsValue = Object.values(props)
     const [orderDetails, setOrderDetails] = useState([])
     const [orderItems, setOrderItems] = useState([])
     const navigate = useNavigate()

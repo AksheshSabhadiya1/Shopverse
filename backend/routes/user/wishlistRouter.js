@@ -32,10 +32,11 @@ wishlistRouter.post('/wishlist/addToWishlist', async(req, res)=>{
 })
 
 wishlistRouter.get('/wishlist/remove/:id', async(req, res)=>{
-    const [products] = await db.execute('SELECT * FROM products WHERE id=?',[req.params.id])
+    const [products] = await db.execute('SELECT * FROM products WHERE id=?',[parseInt(req.params.id)])
+    console.log(products);
     if(req.user) {
-        await db.execute('DELETE FROM wishlist WHERE user_id=? AND product_id=?',[req.user.id, req.params.id])
-        await db.execute('UPDATE products SET isFavourite=? WHERE id=?',[!(products.isFavourite), req.params.id])
+        await db.execute('DELETE FROM wishlist WHERE user_id=? AND product_id=?',[req.user.id, parseInt(req.params.id)])
+        await db.execute('UPDATE products SET isFavourite=? WHERE id=?',[!(products.isFavourite), parseInt(req.params.id)])
         return res.send("Deleted done")
     }
 })

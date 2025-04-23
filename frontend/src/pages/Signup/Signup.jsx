@@ -18,12 +18,12 @@ export default function Signup() {
 
     const { register, formState, handleSubmit, reset, trigger } = form
     const { errors } = formState
-    const nevigate = useNavigate()
+    const navigate = useNavigate()
 
     const CreateNewUser = async (data) => {
         try {
             await axios.post('http://localhost:5000/signup', data, { withCredentials: true })
-            .then(()=> nevigate('/signin'))
+            .then(()=> navigate('/signin'))
             .catch(error=> console.log(error))
 
         } catch (error) {
@@ -108,17 +108,6 @@ export default function Signup() {
                             className="w-full bg-[#DB4444] hover:bg-orange-700 text-white cursor-pointer font-semibold py-2 rounded-lg transition duration-300"
                         >
                             Create Account
-                        </button>
-                        <button
-                            type="button"
-                            className="w-full flex items-center justify-center bg-white border cursor-pointer border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-2 rounded-lg transition duration-300"
-                        >
-                            <img
-                                src="/icons/Google-logo.png"
-                                alt="Google"
-                                className="w-5 h-5 mr-2"
-                            />
-                            Sign up with Google
                         </button>
                     </form>
                     <p className="text-gray-600">

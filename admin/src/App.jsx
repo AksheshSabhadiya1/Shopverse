@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Header from './pages/Header/Header'
-import SliderContextProvider from './context/SliderData/SliderContextProvider'
-import AdminDataContextProvider from './context/AdminData/AdminDataContextProvider'
+import { AdminDataContextProvider } from './context/AdminData/AdminDataContextProvider'
+import { SliderContextProvider } from './context/SliderData/SliderContextProvider'
 
 function App() {
 

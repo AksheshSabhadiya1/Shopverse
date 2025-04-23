@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import { FindProductById } from "../../API/API";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import ProductSlider from "../../components/ProductsAPI/ProductSlider";
 import { CircleCheck, CircleX, Heart, Minus, Plus } from "lucide-react";
 import { SendHorizontal } from 'lucide-react';
 import axios from "axios";
-import CartContext from "../../context/Cart/CartContextProvider";
 import EmptyProducts from "../Error/EmptyProduct";
 import ProductCategory from "../../components/ProductsAPI/ProductCategory";
+import CartContext from "../../context/Cart/CartContextProvider";
+import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
+import Cookies from 'js-cookie'
 
 
 export default function ProductDetails() {
@@ -19,6 +20,9 @@ export default function ProductDetails() {
     const [pincodeFound, SetPincodeFound] = useState('')
     const { id } = useParams()
     const { addToCart } = useContext(CartContext)
+    const { addToWishlist } = useContext(WishlistContext)
+    const userToken = Cookies.get('userToken') || null
+    const navigate = useNavigate()
 
 
     const { data } = useQuery({
@@ -55,7 +59,9 @@ export default function ProductDetails() {
                     <div className="flex-1 order-1">
                         <div className="border border-gray-200 rounded-lg p-8 flex justify-center items-center bg-white h-auto">
                             <div className="absolute top-50 left-45">
-                                <Heart className="hover:text-red-500" />
+                                <button onClick={()=> userToken ? addToWishlist(product) : navigate('/signin')}>
+                                    <Heart className="hover:text-red-500" />
+                                </button>
                             </div>
                             <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.produtname} className="w-full max-h-[500px] object-contain" />
                         </div>

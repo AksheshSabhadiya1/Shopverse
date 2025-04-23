@@ -11,12 +11,12 @@ const userRouter = require('./routes/user/userRouter')
 const productRouter = require('./routes/user/productRouter')
 const { checkAuthCookie, checkAuthAdminCookie } = require('./middleware/authToken')
 const cookieParser = require('cookie-parser')
-const db = require('./config/database')
 const cartRouter = require('./routes/user/cartRouter')
 const checkoutRouter = require('./routes/user/checkoutRouter')
 const adminOrderRouter = require('./routes/admin/orderRouter')
 const orderRouter = require('./routes/user/orderRouter')
 const wishlistRouter = require('./routes/user/wishlistRouter')
+const contactRouter = require('./routes/user/contactRouter')
 
 const corsOptions = {
     origin: [process.env.frontend_url, process.env.admin_url],
@@ -41,6 +41,7 @@ app.use(cartRouter)
 app.use(checkoutRouter)
 app.use(orderRouter)
 app.use(wishlistRouter)
+app.use(contactRouter)
 
 
 app.listen(port, ()=>{

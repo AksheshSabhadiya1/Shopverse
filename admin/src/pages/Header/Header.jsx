@@ -3,9 +3,9 @@ import { NavLink, useLocation, Link, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { LogOut, Menu, User, X } from "lucide-react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import SliderContext from "../../context/SliderData/SliderContext";
-import AdminDataContext from "../../context/AdminData/AdminDataContext";
 import axios from "axios";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
+import AdminDataContext from "../../context/AdminData/AdminDataContextProvider";
 
 export default function Header() {
     const { sliderOpen, setSliderOpen } = useContext(SliderContext);

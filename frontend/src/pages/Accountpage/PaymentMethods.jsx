@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import UserDataContext from "../../context/UserData/UserDataContext";
 import Swal from "sweetalert2";
+import UserDataContext from "../../context/UserData/UserDataContextProvider";
 
 
 export default function PaymentMethods(props) {
@@ -30,9 +30,9 @@ export default function PaymentMethods(props) {
                 showCancelButton: true,
                 confirmButtonText: "Save",
                 denyButtonText: `Don't save`
-            }).then((result) => {
+            }).then(async(result) => {
                 if (result.isConfirmed) {
-                    axios.post('http://localhost:5000/updatePayment', { ...data, ...currentUser }, { withCredentials: true })
+                    await axios.post('http://localhost:5000/updatePayment', { ...data, ...currentUser }, { withCredentials: true })
                         .then(() => {navigate('/my_account'),Swal.fire("Payment Method Updated!", "", "success")})
                         .catch(error => console.log(error))
                 } else if (result.isDenied) {

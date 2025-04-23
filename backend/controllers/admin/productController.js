@@ -22,8 +22,9 @@ const addProduct =  async(req, res)=>{
         const color = JSON.parse(productcolor)
         const slug = productname.toLowerCase().replaceAll(' ','_')
         const image = Base64.encode(`${req.uniqueNumber}-${req.file?.originalname}`)
+        const uniqueID = Math.floor(Math.random() * 1e16)
 
-        await db.execute('INSERT INTO products (productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, productcolor, productsize) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,[productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, JSON.stringify(color), JSON.stringify(size)])
+        await db.execute('INSERT INTO products (id, productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, productcolor, productsize) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)' ,[uniqueID, productname, originalprice, sellingprice, description, category, image, rating, rate_count, stock_count, brand, slug, JSON.stringify(color), JSON.stringify(size)])
         return res.json("Product Succesfully Inserted")
         
     } catch (error) {

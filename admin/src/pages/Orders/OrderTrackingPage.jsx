@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import SliderContext from '../../context/SliderData/SliderContext';
 import { useForm } from 'react-hook-form';
+import SliderContext from '../../context/SliderData/SliderContextProvider';
 
 const OrderTrackingPage = () => {
     const [orderData, setOrderData] = useState([]);

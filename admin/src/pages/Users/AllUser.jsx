@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import SliderContext from "../../context/SliderData/SliderContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
 
 
 

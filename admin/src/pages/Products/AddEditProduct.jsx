@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { Input } from "@mui/material";
-import SliderContext from "../../context/SliderData/SliderContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
 
 
 

@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
+import { CircleDollarSign, CircleUserRound, Headset, ShieldCheck, Truck, Warehouse } from "lucide-react";
+import { TbMoneybag } from "react-icons/tb";
 
 export default function About() {
 
@@ -50,58 +52,67 @@ export default function About() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mb-10">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-10 sm:py-12 mb-0">
+              <div className="flex flex-col md:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+      
+                <div className="lg:w-60 max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+                  <div className="w-full flex-col items-center justify-center">
+                    <div className="flex justify-center items-center">
+                    <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                      <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                        <Warehouse className="w-8 h-8" />
+                      </div>
+                    </div>
+                    </div>
+                    <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">10.5k</h3>
+                    <p className="opacity-80 text-xs sm:text-sm text-center">Sellers active on our site</p>
+                  </div>
+                </div>
+      
+                <div className="lg:w-60 max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+                  <div className="w-full flex-col items-center justify-center">
+                    <div className="flex justify-center items-center">
+                    <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                      <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                        <CircleDollarSign className="w-8 h-8" />
+                      </div>
+                    </div>
+                    </div>
+                    <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">33k</h3>
+                  <p className="opacity-80 text-xs sm:text-sm text-center">Monthly Product Sale</p>
+                  </div>
+                </div>
+      
+                <div className="lg:w-60 max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+                  <div className="w-full flex-col items-center justify-center">
+                    <div className="flex justify-center items-center">
+                    <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                      <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                        <CircleUserRound className="w-8 h-8" />
+                      </div>
+                    </div>
+                    </div>
+                    <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">45.5k</h3>
+                  <p className="opacity-80 text-xs sm:text-sm text-center">Customers active on our site</p>
+                  </div>
+                </div>
 
-          <div className="w-full max-w-3xs min-h-50 p-4 border border-gray-300 bg-gray-100 rounded hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="/icons/Services-icon-1.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
+                <div className="lg:w-60 max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+                  <div className="w-full flex-col items-center justify-center">
+                    <div className="flex justify-center items-center">
+                    <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                      <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                        <TbMoneybag className="w-8 h-8" />
+                      </div>
+                    </div>
+                    </div>
+                    <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">25k</h3>
+                  <p className="opacity-80 text-xs sm:text-sm text-center">Annual Gross Sale</p>
+                  </div>
+                </div>
+      
+              </div>
             </div>
-            <h3 className="uppercase text-center mb-2 font-bold text-xl sm:text-2xl">10.5k</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">Sellers active on our site</p>
-          </div>
-
-          <div className="w-full max-w-3xs min-h-50 p-4 border border-gray-300 bg-red-500 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="/icons/Services-icon-2.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
-            </div>
-            <h3 className="uppercase text-center text-white mb-2 font-bold text-xl sm:text-2xl">33k</h3>
-            <p className="text-xs text-white sm:text-sm text-center">Monthly Product Sale</p>
-          </div>
-
-          <div className="w-full max-w-3xs min-h-50 p-4 border border-gray-300 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="/icons/Services-icon-3.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
-            </div>
-            <h3 className="uppercase text-center mb-2 font-bold text-xl sm:text-2xl">45.5k</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">Customers active on our site</p>
-          </div>
-
-          <div className="w-full max-w-3xs min-h-50 p-4 border border-gray-300 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="/icons/Services-icon-4.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
-            </div>
-            <h3 className="uppercase text-center mb-2 font-bold text-xl sm:text-2xl">25k</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">Annual Gross Sale</p>
-          </div>
-        </div>
-      </div>
 
       <div className="flex flex-wrap m-10 justify-center items-center mb-0">
         <div className="w-full container mx-auto px-2 sm:px-2 md:px-6 lg:px-10 xl:px-12 py-10">
@@ -176,43 +187,51 @@ export default function About() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 mb-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-0 sm:py-12 mb-10">
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="icons/truck-icon.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
+
+          <div className="w-full max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+            <div className="w-full flex-col items-center justify-center">
+              <div className="flex justify-center items-center">
+              <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                  <Truck className="w-8 h-8" />
+                </div>
+              </div>
+              </div>
+              <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">FREE AND FAST DELIVERY</h3>
+              <p className="opacity-80 text-xs sm:text-sm text-center">Free delivery for all orders over $140</p>
             </div>
-            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">FREE AND FAST DELIVERY</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">Free delivery for all orders over $140</p>
           </div>
 
-          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="icons/support-icon.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
+          <div className="w-full max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+            <div className="w-full flex-col items-center justify-center">
+              <div className="flex justify-center items-center">
+              <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                  <Headset className="w-8 h-8" />
+                </div>
+              </div>
+              </div>
+              <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">24/7 CUSTOMER SERVICE</h3>
+            <p className="opacity-80 text-xs sm:text-sm text-center">Friendly 24/7 customer support</p>
             </div>
-            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">24/7 CUSTOMER SERVICE</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">Friendly 24/7 customer support</p>
           </div>
 
-          <div className="w-full max-w-xs p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-center mb-4">
-              <img
-                src="icons/tick-icon.png"
-                alt="Fast Delivery"
-                className="w-18 h-18 object-contain"
-              />
+          <div className="w-full max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow">
+            <div className="w-full flex-col items-center justify-center">
+              <div className="flex justify-center items-center">
+              <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
+                <div className=" w-13 h-13 bg-black rounded-full text-white flex items-center justify-center ">
+                  <ShieldCheck className="w-8 h-8" />
+                </div>
+              </div>
+              </div>
+              <h3 className="uppercase font-bold text-sm md:text-base text-center mt-4">MONEY BACK GUARANTEE</h3>
+            <p className="opacity-80 text-xs sm:text-sm text-center">We reurn money within 30 days</p>
             </div>
-            <h3 className="uppercase font-bold text-sm md:text-base text-center mb-2">MONEY BACK GUARANTEE</h3>
-            <p className="text-gray-500 text-xs sm:text-sm text-center">We reurn money within 30 days</p>
           </div>
+
         </div>
       </div>
 

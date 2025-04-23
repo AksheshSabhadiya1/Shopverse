@@ -4,6 +4,9 @@ const db = require("../../config/database");
 const { Base64 } = require("js-base64");
 
 orderRouter.get("/orders", async (req, res) => {
+
+    if(!req.user) return res.status(401).end()
+
     const [ordersDetails] = await db.execute("select * from checkout c join orders o on c.id = o.checkout_id where c.id=?",[3551771300267121])
     const [products] = await db.execute("Select * from products")
     let allProducts = [];
@@ -24,6 +27,9 @@ orderRouter.get("/orders", async (req, res) => {
 });
 
 orderRouter.get("/orders/:orderid", async (req, res) => {
+
+    if(!req.user) return res.status(401).end()
+
     const [ordersDetails] = await db.execute("select * from checkout c join orders o on c.id = o.checkout_id where o.id=?",[parseInt(req.params.orderid)])
     const [products] = await db.execute("Select * from products")
     let allProducts = [];
@@ -44,6 +50,9 @@ orderRouter.get("/orders/:orderid", async (req, res) => {
 });
 
 orderRouter.get("/cancellations", async (req, res) => {
+
+    if(!req.user) return res.status(401).end()
+        
     const [allOrders] = await db.execute(
         "SELECT *, orders.id as order_id, orders.created_at as order_date from (select distinct id,allProducts_id_qty from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id_qty, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id"
     );

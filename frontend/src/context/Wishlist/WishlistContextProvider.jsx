@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 const WishlistContext = createContext()
 
+
 export const WishlistContextProvider = ({children}) => {
     const [wishlistItem, setWishlistItem] = useState([])
 
@@ -23,6 +24,7 @@ export const WishlistContextProvider = ({children}) => {
     const addToWishlist = async(product) => {
         try {
             await axios.post('http://localhost:5000/wishlist/addToWishlist', product , {withCredentials:true})
+            .catch()
         } catch (error) {
             console.log("Add to wishlist failed", error);
         }

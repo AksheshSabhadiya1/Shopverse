@@ -4,7 +4,7 @@ import { PiPackageDuotone } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import {useQuery} from '@tanstack/react-query'
 import { fetchAllProductData, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
-import SliderContext from "../../context/SliderData/SliderContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
 
 
 

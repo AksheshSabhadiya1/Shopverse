@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import SliderContext from "../../context/SliderData/SliderContext";
 import axios from 'axios';
-import AdminDataContext from "../../context/AdminData/AdminDataContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
+import AdminDataContext from "../../context/AdminData/AdminDataContextProvider";
 
 export default function Signin() {
     const { sliderOpen, setSliderOpen } = useContext(SliderContext);

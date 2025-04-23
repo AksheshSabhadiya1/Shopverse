@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import SliderContext from "./SliderContext";
 
+const SliderContext = React.createContext()
 
-const SliderContextProvider = ({children}) => {
+export const SliderContextProvider = ({children}) => {
 
     const [sliderOpen, setSliderOpen] = useState(true)
 
@@ -13,4 +13,4 @@ const SliderContextProvider = ({children}) => {
     )
 }
 
-export default SliderContextProvider
+export default SliderContext
