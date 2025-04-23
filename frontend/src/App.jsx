@@ -1,13 +1,13 @@
 import './App.css'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import Header from './pages/Header/Header'
 import Footer from './pages/Footer/Footer'
 import Breadcrumb from './components/Breadcrumbs/Breadcrumb'
-import UserDataContextProvider from './context/UserData/UserDataContextProvider'
-import FilterContextProvider from './context/FilterDropDown/FilterContextProvider'
-import { CartContextProvider } from './context/Cart/CartContextProvider'
-import { useEffect } from 'react'
+import { UserDataContextProvider } from './context/UserData/UserDataContextProvider'
 import { WishlistContextProvider } from './context/Wishlist/WishlistContextProvider'
+import { CartContextProvider } from './context/Cart/CartContextProvider'
+import { FilterContextProvider } from './context/FilterDropDown/FilterContextProvider'
+
 
 function App() {
 

@@ -6,12 +6,10 @@ const {Base64} = require('js-base64')
 
 
 cartRouter.get('/cart', async(req, res)=>{
-    if(req.user){
+
         const [cart] = await db.execute('select * from products join cart on products.id = cart.product_id')
         const result = cart.map(item => ({...item, image: Base64.decode(item.image)}))
         return res.json(result)
-    }
-    return res.json()
 })
 
 cartRouter.post('/cart/addToCart', async(req, res)=>{   
@@ -33,29 +31,23 @@ cartRouter.post('/cart/addToCart', async(req, res)=>{
 })
 
 cartRouter.post('/cart/updateCart/:id', async(req, res)=>{
-    if(req.user){
-        const {value} = req.body
-        await db.execute('UPDATE cart SET quantity = quantity + ? WHERE user_id=? AND product_id=?',[value,req.user.id,req.params.id])
-        return res.json()
-    }
+
+    const {value} = req.body
+    await db.execute('UPDATE cart SET quantity = quantity + ? WHERE user_id=? AND product_id=?',[value,req.user.id,req.params.id])
     return res.json()
 })
 
 
 cartRouter.get('/cart/remove/:id', async(req, res)=>{
-    if(req.user){
-        await db.execute('DELETE FROM cart WHERE product_id=?',[req.params.id])
-        return res.send("Deleted done")
-    }
 
-    return res.json()
+    await db.execute('DELETE FROM cart WHERE product_id=?',[req.params.id])
+    return res.send("Deleted done")
 })
 
 cartRouter.get('/cart/clearCart', async(req, res)=>{
-    if(req.user){
-        await db.execute('DELETE FROM cart WHERE user_id=?',[req.user.id])
-        return res.send("Deleted All")
-    }
+
+    await db.execute('DELETE FROM cart WHERE user_id=?',[req.user.id])
+    return res.send("Deleted All")
 })
 
 

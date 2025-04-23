@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import AdminDataContext from "./AdminDataContext";
 import axios from "axios";
 import Cookies from 'js-cookie'
 
-const AdminDataContextProvider = ({children}) => {
+const AdminDataContext = React.createContext()
+
+export const AdminDataContextProvider = ({children}) => {
 
     const [currentAdmin, setCurrentAdmin] = useState(null)
 
@@ -24,4 +25,4 @@ const AdminDataContextProvider = ({children}) => {
     )
 }
 
-export default AdminDataContextProvider
+export default AdminDataContext

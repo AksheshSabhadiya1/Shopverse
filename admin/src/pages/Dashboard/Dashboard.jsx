@@ -3,9 +3,9 @@ import { FaBox, FaUsers } from "react-icons/fa";
 import { PiPackageDuotone } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import {useQuery} from '@tanstack/react-query'
-import { fetchAllProductData, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
-import SliderContext from "../../context/SliderData/SliderContext";
-
+import { fetchAllProductData, fetchTotalContacts, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
+import { TbMessageUser } from "react-icons/tb";
 
 
 export default function Dashboard() {
@@ -26,9 +26,16 @@ export default function Dashboard() {
     queryFn: ()=> fetchTotalOrders()
   })
 
+  const {data: contactdata, isError: isContactError, isLoading: isContactLoading} = useQuery({
+    queryKey: ["Contacts"],
+    queryFn: ()=> fetchTotalContacts()
+  })
+
+  
   if(isProductError) return <div><h1> Error : Product not found </h1></div>
   if(isUserError) return <div><h1> Error : User not found </h1></div>
   if(isOrderError) return <div><h1> Error : Order not found </h1></div>
+  if(isContactError) return <div><h1> Error : Contact not found </h1></div>
 
 
   return (
@@ -63,6 +70,16 @@ export default function Dashboard() {
               <div>
                 <h2 className="text-xl font-semibold text-white">Total Orders</h2>
                 <p className="text-3xl font-bold text-purple-300">{orderdata ? orderdata.length : 0}</p>
+              </div>
+            </div>
+          </NavLink>
+
+          <NavLink to="/admin/contact" className="transform transition-all hover:scale-105">
+            <div className="bg-white/10 backdrop-blur-md shadow-lg p-6 rounded-2xl flex items-center gap-6 border border-white/20 hover:border-red-400 hover:shadow-red-400/30 transition-all duration-300">
+              <TbMessageUser className="text-red-400 text-5xl" />
+              <div>
+                <h2 className="text-xl font-semibold text-white">Total User Messages</h2>
+                <p className="text-3xl font-bold text-red-300">{contactdata ? contactdata.length : 0}</p>
               </div>
             </div>
           </NavLink>

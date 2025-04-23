@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { Input } from "@mui/material";
-import SliderContext from "../../context/SliderData/SliderContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
 
 
 
@@ -23,32 +23,16 @@ export default function AddEditProduct() {
 
   const isEdit = Boolean(id);
   const sizes = ["Select All Sizes", "XS", "S", "M", "L", "XL"]
+  const shoeSize = ["Select All Sizes", "6", "7", "8", "9", "10","11"]
   const colors = ["Select All Colors","Red", "Green", "Blue", "White", "Black"]
 
-  const handleSizeChange = (event) => {
-    const { target: { value }, } = event;
-
-      if (value.includes('Select All Sizes')) {
-        setProductsize(sizes.slice(1, sizes.length))
-      } else {
-        setProductsize(typeof value === 'string' ? value.split(',') : value);
-      }
-  }
-
-  const handleColorChange = (event) => {
-    const { target: { value }, } = event;
-
-      if (value.includes('Select All Colors')) {
-        setProductcolor(colors.slice(1, colors.length))
-      } else {
-        setProductcolor(typeof value === 'string' ? value.split(',') : value);
-      }
-  }
+  
+  
 
   const form = useForm({
     defaultValues: isEdit
-      ? async () => {
-        const { data } = await axios.get(`http://localhost:5000/admin/products/${id}`);
+    ? async () => {
+      const { data } = await axios.get(`http://localhost:5000/admin/products/${id}`);
         setOldImage(data[0].image);
         return {
           productname: data[0].productname,
@@ -78,11 +62,42 @@ export default function AddEditProduct() {
         productcolor: "",
         productsize: "",
       },
-    mode: "all",
+      mode: "all",
   });
 
-  const { register, handleSubmit, getValues, trigger, formState } = form;
+  const { register, handleSubmit, getValues, trigger, watch, formState } = form;
   const { errors } = formState;
+  const category = watch('category')
+
+  const handleSizeChange = (event) => {
+    const { target: { value }, } = event;
+    
+    if(category === 'footwear' || category === 'Footwear'){
+      if (value.includes('Select All Sizes')) {
+        setProductsize(shoeSize.slice(1, shoeSize.length))
+      } else {
+        setProductsize(typeof value === 'string' ? value.split(',') : value);
+      }
+    } else {
+
+      if (value.includes('Select All Sizes')) {
+          setProductsize(sizes.slice(1, sizes.length))
+        } else {
+          setProductsize(typeof value === 'string' ? value.split(',') : value);
+        }
+    }
+    
+  }
+
+    const handleColorChange = (event) => {
+      const { target: { value }, } = event;
+
+      if (value.includes('Select All Colors')) {
+        setProductcolor(colors.slice(1, colors.length))
+      } else {
+        setProductcolor(typeof value === 'string' ? value.split(',') : value);
+      }
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -256,7 +271,7 @@ export default function AddEditProduct() {
                     </Box>
                   )}
                 >
-                  {sizes.map((name) => (
+                  { (category === 'Footwear' || category === 'footwear' ? shoeSize : sizes).map((name) => (
                     <MenuItem key={name} value={name} sx={{ backgroundColor: '#6a7282' }}>
                       {name}
                     </MenuItem>

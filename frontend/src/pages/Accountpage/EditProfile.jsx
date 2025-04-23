@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react"
 import { useForm } from "react-hook-form";
-import UserDataContext from "../../context/UserData/UserDataContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import Swal from "sweetalert2";
+import UserDataContext from "../../context/UserData/UserDataContextProvider";
 
 
 export default function EditProfile(props) {
@@ -35,9 +35,9 @@ export default function EditProfile(props) {
                 showCancelButton: true,
                 confirmButtonText: "Save",
                 denyButtonText: `Don't save`
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
-                    axios.post('http://localhost:5000/signup', data, { withCredentials: true })
+                    await axios.post('http://localhost:5000/signup', data, { withCredentials: true })
                         .then(() => {navigate('/my_account'), Swal.fire("Profile Updated Successfully!", "", "success")})
                         .catch(error => console.log(error))
                 } else if (result.isDenied) {

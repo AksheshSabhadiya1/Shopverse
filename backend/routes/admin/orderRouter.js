@@ -6,21 +6,44 @@ const {Base64} = require('js-base64')
 
 
 orderRouter.get('/', async(req, res)=>{
-    const [orderData] = await db.execute('SELECT * FROM orders')
-    return res.json(orderData)
-})
-
-orderRouter.get('/all', async(req, res)=>{
-    const [allOrders] = await db.execute('SELECT *, orders.id as order_id from (select distinct id,allProducts_id_qty from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id_qty, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
-    const result = await allOrders.map(product => ( {...product, image: Base64.decode(product.image)}) )
-    return res.json(result)
+    const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id")
+        const [products] = await db.execute("Select * from products")
+        let allProducts = [];
+    
+        ordersDetails.forEach(order => {
+            try {
+                allProducts = typeof order.allProducts_id_qty === 'string'
+                    ? JSON.parse(order.allProducts_id_qty)
+                    : order.allProducts_id_qty;
+            } catch (err) {
+                console.error("Failed to parse allProduct_id for order:", order.id, err);
+            }
+        });
+    
+        const productresult = products.filter(product=> allProducts.find(item => item.product_id === product.id))
+        const orderItems = await productresult.map((product) => ({ ...product, image: Base64.decode(product.image)}));
+        return res.json({orderItems, ordersDetails})
 })
 
 orderRouter.get('/:orderid', async(req, res)=>{
-    const [allOrders] = await db.execute('SELECT *, p.id as product_id ,orders.id as order_id from (select distinct id,allProducts_id_qty from checkout group by id) c join products p on JSON_CONTAINS(c.allProducts_id_qty, JSON_ARRAY(p.id)) join orders on c.id = orders.checkout_id')
-    const result = await allOrders.map(product => ( {...product, image: Base64.decode(product.image)}) )
-    const filterData = await result.filter(product => product.order_id === parseInt(req.params.orderid))
-    return res.json(filterData)
+    const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id WHERE o.id=?",[parseInt(req.params.orderid)])
+    
+        const [products] = await db.execute("Select * from products")
+        let allProducts = [];
+    
+        ordersDetails.forEach(order => {
+            try {
+                allProducts = typeof order.allProducts_id_qty === 'string'
+                    ? JSON.parse(order.allProducts_id_qty)
+                    : order.allProducts_id_qty;
+            } catch (err) {
+                console.error("Failed to parse allProduct_id for order:", order.id, err);
+            }
+        });
+    
+        const productresult = products.filter(product=> allProducts.find(item => item.product_id === product.id))
+        const orderItems = await productresult.map((product) => ({ ...product, image: Base64.decode(product.image)}));
+        return res.json({orderItems, ordersDetails})
 })
 
 orderRouter.post('/updateOrderStatus', async(req, res)=>{

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import UserDataContext from "./UserDataContext";
 import axios from "axios";
 import Cookies from 'js-cookie'
 
-const UserDataContextProvider = ({children}) => {
+const UserDataContext = React.createContext()
+
+
+export const UserDataContextProvider = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState(null)
 
@@ -32,4 +34,4 @@ const UserDataContextProvider = ({children}) => {
     )
 }
 
-export default UserDataContextProvider
+export default UserDataContext

@@ -38,7 +38,7 @@ export default function SaleClock() {
     }, [])
 
     return (
-        <div>
+        <div className="text-center w-full">
         <div className="grid grid-flow-col gap-2 sm:gap-4 text-center auto-cols-max">
             {["Days", "Hours", "Minutes", "Seconds"].map((unit, i) => (
                 <div key={unit} className="w-18 mt-4 p-3 bg-white text-black font-semibold rounded-full flex flex-col items-center">

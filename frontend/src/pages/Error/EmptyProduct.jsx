@@ -14,7 +14,7 @@ export default function EmptyProducts() {
                 alt="Empty Product"
                 className="w-140 h-auto mb-6"
             />
-            <h2 className="text-3xl font-bold text-red-500 mb-2"> Your Product is Not Found </h2>
+            <h2 className="text-3xl font-bold text-red-500 mb-2"> Your Products Not Found </h2>
             <button
                 onClick={() => navigate('/contact')}
                 className="bg-[#DB4444] flex items-center text-white px-5 py-2 rounded hover:bg-red-600 transition"

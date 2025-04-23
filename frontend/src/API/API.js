@@ -21,7 +21,7 @@ export const FetchProducts = async () => {
 export const BestProduct = async () => {
     try {
         const res = await api.get('/products')
-        return res.data.filter(item => item.rate_count >= 300).sort((a, b) => b.rate_count - a.rate_count).slice(0,4);
+        return res.data.filter(item => item.rate_count >= 200).sort((a, b) => b.rate_count - a.rate_count).slice(0,4);
     } catch (error) {
         console.log("BestProduct Not Found", error);
     }
@@ -62,6 +62,15 @@ export const FindProductByCategory = async (props) => {
     try {
         const {data} = await api.get(`/products/category/${props}`)
         return data
+    } catch (error) {
+        console.log("Product Not Found", error);
+    }
+}
+
+export const FindAllOrders = async() => {
+    try {
+        const data = await api.get('/orders')
+        console.log(data);
     } catch (error) {
         console.log("Product Not Found", error);
     }

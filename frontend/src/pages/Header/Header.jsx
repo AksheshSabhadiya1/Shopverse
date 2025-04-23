@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import {Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon } from "lucide-react";
-import FilterContext from "../../context/FilterDropDown/FilterContext";
-import UserDataContext from "../../context/UserData/UserDataContext";
+import { Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import axios from "axios";
+import FilterContext from "../../context/FilterDropDown/FilterContextProvider";
+import UserDataContext from "../../context/UserData/UserDataContextProvider";
 import CartContext from "../../context/Cart/CartContextProvider";
 import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 
@@ -15,18 +15,17 @@ export default function Header() {
 
     const { filterMenu, setFilterMenu } = useContext(FilterContext);
     const { currentUser, setCurrentUser } = useContext(UserDataContext);
-    const {cartItem, setCartItem, setSessionItem, addToCart, sessionItem} = useContext(CartContext)
-    const {wishlistItem} = useContext(WishlistContext)
+    const { cartItem, setCartItem, setSessionItem, sessionItem } = useContext(CartContext)
+    const { wishlistItem } = useContext(WishlistContext)
     const navigate = useNavigate()
     const { pathname } = useLocation();
     const path = pathname.split("/").filter(Boolean).toString();
     const currentCart = cartItem.length === 0 ? sessionItem : cartItem
 
-    const logoutUser = async() => {
-        await axios.get('http://localhost:5000/user/logout',{ withCredentials: true })
-        .then(() => setCurrentUser(null))
-        .catch(()=> console.log("Logout not Done"))
-        .finally(()=> {setUserDropDown(false),setCartItem([]),setSessionItem([]), sessionStorage.removeItem('cartitem'),navigate('/')})
+    const logoutUser = async () => {
+        await axios.get('http://localhost:5000/user/logout', { withCredentials: true })
+            .then(() => setCurrentUser(null), setUserDropDown(false), setCartItem([]), setSessionItem([]), sessionStorage.removeItem('cartitem'), navigate('/'))
+            .catch(() => console.log("Logout not Done"))
     }
 
 
@@ -62,12 +61,12 @@ export default function Header() {
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-0">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                     <div
-                        className="font-bold px-5 py-2.5 focus:outline-none"
+                        className="font-bold flex px-5 py-2.5 focus:outline-none"
                         type="button"
                     >
                         <button
                             onClick={() => setFilterMenu(!filterMenu)}
-                            className="text-gray-700"
+                            className="text-gray-700 hidden lg:block md:block"
                         >
                             {filterMenu ? <X size={28} /> : <Menu size={28} />}
                         </button>
@@ -80,158 +79,141 @@ export default function Header() {
                     >
                         <div className="py-1 space-y-1">
                             <Link
-                                to="#"
+                                to="/products/allCategory/Women's_Fashion"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
-                                <div className="flex">
-                                    <p>Woman's Fashion </p>{" "}
-                                    <img
-                                        src="/icons/arrow-left-icon.png"
-                                        className="absolute right-5"
-                                    />
+                                <div className="flex justify-center items-center">
+                                    <p>Woman's Fashion </p>
+                                    <ChevronRight className="absolute right-2" />
                                 </div>
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Men's_Fashion"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
-                                <p> Men's Fashion </p>{" "}
-                                <img
-                                    src="/icons/arrow-left-icon.png"
-                                    className="absolute right-5"
-                                />
+                                <p> Men's Fashion </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Electronics"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
                                 <p> Electronics </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Home_&_Kitchen"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
-                                <p> Home & Lifestyle </p>
+                                <p> Home & Kitchen </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Medicine"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
                                 <p> Medicine </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Sports_&_Outdoor"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
                                 <p> Sports & Outdoor </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Footwear"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
-                                <p> Baby's & Toys </p>
+                                <p> Footwear </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Groceries_&_Pets"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
                                 <p> Groceries & Pets </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                             <Link
-                                to="#"
+                                to="/products/allCategory/Accessories"
                                 className="flex items-center px-4 py-2 hover:bg-[#DB4444] hover:text-white transition"
                             >
-                                <p> Health & Beauty </p>
+                                <p> Accessories </p>
+                                <ChevronRight className="absolute right-2" />
                             </Link>
                         </div>
                     </div>
 
                     <div className="flex items-center lg:order-2">
-                        <input
-                            type="text"
-                            placeholder="What are you looking for?"
-                            className="text-gray-800 w-70 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded-lg text-sm lg:px-5 py-2 lg:py-2.5 focus:outline-none"
-                        />
-                        <Link>
-                            <Search className="relative end-10" />
-                        </Link>
-                        {!(path === "signup" || path === "signin") && (
-                            <div className="hidden space-x-5 md:flex lg:flex justify-center items-center">
-                                <div className="flex space-x-4 items-center">
-                                    <Link to="/wishlist" className="relative flex items-center">
-                                        <Heart className="hover:text-red-500 w-6 h-6 sm:w-7 sm:h-7" />
-                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                            {wishlistItem.length || 0}
-                                        </span>
-                                    </Link>
-                                    <Link to="/cart" className="relative flex items-center">
-                                        <ShoppingCart className="hover:text-blue-500 w-6 h-6 sm:w-7 sm:h-7" />
-                                        <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                            {currentCart.length || 0}
-                                        </span>
-                                    </Link>
-                                </div>
-
-                                {currentUser ? (
-                                    <button
-                                        onClick={() => setUserDropDown(!userDropDown)}
-                                        className={`flex items-center justify-center ${userDropDown
-                                            ? "w-8 h-8 text-white bg-red-500 rounded-full"
-                                            : "w-8 h-8"
-                                            }`}
-                                    >
-                                        {" "}
-                                        <User />
-                                    </button>
-                                ) : (
-                                    <div>
-                                        {" "}
-                                        <NavLink
-                                            to="/signup"
-                                            className={({ isActive }) =>
-                                                `${isActive ? "text-orange-700" : "text-gray-700"
-                                                } hover:text-orange-700`
-                                            }
-                                        >
-                                            <span className="mb-2 font-semibold">Signup</span>
-                                        </NavLink>{" "}
-                                        |&nbsp;
-                                        <NavLink
-                                            to="/signin"
-                                            className={({ isActive }) =>
-                                                `${isActive ? "text-orange-700" : "text-gray-700"
-                                                } hover:text-orange-700`
-                                            }
-                                        >
-                                            <span className="mb-2 font-semibold">Signin</span>
-                                        </NavLink>{" "}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        <div className="lg:hidden md:hidden flex justify-center items-center">
-                            <Link to="/wishlist">
-                                <Heart className="hover:text-red-500" />
-                                <span className="w-auto bg-red-400">{wishlistItem.length || 0}</span>
-                            </Link>
-                            <Link to="/cart">
-                                <div className="flex">
-                                    <ShoppingCart className="hover:text-blue-500" />
-                                    <span className="w-auto bg-red-400">{currentCart.length || 0}</span>
-                                </div>
-                            </Link>
-                            <button
-                                onClick={() => setUserDropDown(!userDropDown)}
-                                className={`flex items-center justify-center ${userDropDown
-                                    ? "w-8 h-8 text-white bg-red-500 rounded-full"
-                                    : "w-8 h-8"
-                                    }`}
-                            >
-                                {" "}
-                                <User />
+                        <div className="flex items-center lg:px-4 md:px-4">
+                            <input
+                                type="text"
+                                placeholder="What are you looking for?"
+                                className="text-gray-800 lg:w-60 md:w-60 w-52 bg-gray-200 focus:ring-2 focus:ring-orange-500 font-medium rounded rounded-e-none text-sm lg:px-5 md:px-5 px-3 py-2 lg:py-2.5 focus:outline-none"
+                            />
+                            <button className="bg-gray-200 w-9 h-9 lg:h-10 md:h-9 sm:h-9 rounded rounded-s-none">
+                                <Search />
                             </button>
                         </div>
+                        {!(path === "signup" || path === "signin") && (
+                            <div className="hidden space-x-5 md:flex lg:flex justify-center items-center">
+                                {
+                                    !menuOpen && <>
+                                        <div className="flex space-x-4 items-center">
+                                            <Link to="/wishlist" className="relative flex items-center">
+                                                <Heart className="hover:text-red-500 w-6 h-6 sm:w-7 sm:h-7" />
+                                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                                                    {wishlistItem.length || 0}
+                                                </span>
+                                            </Link>
+                                            <Link to="/cart" className="relative flex items-center">
+                                                <ShoppingCart className="hover:text-blue-500 w-6 h-6 sm:w-7 sm:h-7" />
+                                                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                                                    {currentCart.length || 0}
+                                                </span>
+                                            </Link>
+                                        </div>
+
+                                        {currentUser ? (
+                                            <button
+                                                onClick={() => setUserDropDown(!userDropDown)}
+                                                className={`flex items-center justify-center ${userDropDown
+                                                    ? "w-8 h-8 text-white bg-red-500 rounded-full"
+                                                    : "w-8 h-8"
+                                                    }`}
+                                            >
+                                                {" "}
+                                                <User />
+                                            </button>
+                                        ) : (
+                                            <div>
+                                                {" "}
+                                                <NavLink
+                                                    to="/signup"
+                                                    className={({ isActive }) =>
+                                                        `${isActive ? "text-orange-700" : "text-gray-700"
+                                                        } hover:text-orange-700`
+                                                    }
+                                                >
+                                                    <span className="mb-2 font-semibold">Signup</span>
+                                                </NavLink>{" "}
+                                                |&nbsp;
+                                                <NavLink
+                                                    to="/signin"
+                                                    className={({ isActive }) =>
+                                                        `${isActive ? "text-orange-700" : "text-gray-700"
+                                                        } hover:text-orange-700`
+                                                    }
+                                                >
+                                                    <span className="mb-2 font-semibold">Signin</span>
+                                                </NavLink>{" "}
+                                            </div>
+                                        )} </>
+                                }
+                            </div>
+                        )}
 
                         <div
                             className={`absolute right-0 md:right-30 top-26 w-48 sm:w-56 md:w-64 bg-white text-black divide-y divide-gray-300 rounded-lg border border-gray-300 shadow-lg transition-all duration-300 ${userDropDown ? "block" : "hidden"
@@ -342,49 +324,59 @@ export default function Header() {
                             >
                                 Contact
                             </NavLink>
-                            <NavLink
-                                to="/signup"
-                                className="text-gray-700 hover:text-orange-700"
-                            >
-                                Sign Up
-                            </NavLink>
-                            {currentUser.length > 0 ? (
-                                <button
-                                    onClick={() => setUserDropDown(!userDropDown)}
-                                    className={`flex items-center justify-center ${userDropDown
-                                        ? "w-8 h-8 text-white bg-red-500 rounded-full"
-                                        : "w-8 h-8"
-                                        }`}
-                                >
-                                    {" "}
-                                    <User />
-                                </button>
-                            ) : (
-                                <div>
-                                    {" "}
-                                    <NavLink
-                                        to="/signup"
-                                        onClick={() => setMenuOpen(false)}
-                                        className={({ isActive }) =>
-                                            `${isActive ? "text-orange-700" : "text-gray-700"
-                                            } hover:text-orange-700`
-                                        }
-                                    >
-                                        <span className="mb-2 font-semibold">Signup</span>
-                                    </NavLink>{" "}
-                                    |&nbsp;
-                                    <NavLink
-                                        to="/signin"
-                                        onClick={() => setMenuOpen(false)}
-                                        className={({ isActive }) =>
-                                            `${isActive ? "text-orange-700" : "text-gray-700"
-                                            } hover:text-orange-700`
-                                        }
-                                    >
-                                        <span className="mb-2 font-semibold">Signin</span>
-                                    </NavLink>{" "}
+                            <div className="space-x-5 flex justify-center items-center">
+                                <div className="flex space-x-4 items-center">
+                                    <Link to="/wishlist" className="relative flex items-center">
+                                        <Heart className="hover:text-red-500 w-6 h-6 sm:w-7 sm:h-7" />
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                                            {wishlistItem.length || 0}
+                                        </span>
+                                    </Link>
+                                    <Link to="/cart" className="relative flex items-center">
+                                        <ShoppingCart className="hover:text-blue-500 w-6 h-6 sm:w-7 sm:h-7" />
+                                        <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                                            {currentCart.length || 0}
+                                        </span>
+                                    </Link>
                                 </div>
-                            )}
+                                {currentUser ? (
+                                    <button
+                                        onClick={() => setUserDropDown(!userDropDown)}
+                                        className={`flex items-center justify-center ${userDropDown
+                                            ? "w-8 h-8 text-white bg-red-500 rounded-full"
+                                            : "w-8 h-8"
+                                            }`}
+                                    >
+                                        {" "}
+                                        <User />
+                                    </button>
+                                ) : (
+                                    <div>
+                                        {" "}
+                                        <NavLink
+                                            to="/signup"
+                                            onClick={() => setMenuOpen(false)}
+                                            className={({ isActive }) =>
+                                                `${isActive ? "text-orange-700" : "text-gray-700"
+                                                } hover:text-orange-700`
+                                            }
+                                        >
+                                            <span className="mb-2 font-semibold">Signup</span>
+                                        </NavLink>{" "}
+                                        |&nbsp;
+                                        <NavLink
+                                            to="/signin"
+                                            onClick={() => setMenuOpen(false)}
+                                            className={({ isActive }) =>
+                                                `${isActive ? "text-orange-700" : "text-gray-700"
+                                                } hover:text-orange-700`
+                                            }
+                                        >
+                                            <span className="mb-2 font-semibold">Signin</span>
+                                        </NavLink>{" "}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>

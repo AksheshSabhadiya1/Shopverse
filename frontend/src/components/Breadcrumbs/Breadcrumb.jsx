@@ -2,7 +2,7 @@ import { useLocation, Link, NavLink } from "react-router-dom";
 
 export default function Breadcrumb() {
     const { pathname } = useLocation();
-    const path = pathname.split('/').filter((x) => x);
+    const path = pathname.split('/').filter(Boolean);
     let breacrumbs = "";
 
     if (path.includes('signin') || path.includes('signup')) return null

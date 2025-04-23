@@ -1,5 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import CartContext from "../../context/Cart/CartContextProvider";
 import { useNavigate } from "react-router-dom";

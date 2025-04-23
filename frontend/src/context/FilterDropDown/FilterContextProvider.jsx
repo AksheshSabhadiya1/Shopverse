@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import FilterContext from "./FilterContext";
+
+const FilterContext = React.createContext()
 
 
-const FilterContextProvider = ({children}) => {
+export const FilterContextProvider = ({children}) => {
 
     const [filterMenu, setFilterMenu] = useState(false)
 
@@ -14,4 +15,4 @@ const FilterContextProvider = ({children}) => {
 }
 
 
-export default FilterContextProvider
+export default FilterContext

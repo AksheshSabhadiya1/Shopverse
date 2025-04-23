@@ -31,7 +31,7 @@ const postSignin = async (req, res)=>{
 
     try {
         const adminToken = await matchPasswordAndCreateTokenForAdmin(email,password)
-        return res.cookie('adminToken', adminToken).redirect('/admin')
+        return res.cookie('adminToken', adminToken, { maxAge: 12 * 60 * 60 * 1000 }).redirect('/admin')
     } catch (error) {
         console.log("Error While AdminCookie generted");
     }

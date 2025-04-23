@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Mail, Phone, User } from 'lucide-react';
@@ -21,7 +21,6 @@ export default function OrderDetails() {
                 console.error("Order fetch failed:", err);
             }
         };
-
         fetchOrderDetails();
     }, [orderId]);
 
@@ -30,46 +29,43 @@ export default function OrderDetails() {
         ordersDetails[0]?.allProducts_id_qty?.forEach(item => {
             quantityMap[item.product_id] = item.quantity;
         });
-
         const productsWithQuantity = orderItems.map(product => ({
             ...product,
             quantity: quantityMap[product.id] || 1
         }));
-
         if (productsWithQuantity) return productsWithQuantity
     }
 
     if (!orderDetails.length) return <div className="text-center py-10">Loading...</div>;
-
     const order = orderDetails[0];
 
     return (
         <div className="max-w-7xl mx-auto p-6 grid lg:grid-cols-3 gap-8 text-gray-800">
 
-            <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow-lg space-y-5">
+            <aside className="lg:col-span-1 h-screen bg-white p-6 rounded-lg shadow-lg space-y-5">
                 <div>
-                    <h2 className="text-xl font-bold mb-1">Order Summary </h2>
+                    <h2 className="text-xl text-[#DB4444] font-bold mb-1">Order Summary </h2>
                     <p className="text-gray-600">Order ID: #{order.id}</p>
                 </div>
 
                 <div>
                     <h3 className="font-semibold mb-1">Customer Info</h3>
-                    <p className='flex items-center text-gray-500'><User className='me-2' />{order.firstname} {order.lastname}</p>
-                    <p className="text-sm flex items-center text-gray-500"><Mail className='me-2' />{order.email}</p>
-                    <p className="text-sm flex items-center text-gray-500"><Phone className='me-2' /> {order.mobile}</p>
+                    <p className='flex text-base items-center text-gray-500'><User className='me-2' />{order.firstname} {order.lastname}</p>
+                    <p className="text-base flex items-center text-gray-500"><Mail className='me-2' />{order.email}</p>
+                    <p className="text-base flex items-center text-gray-500"><Phone className='me-2' /> {order.mobile}</p>
                 </div>
 
                 <div>
                     <h3 className="font-semibold mb-1">Shipping Address</h3>
-                    <p className="text-sm">{order.floor}, {order.address},</p>
-                    <p className="text-sm">{order.city}, {order.pincode}</p>
-                    <p className="text-sm">{order.country}</p>
+                    <p className="text-base text-gray-600">{order.floor}, {order.address},</p>
+                    <p className="text-base text-gray-600">{order.city}, {order.pincode}</p>
+                    <p className="text-base text-gray-600">{order.country}</p>
                 </div>
 
                 <div>
                     <h3 className="font-semibold mb-1">Payment</h3>
-                    <p className="text-sm">Type: {order.payment_method}</p>
-                    <p className="text-sm">Status: <span className="capitalize font-medium">{order.payment_status}</span></p>
+                    <p className="text-base text-gray-600">Type: {order.payment_method}</p>
+                    <p className="text-base text-gray-600">Status: {order.payment_status === 'prepaid' ? <span className="text-green-500 ">prepaid</span> : <span className="text-red-500">unpaid</span>}</p>
                 </div>
 
                 <div>
@@ -98,15 +94,16 @@ export default function OrderDetails() {
                 </button>
             </aside>
 
-            <main className="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg">
-                <h2 className="text-xl font-semibold mb-6">Ordered Items</h2>
+            <main className="lg:col-span-2 bg-white p-4 rounded-lg shadow-lg">
+                <h2 className="text-xl font-semibold border-b mb-4 py-2">Ordered Items</h2>
                 <div className="space-y-4">
                     {orderItems.map((item, idx) => (
-                        <div key={idx} className="flex gap-4 border-b pb-4">
+                        <Link to={`/products/${item.slug}`}>
+                        <div key={idx} className="flex gap-4 border-b border-gray-400 pb-2">
                             <img
                                 src={`http://localhost:5000/uploads/products/${item.image}`}
                                 alt={item.productname}
-                                className="w-24 h-24 object-contain rounded"
+                                className="w-14 h-14 object-contain rounded"
                             />
                             <div className="flex justify-between w-full items-center">
                                 <div>
@@ -119,6 +116,7 @@ export default function OrderDetails() {
                                 </div>
                             </div>
                         </div>
+                        </Link>
                     ))}
                 </div>
 

@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductData } from "../../API/API";
-import SliderContext from "../../context/SliderData/SliderContext";
+import SliderContext from "../../context/SliderData/SliderContextProvider";
 
 
 export default function ProductDetails() {

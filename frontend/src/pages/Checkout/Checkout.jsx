@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CartContext from "../../context/Cart/CartContextProvider";
-import UserDataContext from "../../context/UserData/UserDataContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserDataContext from "../../context/UserData/UserDataContextProvider";
 
 
 export default function Checkout() {

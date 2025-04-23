@@ -4,32 +4,30 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllProductData } from "../../API/API";
-import SliderContext from "../../context/SliderData/SliderContext";
-
+import SliderContext from "../../context/SliderData/SliderContextProvider";
+import EmptyProducts from "../../Error/EmptyProduct";
 
 
 export default function AllProduct() {
   const { sliderOpen } = useContext(SliderContext);
 
+  const {data: products, isError, isLoading, refetch} = useQuery({
+    queryKey: ['AllProductData'],
+    queryFn: () => fetchAllProductData()
+  })
+  
   const handleDelete = async (id) => {
     try {
-      const result = await axios.delete(`http://localhost:5000/admin/products/${id}`);
-      if (result.status === 200) {
-        console.log("Product deleted successfully");
-      }
+      await axios.delete(`http://localhost:5000/admin/products/${id}`)
+      .then(() => refetch(), console.log("Product deleted successfully"))
     } catch (error) {
       console.log("Data Deleting Error", error);
     }
   };
 
-  const {data: products, isError, isLoading} = useQuery({
-    queryKey: ['AllProductData'],
-    queryFn: () => fetchAllProductData()
-  })
-
   if(isError) return <div><h1> Error : "Product not Found" </h1></div>
 
-  return (
+  return products?.length > 0 ? (
     <div className={`pt-20 ${sliderOpen ? "pl-64" : "pl-0"} transition-all duration-300`}>
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center px-4 py-10">
         <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -77,5 +75,5 @@ export default function AllProduct() {
         </div>
       </div>
     </div>
-  );
+  ) : <EmptyProducts />
 }

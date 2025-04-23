@@ -1,13 +1,10 @@
-import React, { useContext, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { RingLoader } from 'react-spinners';
-import { wishlist } from "../../API/API";
-import BestSellProduct from "../../components/ProductsAPI/BestSellProduct";
-import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import React, { useContext, useState } from "react";
+import { ShoppingCart, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 import CartContext from "../../context/Cart/CartContextProvider";
 import EmptyWishlist from "../Error/EmptyWishlist";
+import ProductCategory from "../../components/ProductsAPI/ProductCategory";
 
 export default function Wishlist() {
     const navigate = useNavigate()
@@ -15,10 +12,10 @@ export default function Wishlist() {
     const { addToCart } = useContext(CartContext)
 
     const moveAllProductInCart = () => {
-        const data = wishlistItem.map(product => addToCart(product))
-        console.log("data:", data);
+        wishlistItem.map(product => addToCart(product))
         clearWishlist()
     }
+
 
     return wishlistItem.length > 0 ? (
         <div className="px-4 py-6 sm:px-6 lg:px-8 lg:ml-40 lg:mr-30 lg:mb-8">
@@ -60,24 +57,9 @@ export default function Wishlist() {
                         <Trash2 className=" hover:scale-105" />
                     </button>
                 </div>
-            ))
+            )) 
             }
-
-            <div className="mt-10 lg:mt-16">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 mb-6 gap-4">
-                    <div className="flex items-center">
-                        <div className="w-5 h-10 bg-[#DB4444] rounded"></div>
-                        <span className="ml-4 text-[#DB4444] font-semibold">Just For You</span>
-                    </div>
-                    <div className="flex justify-center">
-                        <button onClick={() => navigate('/products')} className="px-12 py-3 cursor-pointer font-semibold bg-white text-black border border-gray-400 hover:text-white rounded hover:bg-[#DB4444] transition">
-                            See All
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <BestSellProduct />
+            <ProductCategory />
         </div>
     ) 
     : <EmptyWishlist />

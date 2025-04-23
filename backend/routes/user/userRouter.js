@@ -6,9 +6,6 @@ const {createHmac} = require('crypto')
 const { generateSalt } = require('../../services/generateSalt')
 const { matchPasswordAndCreateToken } = require('../../services/matchPasswordAndCreateToken')
 
-userRouter.get('/', (req, res)=>{
-    return res.send("Hello i'm working.....")
-})
 
 userRouter.get('/user', async (req, res) => {
     try {
@@ -28,14 +25,6 @@ userRouter.get('/user', async (req, res) => {
 });
 
 
-userRouter.post('/', async(req, res)=> {
-    return res.end()
-})
-
-userRouter.get('/signin', async(req, res)=>{
-    return res.send('signin')
-})
-
 userRouter.post('/signin', async(req, res)=>{
     const {email, password} = req.body
     const [userData] = await db.execute('SELECT * FROM users WHERE email=? and password=?',[email, password])
@@ -44,7 +33,7 @@ userRouter.post('/signin', async(req, res)=>{
 
     try {
         const userToken = await matchPasswordAndCreateToken(email,password)
-        return res.cookie('userToken', userToken).redirect('/')
+        return res.cookie('userToken', userToken, { maxAge: 12 * 60 * 60 * 1000 }).redirect('/')
     } catch (error) {
         console.log("Error While UserCookie generted");
     }
@@ -67,6 +56,9 @@ userRouter.post('/signup', async(req, res)=>{
 })
 
 userRouter.post('/updatePassword', async(req, res)=>{
+
+    if(!req.user) return res.status(401).end()
+
     const {current_password, new_password, salt, password, email} = req.body
     
     const currentPassword = createHmac("sha256",salt).update(current_password).digest('hex')
@@ -83,6 +75,9 @@ userRouter.post('/updatePassword', async(req, res)=>{
 })
 
 userRouter.post('/updatePayment', async(req, res)=>{
+
+    if(!req.user) return res.status(401).end()
+
     const {payment, email} = req.body
     const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
 
@@ -95,6 +90,9 @@ userRouter.post('/updatePayment', async(req, res)=>{
 })
 
 userRouter.post('/updateAddress', async(req, res)=>{
+
+    if(!req.user) return res.status(401).end()
+
     const {defaultAddress, email} = req.body
     const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
 
@@ -107,6 +105,9 @@ userRouter.post('/updateAddress', async(req, res)=>{
 })
 
 userRouter.get('/user/logout', async(req, res)=>{
+
+    if(!req.user) return res.status(401).end()
+        
     return res.clearCookie('userToken').redirect('/')
 })
 

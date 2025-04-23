@@ -14,6 +14,7 @@ import AddEditProduct from './pages/Products/AddEditProduct.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import AllOrders from './pages/Orders/AllOrders.jsx'
 import OrderTrackingPage from './pages/Orders/OrderTrackingPage.jsx'
+import Contact from './pages/Contact/Contact.jsx'
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: 'orders/:orderid',
         element: <OrderTrackingPage />
+      },
+      {
+        path: 'contact',
+        element: <Contact />
       },
       {
         path: '*',

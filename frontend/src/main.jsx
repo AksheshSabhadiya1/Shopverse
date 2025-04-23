@@ -25,7 +25,9 @@ import Orders from './pages/Accountpage/Orders.jsx'
 import PasswordChange from './pages/Accountpage/PasswordChange.jsx'
 import PaymentMethods from './pages/Accountpage/PaymentMethods.jsx'
 import OrderDetails from './pages/Orders/OrderDetails.jsx'
-import OrderTrackingPage from './pages/Orders/OrderTrackingPage.jsx'
+import ProductCategory from './components/ProductsAPI/ProductCategory.jsx'
+import CategoryPage from './components/ProductsAPI/CategoryPage.jsx'
+import AllOrderPage from './pages/Orders/AllOrderPage.jsx'
 
 
 const router = createBrowserRouter([
@@ -77,11 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/orders',
-        element: <OrderDetails />
-      },
-      {
-        path: '/orders/track',
-        element: <OrderTrackingPage />
+        element: <AllOrderPage />
       },
       {
         path: '/cart',
@@ -94,6 +92,14 @@ const router = createBrowserRouter([
       {
         path: '/products/:id',
         element: <ProductDetails />
+      },
+      {
+        path: '/products/category/:category',
+        element: <ProductCategory />
+      },
+      {
+        path: '/products/allCategory/:category',
+        element: <CategoryPage />
       },
       {
         path: '/checkout',

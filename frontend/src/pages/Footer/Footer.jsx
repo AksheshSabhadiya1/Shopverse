@@ -1,3 +1,4 @@
+import { SendHorizontal } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -19,8 +20,8 @@ export default function Footer() {
                             className="bg-black rounded border border-white px-2 py-1 w-full max-w-xs text-white"
                         />
                         </div>
-                        <div className="p-1 bg-black -mx-8">
-                            <img src="/icons/icon-send.png" alt="Send" className="w-5 h-5 cursor-pointer rounded" />
+                        <div className="p-1 relative right-8.5 hover:text-[#DB4444] hover:scale-95 duration-300 bg-black rounded">
+                            <SendHorizontal />
                         </div>
                     </div>
                 </div>

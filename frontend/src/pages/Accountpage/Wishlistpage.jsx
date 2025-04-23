@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import EmptyWishlist from "../Error/EmptyWishlist";

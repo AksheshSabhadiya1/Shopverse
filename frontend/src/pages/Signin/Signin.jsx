@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import UserDataContext from "../../context/UserData/UserDataContext";
+import UserDataContext from "../../context/UserData/UserDataContextProvider";
 import CartContext from "../../context/Cart/CartContextProvider";
 
 
@@ -20,27 +20,30 @@ export default function Signin(){
     
         const { register, handleSubmit, formState, reset, trigger } = form
         const { errors } = formState
-        const nevigate = useNavigate()
-        const {setCurrentUser} = useContext(UserDataContext)
-        const {setCartItem, addToCart} = useContext(CartContext)
+        const navigate = useNavigate()
+        const {setCurrentUser, fetchCurrentUserData} = useContext(UserDataContext)
+        const {setCartItem, addToCart, fetchCart} = useContext(CartContext)
         const sessionData = JSON.parse(sessionStorage.getItem('cartitem'))
 
-        const sesstionDataAddToCart = () => {
+        const sesstionDataAddToCart = async() => {
             if(sessionData){
-                sessionData.map((product)=> addToCart(product))
+                await sessionData.map((product)=> addToCart(product))
                 sessionStorage.removeItem('cartitem')
             }
+        }
+
+        const fetchUserAndCartData = async() => {
+            const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
+            const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
+            userData ? setCurrentUser(userData) : null
+            cartData ? setCartItem(cartData) : []
         }
 
         const validateUser = async(data) => {
             try {
                 await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
-                .finally(()=> {sesstionDataAddToCart(), sessionStorage.removeItem('cartitem')} )
-                const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
-                const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
-                userData ? setCurrentUser(userData) : null
-                cartData ? setCartItem(cartData) : []
-                nevigate('/')
+                .then(() => sesstionDataAddToCart(), sessionStorage.removeItem('cartitem'), fetchCurrentUserData(), fetchCart(), fetchUserAndCartData() )
+                .finally(()=> navigate('/') )
             } catch (error) {
                 console.error("Signin failed", error);
                 reset();

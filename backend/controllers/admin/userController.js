@@ -7,7 +7,7 @@ const getAllUsers = async(req, res)=>{
 }
 
 const getUserById = async(req, res)=>{
-    const [users] = await db.execute('SELECT * FROM users WHERE id=?',[req.params.id])
+    const [users] = await db.execute('SELECT * FROM users WHERE id=?',[parseInt(req.params.id)])
     return res.json(users)
 }
 
@@ -21,7 +21,7 @@ const getToggleApprovedStatus = async(req, res) => {
 
 const deleteUserById = async(req, res)=>{
     try {
-        const [result] = await db.execute('DELETE FROM users WHERE id=?',[req.params.id])
+        const [result] = await db.execute('DELETE FROM users WHERE id=?',[parseInt(req.params.id)])
         if(result.affectedRows > 0){
             console.log("User Deleted Successfully");
             return res.status(200).json({ message: "User deleted successfully" });

@@ -63,3 +63,12 @@ export const fetchAllOrdersData = async() => {
     console.log("Order Data Fetching Error", error);
   }
 }
+
+export const fetchTotalContacts = async() => {
+  try {
+    const {data} = await api.get('/admin/contact', {withCredentials:true})
+    return data
+  } catch (error) {
+    console.log("Contact Data Fetching Error", error);
+  }
+}

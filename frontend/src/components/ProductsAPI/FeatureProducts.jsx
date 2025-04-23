@@ -36,7 +36,7 @@ export default function FeatureProducts() {
                             <div className="absolute bottom-5 left-5">
                                 <h3 className="text-xl font-bold">Women's Collections</h3>
                                 <p className="w-65">Featured woman collections that give you another vibe.</p>
-                                <Link href="#" className="text-white border-b">Shop Now</Link>
+                                <Link to="/products/" className="text-white border-b">Shop Now</Link>
                             </div>
                         </div>
                     </div>
@@ -44,11 +44,11 @@ export default function FeatureProducts() {
                     <div className="flex space-x-8">
                         <div className="w-1/2 bg-black rounded overflow-hidden">
                             <div className="relative">
-                                <img src="/images/speakers.png" alt="Speakers" className="w-auto h-auto object-cover p-6" />
-                                <div className="absolute bottom-3 left-5 text-white">
+                                <img src="/images/speakers.png" alt="Speakers" className="w-full h-auto object-cover p-6" />
+                                <div className="absolute bottom-6 left-5 text-white">
                                     <h3 className="text-xl font-bold">Speakers</h3>
                                     <p>Amazon wireless speakers</p>
-                                    <Link href="#" className="text-white border-b">Shop Now</Link>
+                                    <Link to="/products/amazon_speakers" className="text-white border-b">Shop Now</Link>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ export default function FeatureProducts() {
                                 <div className="absolute bottom-6 left-5 text-white">
                                     <h3 className="text-xl font-bold">Perfume</h3>
                                     <p>GUCCI INTENSE OUD EDP</p>
-                                    <Link href="#" className="text-white border-b">Shop Now</Link>
+                                    <Link to="/products/gucci_perfume" className="text-white border-b">Shop Now</Link>
                                 </div>
                             </div>
                         </div>
