@@ -3,11 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import SliderContext from "../../context/SliderData/SliderContextProvider";
-<<<<<<< HEAD
 import EmptyOrders from "../../Error/EmptyOrders";
 import { User, Mail, Phone } from 'lucide-react'
-=======
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function AllOrders() {
@@ -108,7 +105,7 @@ export default function AllOrders() {
 
         <div className="max-w-full mx-auto p-6 gap-8 ">
           {orderDetails.length > 0 && orderDetails.map(order => (
-            <div className="bg-transparent p-6 text-white border border-gray-200 rounded-lg shadow-lg space-y-5">
+            <div className="bg-transparent p-6 mt-2 text-white border border-gray-200 rounded-lg shadow-lg space-y-5">
               <div className="">
                 <h2 className="text-xl text-[#DB4444] font-bold mb-1">Order ID: #{order.id} </h2>
               </div>

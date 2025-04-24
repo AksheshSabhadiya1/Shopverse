@@ -60,7 +60,7 @@ export default function Home() {
       <ProductSlider />
 
       <div className="my-10 flex justify-center">
-        <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:bg-black duration-300">View All Products</button>
+        <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:scale-97 duration-300">View All Products</button>
       </div>
 
       <div className="border-t border-gray-300 pt-10">
@@ -82,7 +82,7 @@ export default function Home() {
             Best Selling Products
           </p>
           <div className="flex justify-center">
-            <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:scale-97 duration-300">View All</button>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function Home() {
           <p className="text-3xl lg:text-5xl font-bold mt-2">Enhance Your Music Experience</p>
           <SaleClock />
           <div className="mt-6">
-            <button onClick={() => navigate('/products/wireless_speakaers')} className="px-8 py-2 font-semibold bg-[#DB4444] text-white rounded-lg hover:bg-red-700">
+            <button onClick={() => navigate('/products/wireless_speakaers')} className="px-8 py-2 font-semibold bg-[#DB4444] text-white rounded-lg hover:scale-97 duration-300">
               Buy Now
             </button>
           </div>
@@ -120,14 +120,14 @@ export default function Home() {
             Explore Our Products
           </p>
           <div className="flex justify-center">
-            <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All</button>
+            <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:scale-97 duration-300">View All</button>
           </div>
         </div>
       </div>
       <ExpolreProductSlider />
 
       <div className="flex justify-center lg:mt-5">
-        <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:bg-red-700">View All Products</button>
+        <button onClick={() => navigate('/products')} className="px-12 py-3 font-semibold bg-[#DB4444] text-white rounded hover:scale-97 duration-300">View All Products</button>
       </div>
 
       <FeatureProducts />
@@ -146,8 +146,8 @@ export default function Home() {
             icon: <ShieldCheck className="w-8 h-8" />,
             title: "MONEY BACK GUARANTEE",
             desc: "We return money within 30 days"
-          }].map((item, idx) => (
-            <div key={idx} className="w-full max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] rounded-lg hover:text-white transition-shadow text-center">
+          }].map((item, index) => (
+            <div key={index} className="w-full max-w-xs p-6 hover:shadow-md hover:bg-[#DB4444] duration-500 rounded-lg hover:text-white transition-shadow text-center">
               <div className="flex justify-center items-center mb-4">
                 <div className="w-18 h-18 bg-gray-300 rounded-full flex justify-center items-center">
                   <div className="w-13 h-13 bg-black rounded-full text-white flex items-center justify-center">

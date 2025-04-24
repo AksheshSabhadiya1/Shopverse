@@ -10,9 +10,7 @@ export default function Signin(){
 
     const form = useForm({
             defaultValues: {
-                firstname: '',
-                lastname: '',
-                email_phone: '',
+                email: '',
                 password: '',
             },
             mode: 'all',
@@ -32,18 +30,20 @@ export default function Signin(){
             }
         }
 
-        const fetchUserAndCartData = async() => {
-            const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
-            const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
-            userData ? setCurrentUser(userData) : null
-            cartData ? setCartItem(cartData) : []
-        }
 
         const validateUser = async(data) => {
             try {
-                await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
-                .then(() => sesstionDataAddToCart(), sessionStorage.removeItem('cartitem'), fetchCurrentUserData(), fetchCart(), fetchUserAndCartData() )
-                .finally(()=> navigate('/') )
+                console.log(data);
+                const result = await axios.post('http://localhost:5000/signin', data, { withCredentials: true,})
+                console.log(result);
+                    if(sessionData){
+                        sesstionDataAddToCart()
+                    } 
+                    const {data: userData} = await axios.get('http://localhost:5000/user',{ withCredentials: true })
+                    const {data: cartData} = await axios.get('http://localhost:5000/cart',{ withCredentials: true })
+                    userData ? setCurrentUser(userData) : null
+                    cartData ? setCartItem(cartData) : []
+                    navigate('/') 
             } catch (error) {
                 console.error("Signin failed", error);
                 reset();
@@ -55,7 +55,7 @@ export default function Signin(){
                     top: 0,
                     behavior: 'smooth'
                 })
-            },[])
+        },[])
 
 
     return (
@@ -98,8 +98,10 @@ export default function Signin(){
                         >
                             Sign in
                         </button>
-                        <Link to='/signin' className="text-red-500 hover:underline">forgot password?</Link>
-                        
+                        <div className="flex justify-between items-center">
+                        <Link to='/signup' className="text-red-500 hover:underline">forgot password?</Link>
+                        <Link to='/signup' className="text-blue-500 text-right hover:underline">Create new Account?</Link>
+                        </div>
                     </form>
                 </div>
             </div>

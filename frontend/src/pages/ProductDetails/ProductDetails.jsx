@@ -17,7 +17,7 @@ export default function ProductDetails() {
     const [quantity, setQuantity] = useState(1);
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedSize, setSelectedSize] = useState("");
-    const [pincodeFound, SetPincodeFound] = useState('')
+    const [pincodeFound, SetPincodeFound] = useState("")
     const { id } = useParams()
     const { addToCart } = useContext(CartContext)
     const { addToWishlist } = useContext(WishlistContext)

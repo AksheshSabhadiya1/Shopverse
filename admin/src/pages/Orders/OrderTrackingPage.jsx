@@ -1,15 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { useLocation, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import SliderContext from '../../context/SliderData/SliderContextProvider';
 import { Mail, Phone, User } from 'lucide-react';
-=======
-import { useLocation, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import SliderContext from '../../context/SliderData/SliderContextProvider';
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 const OrderTrackingPage = () => {
     const [orderItem, setOrderItem] = useState([]);
@@ -151,9 +145,9 @@ const OrderTrackingPage = () => {
                             </div>
                         ))}
                     </div>
-                <div className="bg-white/10 mx-auto gap-8 p-6 rounded-lg shadow-lg">
+                <div className="bg-white/10 mx-auto gap-8 p-6 rounded-lg shadow-lg pb-20">
                 <h2 className="text-xl text-white font-semibold border-b mb-4 py-4">Ordered Items</h2>
-                <div className="space-y-4">
+                <div className="space-y-4 ">
                     {orderItem.map((item, idx) => (
                         <Link to={`/admin/products/${item.slug}`}>
                         <div key={idx} className="flex gap-4 border-b p-2 border-gray-400 pb-2">

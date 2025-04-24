@@ -16,10 +16,7 @@ const checkoutRouter = require('./routes/user/checkoutRouter')
 const adminOrderRouter = require('./routes/admin/orderRouter')
 const orderRouter = require('./routes/user/orderRouter')
 const wishlistRouter = require('./routes/user/wishlistRouter')
-<<<<<<< HEAD
 const admincontactRouter = require('./routes/admin/contactRouter')
-=======
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 const contactRouter = require('./routes/user/contactRouter')
 
 const corsOptions = {

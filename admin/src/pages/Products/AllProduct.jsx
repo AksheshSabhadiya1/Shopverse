@@ -5,11 +5,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllProductData } from "../../API/API";
 import SliderContext from "../../context/SliderData/SliderContextProvider";
-<<<<<<< HEAD
 import EmptyProducts from "../../Error/EmptyProduct";
-=======
-
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function AllProduct() {

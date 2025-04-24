@@ -13,7 +13,6 @@ const checkAuthCookie = (cookievalue) => {
         } catch (error) {
             console.log("Error Generated during checkAuthCookie", error);
         }
-
         return next()
     }
 }
@@ -30,7 +29,6 @@ const checkAuthAdminCookie = (cookievalue) => {
         } catch (error) {
             console.log("Error Generated during checkAuthAdminCookie", error);
         }
-
         return next()
     }
 }

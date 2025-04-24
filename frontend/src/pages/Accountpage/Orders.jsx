@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-<<<<<<< HEAD
 import { Mail, Phone, User } from "lucide-react";
-=======
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function Orders(props) {
@@ -51,7 +48,7 @@ export default function Orders(props) {
             </h2>
 
         {orderDetails.length > 0 && orderDetails.map(order => (
-        <div className="max-w-7xl mx-auto p-6 gap-8 text-gray-800">
+        <div className="max-w-7xl mx-auto p-6 pt-0 gap-8 text-gray-800">
             <div className="bg-white p-6 rounded-lg shadow-lg space-y-5">
                 <div>
                     <h2 className="text-xl font-bold mb-1">Order ID: #{order.id} </h2>
@@ -91,6 +88,8 @@ export default function Orders(props) {
                                 ? "bg-purple-100 text-purple-700"
                                 : order.order_status === "processing"
                                     ? "bg-blue-100 text-blue-700"
+                                    : order.order_status === "returns"
+                                    ? "bg-red-100 text-red-700"
                                     : "bg-yellow-100 text-yellow-700"
                         }`}>
                         {order.order_status}

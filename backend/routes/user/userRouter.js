@@ -5,9 +5,10 @@ const {Base64} = require('js-base64')
 const {createHmac} = require('crypto')
 const { generateSalt } = require('../../services/generateSalt')
 const { matchPasswordAndCreateToken } = require('../../services/matchPasswordAndCreateToken')
+const { checkAuthCookie } = require('../../middleware/authToken')
 
 
-userRouter.get('/user', async (req, res) => {
+userRouter.get('/user', checkAuthCookie('userToken'), async (req, res) => {
     try {
         const id = req.user?.id;
         if (!id) return res.status(401).json({ error: 'Unauthorized: User not logged in' });
@@ -27,21 +28,19 @@ userRouter.get('/user', async (req, res) => {
 
 userRouter.post('/signin', async(req, res)=>{
     const {email, password} = req.body
-    const [userData] = await db.execute('SELECT * FROM users WHERE email=? and password=?',[email, password])
+    const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
 
     if(!userData) return res.status(401).json({error: "User not Found"})
 
     try {
         const userToken = await matchPasswordAndCreateToken(email,password)
-<<<<<<< HEAD
-        return res.cookie('userToken', userToken, { maxAge: 12 * 60 * 60 * 1000 }).redirect('/')
-=======
-        return res.cookie('userToken', userToken, { maxAge: 24 * 60 * 60 * 1000 }).redirect('/')
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
+        res.cookie('userToken', userToken, { maxAge: 24 * 60 * 60 * 1000 })
+        console.log(userData);
+        return res.json(userData)
     } catch (error) {
         console.log("Error While UserCookie generted");
     }
-    userData.length > 0 ? res.json(userData) : res.status(401).json({ error: "Invalid Email or Password" })
+    return res.status(401).json({ error: "Invalid Email or Password" })
 })
 
 userRouter.post('/signup', async(req, res)=>{
@@ -112,7 +111,7 @@ userRouter.get('/user/logout', async(req, res)=>{
 
     if(!req.user) return res.status(401).end()
         
-    return res.clearCookie('userToken').redirect('/')
+    return res.status(200).clearCookie('userToken').redirect('/')
 })
 
 

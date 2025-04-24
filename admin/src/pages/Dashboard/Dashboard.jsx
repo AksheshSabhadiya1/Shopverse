@@ -3,15 +3,9 @@ import { FaBox, FaUsers } from "react-icons/fa";
 import { PiPackageDuotone } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import {useQuery} from '@tanstack/react-query'
-<<<<<<< HEAD
 import { fetchAllProductData, fetchTotalContacts, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
 import SliderContext from "../../context/SliderData/SliderContextProvider";
 import { TbMessageUser } from "react-icons/tb";
-=======
-import { fetchAllProductData, fetchTotalOrders, fetchTotalUsers } from "../../API/API";
-import SliderContext from "../../context/SliderData/SliderContextProvider";
-
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 
 
 export default function Dashboard() {
@@ -75,7 +69,7 @@ export default function Dashboard() {
               <PiPackageDuotone className="text-purple-400 text-5xl" />
               <div>
                 <h2 className="text-xl font-semibold text-white">Total Orders</h2>
-                <p className="text-3xl font-bold text-purple-300">{orderdata ? orderdata.length : 0}</p>
+                <p className="text-3xl font-bold text-purple-300">2</p>
               </div>
             </div>
           </NavLink>

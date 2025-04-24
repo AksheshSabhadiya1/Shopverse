@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import { Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
-=======
-import { Menu, X, Heart, ShoppingCart, User, Search, User2, ShoppingBag, Star, LogOutIcon } from "lucide-react";
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
 import axios from "axios";
 import FilterContext from "../../context/FilterDropDown/FilterContextProvider";
 import UserDataContext from "../../context/UserData/UserDataContextProvider";
@@ -28,14 +24,13 @@ export default function Header() {
 
     const logoutUser = async () => {
         await axios.get('http://localhost:5000/user/logout', { withCredentials: true })
-<<<<<<< HEAD
-            .then(() => setCurrentUser(null), setUserDropDown(false), setCartItem([]), setSessionItem([]), sessionStorage.removeItem('cartitem'), navigate('/'))
-            .catch(() => console.log("Logout not Done"))
-=======
-            .then(() => setCurrentUser(null))
-            .catch(() => console.log("Logout not Done"))
-            .finally(() => { setUserDropDown(false), setCartItem([]), setSessionItem([]), sessionStorage.removeItem('cartitem'), navigate('/') })
->>>>>>> 0cea7e57c91d7df5ebbf4d4f8986583f1f5736d0
+        .catch(() => console.log("Logout not Done"))
+            setCurrentUser(null)
+            setUserDropDown(false)
+            setCartItem([])
+            setSessionItem([])
+            sessionStorage.removeItem('cartitem')
+            navigate('/')
     }
 
 
@@ -46,6 +41,7 @@ export default function Header() {
 
         return () => clearTimeout(time);
     }, [userDropDown]);
+
 
     return (
         <header className="shadow sticky z-50 top-0">
