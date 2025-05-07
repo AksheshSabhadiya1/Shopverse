@@ -1,11 +1,8 @@
 const {Router} = require('express')
 const contactRouter = Router()
-const db = require('../../config/database')
+const {getContact} = require('../../controllers/admin/contactController')
 
 
-contactRouter.get('/admin/contact', async(req, res)=> {
-    const [contactData] = await db.execute('SELECT * FROM contact')
-    return res.json(contactData)
-})
+contactRouter.get('/admin/contact', getContact)
 
 module.exports = contactRouter

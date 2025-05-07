@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import SliderContext from '../../context/SliderData/SliderContextProvider';
-import { Mail, Phone, User } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Mail, Phone, User } from 'lucide-react';
 
 const OrderTrackingPage = () => {
     const [orderItem, setOrderItem] = useState([]);
@@ -11,6 +11,7 @@ const OrderTrackingPage = () => {
     const { pathname } = useLocation()
     const orderid = pathname.split('/').filter(Boolean)[2]
     const { sliderOpen } = useContext(SliderContext);
+    const navigate = useNavigate()
 
     const form = useForm({
         defaultValues: {
@@ -50,6 +51,12 @@ const OrderTrackingPage = () => {
             <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-20 px-4">
                 <div className="max-w-5xl mx-auto">
                     <div className='flex justify-between border-b border-gray-700 mb-10'>
+                        <button
+                            onClick={()=> navigate('/admin/orders')}
+                            className="bg-[#DB4444] flex items-center h-10 hover:scale-95 text-white font-semibold px-4 rounded transition"
+                            >
+                            <ArrowLeft/> Back
+                        </button>
                         <h2 className="text-3xl font-bold text-center mb-2 text-white  pb-3 w-full max-w-4xl">
                             Order ID: {orderid}</h2>
                         <div className="mb-0">

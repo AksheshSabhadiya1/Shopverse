@@ -1,10 +1,7 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Error() {
-    const {pathname} = useLocation()
-    const path = pathname.split('/').filter(Boolean)
-    console.log(path);
 
     return (
         <div className="flex flex-col bg-gradient-to-br from-black via-gray-900 to-black items-center justify-center h-screen text-center">
@@ -16,8 +13,7 @@ export default function Error() {
                 <Link
                     to="/admin/signin"
                     className="bg-[#DB4444] text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-orange-700 transition duration-300"
-                >
-                    Go to Signin
+                >Go to Signin
                 </Link>
             </div>
         </div>

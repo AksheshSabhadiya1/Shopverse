@@ -12,9 +12,9 @@ const getUserById = async(req, res)=>{
 }
 
 const getToggleApprovedStatus = async(req, res) => {
-    const [users] = await db.execute('SELECT * FROM users WHERE id=?',[req.params.userid])
+    const [[users]] = await db.execute('SELECT * FROM users WHERE id=?',[Number(req.params.userid)])
     if(users){
-        await db.execute('UPDATE users SET approved_status=? WHERE id=?',[!(users.approved_status),req.params.userid])
+        await db.execute('UPDATE users SET approved_status=? WHERE id=?',[!(users.approved_status),Number(req.params.userid)])
     }
     return res.end()
 }

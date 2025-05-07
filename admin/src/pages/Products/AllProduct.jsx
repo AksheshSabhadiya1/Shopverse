@@ -11,7 +11,7 @@ import EmptyProducts from "../../Error/EmptyProduct";
 export default function AllProduct() {
   const { sliderOpen } = useContext(SliderContext);
 
-  const {data: products, isError, isLoading, refetch} = useQuery({
+  const {data: products, isError, refetch} = useQuery({
     queryKey: ['AllProductData'],
     queryFn: () => fetchAllProductData()
   })

@@ -3,13 +3,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import SliderContext from "../../context/SliderData/SliderContextProvider";
-import EmptyOrders from "../../Error/EmptyOrders";
-import { User, Mail, Phone } from 'lucide-react'
+import { User, Mail, Phone, X } from 'lucide-react'
+import OrderNotFound from "../../Error/OrderNotFound";
 
 
 export default function AllOrders() {
   const { sliderOpen } = useContext(SliderContext);
-  const [orderItem, setOrderItem] = useState([])
   const [orderDetails, setOrderDetails] = useState([])
   const { pathname } = useLocation()
   const path = pathname.split('/').filter(Boolean)
@@ -21,22 +20,21 @@ export default function AllOrders() {
     }
   })
 
-  const { register, handleSubmit, trigger, watch, formState } = form
+  const { register, handleSubmit, trigger, watch, reset, formState } = form
   const { errors } = formState
 
   const fetchOrderData = async (filterValue) => {
     try {
       const { data } = await axios.get('http://localhost:5000/admin/orders', { withCredentials: true })
 
-      let filterData = data.orderDetails
-      if (filterValue === 'pending') filterData = await data.filter(product => product.order_status === 'pending')
-      if (filterValue === 'processing') filterData = await data.filter(product => product.order_status === 'processing')
-      if (filterValue === 'shipped') filterData = await data.filter(product => product.order_status === 'shipped')
-      if (filterValue === 'delivered') filterData = await data.filter(product => product.order_status === 'delivered')
-      if (filterValue === 'returns') filterData = await data.filter(product => product.order_status === 'returns')
-
-      setOrderItem(filterData)
-      setOrderDetails(data.ordersDetails)
+      let filterData = data.ordersDetails
+      if (filterValue === 'pending') filterData = await filterData.filter(product => product.order_status === 'pending')
+      if (filterValue === 'processing') filterData = await filterData.filter(product => product.order_status === 'processing')
+      if (filterValue === 'shipped') filterData = await filterData.filter(product => product.order_status === 'shipped')
+      if (filterValue === 'delivered') filterData = await filterData.filter(product => product.order_status === 'delivered')
+      if (filterValue === 'returns') filterData = await filterData.filter(product => product.order_status === 'returns')
+      
+      setOrderDetails(filterData)
     } catch (error) {
       console.log("orderItem fetching error", error);
     }
@@ -47,7 +45,7 @@ export default function AllOrders() {
   const findOrderById = async () => {
     try {
       const { data } = await axios.get(`http://localhost:5000/admin/orders/${orderid}`, { withCredentials: true }).catch(error => console.log(error))
-      setOrderItem(data)
+      setOrderDetails(data.ordersDetails)
     } catch (error) {
       console.log("Order not found", error);
     }
@@ -67,7 +65,8 @@ export default function AllOrders() {
     } else {
       fetchOrderData()
     }
-  }, [pathname])
+  }, [pathname, orderid])
+
 
   return (
     <div className={`pt-20 ${sliderOpen ? "pl-64" : "pl-0"} transition-all duration-300`}>
@@ -91,9 +90,14 @@ export default function AllOrders() {
                 placeholder="Enter your Order ID"
                 name="orderSearchBar"
                 id="orderSearchBar"
-                {...register('orderSearchBar', { required: "OrderID is required" })}
+                required
+                {...register('orderSearchBar')}
                 className="flex-1 w-full bg-gray-100 text-gray-800 px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#DB4444]"
-              /><p className="error ml-2 text-red-500">{errors.orderSearchBar?.message}</p>
+              />
+                <p className="error ml-2 text-red-500">{errors.orderSearchBar?.message}</p>
+              {
+                orderid && <X onClick={()=> reset()} className="text-black bg-transparent w-15 h-12 absolute right-90 rounded-e p-3 " />
+              }
               <button
                 onClick={() => trigger()}
                 className="bg-[#DB4444] hover:scale-95 text-white font-semibold px-6 py-3 rounded-md transition">
@@ -103,10 +107,10 @@ export default function AllOrders() {
           </div>
         }
 
-        <div className="max-w-full mx-auto p-6 gap-8 ">
-          {orderDetails.length > 0 && orderDetails.map(order => (
-            <div className="bg-transparent p-6 mt-2 text-white border border-gray-200 rounded-lg shadow-lg space-y-5">
-              <div className="">
+        <div className="max-w-full mx-auto p-4 px-30 gap-8 ">
+          {orderDetails.length > 0 ? orderDetails.map(order => (
+            <div key={order.order_id} className="bg-transparent p-6 mt-2 text-white border border-gray-200 rounded-lg shadow-lg space-y-5">
+              <div>
                 <h2 className="text-xl text-[#DB4444] font-bold mb-1">Order ID: #{order.id} </h2>
               </div>
 
@@ -162,7 +166,8 @@ export default function AllOrders() {
                 </button>
               </div>
             </div>
-          ))}
+          )) : <OrderNotFound props={orderid} value={path} />
+          }
         </div>
       </div>
     </div>

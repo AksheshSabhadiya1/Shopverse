@@ -40,6 +40,20 @@ export default function AllUser() {
       console.error("Error fetching users:", error);
     }
   };
+  
+  const ToggleApprovedStatus = async(id) => {
+    const userData = users?.find(user => user.id === id)
+    if(userData){
+      const updatedUser = users.map(user => {
+        if(user.id === userData.id){
+          axios.get(`http://localhost:5000/admin/users/toggle/${userData.id}`, {withCredentials:true})
+          return {...userData, approved_status: !(userData.approved_status)}
+        }
+        return user
+      })
+      setUsers(updatedUser)
+    }
+  }
 
   useEffect(() => {
     if (path.includes("approveduser")) {
@@ -49,22 +63,9 @@ export default function AllUser() {
     } else {
       fetchUsers();
     }
-  }, [pathname]);
+  }, [pathname, ToggleApprovedStatus]);
 
-  const ToggleApprovedStatus = async(id) => {
-    const userData = users?.find(user => user.id === id)
-    if(userData){
-      const updatedUser = users.map(user => {
-        if(user.id === userData.id){
-          return {...userData, approved_status: !(userData.approved_status)}
-        }
-        return user
-      })
-      setUsers(updatedUser)
-      axios.get(`http://localhost:5000/admin/users/toggle/${userData.id}`, {withCredentials:true})
-    }
-  }
-
+  
   return (
     <div className={`pt-15 ${sliderOpen ? "pl-64" : "pl-0"}`}>
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center p-6">
