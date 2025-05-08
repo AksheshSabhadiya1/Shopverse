@@ -94,7 +94,7 @@ export default function Home() {
           <p className="text-3xl lg:text-5xl font-bold mt-2">Enhance Your Music Experience</p>
           <SaleClock />
           <div className="mt-6">
-            <button onClick={() => navigate('/products/wireless_speakaers')} className="px-8 py-2 font-semibold bg-[#DB4444] text-white rounded-lg hover:scale-97 duration-300">
+            <button onClick={() => navigate('/products/wireless_headphones')} className="px-8 py-2 font-semibold bg-[#DB4444] text-white rounded-lg hover:scale-97 duration-300">
               Buy Now
             </button>
           </div>

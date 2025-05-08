@@ -25,7 +25,7 @@ export default function ProductDetails() {
     const navigate = useNavigate()
 
 
-    const { data } = useQuery({
+    const { data, refetch } = useQuery({
         queryKey: ['productDetails', id],
         queryFn: () => FindProductById(id)
     });
@@ -45,6 +45,10 @@ export default function ProductDetails() {
         }
     };
 
+    useEffect(()=>{
+        refetch()
+    },[addToWishlist])
+
     useEffect(() => {
         window.scrollTo({
             top: 0,
@@ -60,7 +64,7 @@ export default function ProductDetails() {
                         <div className="border border-gray-200 rounded-lg p-8 flex justify-center items-center bg-white h-auto">
                             <div className="absolute top-50 left-45">
                                 <button onClick={()=> userToken ? addToWishlist(product) : navigate('/signin')}>
-                                    <Heart className="hover:text-red-500" />
+                                    <Heart className={`${product.isFavourite === 1 ? "text-red-500" : "text-black" } hover:text-red-500`} />
                                 </button>
                             </div>
                             <img src={`http://localhost:5000/uploads/products/${product.image}`} alt={product.produtname} className="w-full max-h-[500px] object-contain" />

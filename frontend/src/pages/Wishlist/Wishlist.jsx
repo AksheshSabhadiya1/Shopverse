@@ -5,6 +5,7 @@ import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 import CartContext from "../../context/Cart/CartContextProvider";
 import EmptyWishlist from "../Error/EmptyWishlist";
 import ProductCategory from "../../components/ProductsAPI/ProductCategory";
+import Swal from "sweetalert2";
 
 
 export default function Wishlist() {
@@ -13,9 +14,49 @@ export default function Wishlist() {
     const { addToCart } = useContext(CartContext)
 
     const moveAllProductInCart = () => {
-        wishlistItem.map(product => addToCart(product))
-        clearWishlist()
+        Swal.fire({
+            title: "Are you want to move products into cart?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Move it!"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                wishlistItem.map(product => addToCart(product))
+                clearWishlist()
+                Swal.fire({
+                    title: "All Products Moved Successfully!",
+                    icon: "success"
+                });
+            }
+        });
     }
+
+    const clearProductsWishlist = () => {
+        Swal.fire({
+            title: "Are you want to clear wishlist?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, clear it!"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                clearWishlist()
+                Swal.fire({
+                    title: "All Products Removed Successfully!",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
+    const handleWishlist = async (product) => {
+        await addToCart(product)
+        await removeFromWishlist(product.id)
+    }
+
 
 
     return wishlistItem.length > 0 ? (
@@ -24,7 +65,7 @@ export default function Wishlist() {
                 <button onClick={() => moveAllProductInCart()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
                     Move All To Cart
                 </button>
-                <button onClick={() => clearWishlist()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
+                <button onClick={() => clearProductsWishlist()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
                     Clear Wishlist
                 </button>
             </div>
@@ -49,17 +90,17 @@ export default function Wishlist() {
                     <span className="text-[#DB4444] text-lg font-semibold">{product.stock_count > 0 ? <span className="text-green-500 ml-4">In Stock</span> : <span className="text-red-500 ml-4">Out of Stock</span>}</span>
                     <div className="flex justify-center items-center space-x-2">
                         {
-                            product.stock_count > 0 ? 
-                            <button
-                                onClick={() => { addToCart(product), removeFromWishlist(product.id) }}
-                                className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
-                                <ShoppingCart className="me-2 duration-300" /> Add to Cart
-                            </button> : 
-                            <button
-                                onClick={() => navigate('/contact')}
-                                className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] font-semibold hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
-                                <Headset className="me-2 h-5 duration-300" /> Contact us
-                            </button>
+                            product.stock_count > 0 ?
+                                <button
+                                    onClick={() => handleWishlist(product)}
+                                    className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
+                                    <ShoppingCart className="me-2 duration-300" /> Add to Cart
+                                </button> :
+                                <button
+                                    onClick={() => navigate('/contact')}
+                                    className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] font-semibold hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
+                                    <Headset className="me-2 h-5 duration-300" /> Contact us
+                                </button>
                         }
 
                     </div>

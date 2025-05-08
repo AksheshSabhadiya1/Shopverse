@@ -12,7 +12,7 @@ export default function Breadcrumb() {
         <nav className="flex flex-wrap items-center text-sm text-gray-500 py-10 -mb-10 px-4 lg:px-4 md:px-8 w-full max-w-screen-xl mx-auto">
 
             {path.length > 0 && (
-                <Link to="/" className="hover:text-orange-500 transition font-bold">Home</Link>
+                <Link to="/" className="hover:text-[#DB4444] transition font-bold">Home</Link>
             )
             }
 
@@ -30,7 +30,7 @@ export default function Breadcrumb() {
                             <NavLink
                                 to={breacrumbs}
                                 className={({ isActive }) =>
-                                    `${isActive ? "text-gray-500 font-bold" : "text-gray-600"} capitalize hover:text-orange-500 transition`
+                                    `${isActive ? "text-gray-500 font-bold" : "text-gray-600"} capitalize hover:text-[#DB4444] transition`
                                 }
                             >
                                 {name.replaceAll('_',' ')}

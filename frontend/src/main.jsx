@@ -102,6 +102,10 @@ const router = createBrowserRouter([
         element: <CategoryPage />
       },
       {
+        path: '/products/allCategory',
+        element: <AllProductsPage />
+      },
+      {
         path: '/checkout',
         element: <Checkout />
       },

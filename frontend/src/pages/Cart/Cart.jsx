@@ -47,6 +47,25 @@ export default function Cart() {
         }
     }
 
+    const clearProductsCart = () => {
+            Swal.fire({
+                title: "Are you want to clear cart?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, clear it!"
+            }).then(async(result) => {
+                if (result.isConfirmed) {
+                    clearCart()
+                    Swal.fire({
+                        title: "All Products Removed Successfully!",
+                        icon: "success"
+                    });
+                }
+            });
+    }
+
     useEffect(() => {
         window.scrollTo({
             top: 0,
@@ -61,7 +80,7 @@ export default function Cart() {
                 <button onClick={() => navigate('/products')} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
                     Contine Shopping
                 </button>
-                <button onClick={() => clearCart()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
+                <button onClick={() => clearProductsCart()} className="mb-4 px-6 py-3 outline bg-white cursor-pointer text-black rounded hover:bg-[#DB4444] hover:text-white transition duration-300">
                     Clear Cart
                 </button>
             </div>

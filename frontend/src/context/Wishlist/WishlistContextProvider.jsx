@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const WishlistContext = createContext()
 
@@ -24,7 +25,13 @@ export const WishlistContextProvider = ({children}) => {
     const addToWishlist = async(product) => {
         try {
             await axios.post('http://localhost:5000/wishlist/addToWishlist', product , {withCredentials:true})
-            .catch()
+            .then(res => Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: res.data,
+                showConfirmButton: false,
+                timer: 1500
+            }))            
         } catch (error) {
             console.log("Add to wishlist failed", error);
         }
