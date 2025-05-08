@@ -23,7 +23,7 @@ export default function ProductCategory({ props }) {
     const ProductSliderScrollRight = () =>
         sliderRef.current?.scrollBy({ left: 300, behavior: "smooth" });
 
-    const { data, isError, isLoading, error } = useQuery({
+    const { data, isError, isLoading, error, refetch } = useQuery({
         queryKey: ["Categoryproducts"],
         queryFn: () => props ? FindProductByCategory(props) : BestProduct(),
     });
@@ -34,6 +34,10 @@ export default function ProductCategory({ props }) {
             behavior: 'smooth'
         })
     }, [])
+
+    useEffect(()=>{
+        refetch()
+    },[addToWishlist])
 
     if (isLoading)
         return (
@@ -85,7 +89,7 @@ export default function ProductCategory({ props }) {
                                 <div className="relative">
                                     <div className="absolute top-2 right-2 cursor-pointer w-8 p-1.5 z-10">
                                         <button onClick={() => userToken ? addToWishlist(product) : navigate('/signin')}>
-                                            <Heart className="hover:text-red-500" />
+                                            <Heart className={`${product.isFavourite === 1 ? "text-red-500" : "text-black" } hover:text-red-500`} />
                                         </button>
                                     </div>
                                     <div className="absolute top-10 right-2 cursor-pointer w-8 p-1.5 z-10">

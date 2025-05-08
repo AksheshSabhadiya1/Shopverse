@@ -1,9 +1,10 @@
 const db = require("../../config/database");
 const { Base64 } = require("js-base64");
 
+
 const getOrders =  async (req, res) => {
 
-    const [ordersDetails] = await db.execute("select * from checkout c join orders o on c.id = o.checkout_id")
+    const [ordersDetails] = await db.execute("select * from checkout c join orders o on c.id = o.checkout_id where o.user_id=?",[Number(req.user.id)])
     const [products] = await db.execute("Select * from products")
     let allProducts = [];
 

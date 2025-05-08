@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Mail, Phone, User } from "lucide-react";
+import EmptyOrders from "../Error/EmptyOrders";
 
 
 export default function Orders(props) {
@@ -19,7 +20,7 @@ export default function Orders(props) {
     
     const fetchOrderData = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/orders').catch((error) => console.log(error))
+            const { data } = await axios.get('http://localhost:5000/orders',{withCredentials:true}).catch((error) => console.log(error))
             setOrderDetails(data.ordersDetails)
             setOrderItems(getQuantity(data.ordersDetails,data.orderItems))
         } catch (error) {
@@ -47,7 +48,7 @@ export default function Orders(props) {
                 Your Orders
             </h2>
 
-        {orderDetails.length > 0 && orderDetails.map(order => (
+        {orderDetails.length > 0 ? orderDetails.map(order => (
         <div className="max-w-7xl mx-auto p-6 pt-0 gap-8 text-gray-800">
             <div className="bg-white p-6 rounded-lg shadow-lg space-y-5">
                 <div>
@@ -109,7 +110,8 @@ export default function Orders(props) {
                 </div>
             </div>
         </div>
-    ))}
-        </div>
+    )) : <EmptyOrders />
+    } 
+    </div>
     )
 }

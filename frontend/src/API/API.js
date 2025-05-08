@@ -66,12 +66,3 @@ export const FindProductByCategory = async (props) => {
         console.log("Product Not Found", error);
     }
 }
-
-export const FindAllOrders = async() => {
-    try {
-        const data = await api.get('/orders')
-        console.log(data);
-    } catch (error) {
-        console.log("Product Not Found", error);
-    }
-}

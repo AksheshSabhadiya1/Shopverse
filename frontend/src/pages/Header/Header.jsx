@@ -16,7 +16,7 @@ export default function Header() {
     const { filterMenu, setFilterMenu } = useContext(FilterContext);
     const { currentUser, setCurrentUser } = useContext(UserDataContext);
     const { cartItem, setCartItem, setSessionItem, sessionItem } = useContext(CartContext)
-    const { wishlistItem } = useContext(WishlistContext)
+    const { wishlistItem, setWishlistItem } = useContext(WishlistContext)
     const navigate = useNavigate()
     const { pathname } = useLocation();
     const path = pathname.split("/").filter(Boolean).toString();
@@ -29,6 +29,7 @@ export default function Header() {
             setUserDropDown(false)
             setCartItem([])
             setSessionItem([])
+            setWishlistItem([])
             sessionStorage.removeItem('cartitem')
             navigate('/')
     }

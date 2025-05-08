@@ -4,7 +4,7 @@ const { createTokenForUser, createTokenForAdmin } = require('./createToken')
 
 const matchPasswordAndCreateToken = async (email, password) => {
     const [[user]] = await db.execute('SELECT * FROM users WHERE email=?', [email])
-    
+
     if(!user) throw new Error('User Not Found!')
 
     const salt = user.salt
@@ -12,7 +12,6 @@ const matchPasswordAndCreateToken = async (email, password) => {
     const userPassword = createHmac("sha256", salt).update(password).digest('hex')
 
     if(hashPassword !== userPassword ) throw new Error('Incorrect Email or Password')
-
     const userToken = createTokenForUser(user)
     return userToken
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import EmptyCancellations from "../Error/EmptyCancellations";
 
 
 export default function Cancellations(props) {
@@ -64,7 +65,7 @@ export default function Cancellations(props) {
                                 </div>
                             </div>
                         </div>
-                    )) : <div>Cancel Product Not Found</div>
+                    )) : <EmptyCancellations />
                 }
             </div>
         </div>

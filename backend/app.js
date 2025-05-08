@@ -18,6 +18,10 @@ const orderRouter = require('./routes/user/orderRouter')
 const wishlistRouter = require('./routes/user/wishlistRouter')
 const admincontactRouter = require('./routes/admin/contactRouter')
 const contactRouter = require('./routes/user/contactRouter')
+const { authGoogleRouter, passport} = require('./middleware/authGoogle')
+const { createTokenForUser } = require('./services/createToken')
+const { matchPasswordAndCreateToken } = require('./services/matchPasswordAndCreateToken')
+
 
 const corsOptions = {
     origin: [process.env.frontend_url, process.env.admin_url],
@@ -31,6 +35,33 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(checkAuthCookie('userToken'))
 app.use(checkAuthAdminCookie('adminToken'))
+app.use(authGoogleRouter)
+
+app.get("/auth/google", passport.authenticate("google",{
+    scope: ["profile", "email"]
+}))
+
+app.get("/auth/google/callback", (req, res, next) => {
+    passport.authenticate("google", async (err, user) => {
+        if (err || !user) {
+            return res.redirect("http://localhost:5173/signin");
+        }
+
+        req.logIn(user, (err) => {
+            if (err) return res.redirect("http://localhost:5173/signin");
+
+            const userToken = createTokenForUser(user)
+            res.cookie("userToken", userToken, {
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+
+            return res.redirect("http://localhost:5173");
+        });
+    })(req, res, next);
+});
+
+
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/admin', adminRouter)
 app.use('/admin/users', adminUserRouter)

@@ -26,10 +26,14 @@ export default function AllProductsPage() {
     }, [])
 
 
-    const { data, isLoading, isError, error } = useQuery({
+    const { data, isLoading, isError, error, refetch } = useQuery({
         queryKey: ["exploreProduct"],
         queryFn: () => FetchProducts(),
     });
+
+    useEffect(()=>{
+        refetch()
+    },[addToWishlist])
 
 
     useEffect(() => {
@@ -79,7 +83,7 @@ export default function AllProductsPage() {
                                             <div className="relative">
                                                 <div className="absolute top-2 right-2 cursor-pointer w-8 p-1.5 z-10">
                                                     <button onClick={() => userToken ? addToWishlist(product) : navigate('/signin')}>
-                                                        <Heart className="hover:text-red-500" />
+                                                        <Heart className={`${product.isFavourite === 1 ? "text-red-500" : "text-black" } hover:text-red-500`} />
                                                     </button>
                                                 </div>
                                                 <div className="absolute top-10 right-2 cursor-pointer w-8 p-1.5 z-10">

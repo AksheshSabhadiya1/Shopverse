@@ -6,7 +6,7 @@ const getContactData = async(req, res)=>{
 
     const {email, firstname, lastname, mobile, message } = req.body
     const [[userData]] = await db.execute('SELECT id as user_id FROM users WHERE email=?',[email])
-    const uniqueID = Math.floor(Math.random()* 1e16)
+    const uniqueID = Math.floor(Math.random()* 1e6)
     
     if(userData){
         await db.execute('INSERT INTO contact (id, user_id, firstname, lastname, email, mobile, message) VALUES (?,?,?,?,?,?,?)' ,[uniqueID,userData.user_id, firstname, lastname, email, mobile, message])

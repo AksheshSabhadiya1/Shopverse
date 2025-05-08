@@ -18,7 +18,7 @@ export default function EmptyWishlist() {
             <span className="text-blue-500 text-base font-semibold mb-4">Make a Wish!</span>
             <button
                 onClick={() => navigate('/products')}
-                className="bg-[#DB4444] text-white px-5 py-2 mb-15 rounded hover:bg-red-600 transition"
+                className="bg-[#DB4444] text-white px-5 py-2 mb-15 rounded hover:scale-98 transition duration-300"
             > Start Shopping
             </button>
         </div>

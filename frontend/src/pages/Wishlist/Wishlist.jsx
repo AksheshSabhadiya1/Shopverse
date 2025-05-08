@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { ShoppingCart, Trash2 } from "lucide-react";
+import { Headset, ShoppingCart, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import WishlistContext from "../../context/Wishlist/WishlistContextProvider";
 import CartContext from "../../context/Cart/CartContextProvider";
 import EmptyWishlist from "../Error/EmptyWishlist";
 import ProductCategory from "../../components/ProductsAPI/ProductCategory";
+
 
 export default function Wishlist() {
     const navigate = useNavigate()
@@ -47,20 +48,29 @@ export default function Wishlist() {
                     <span className="text-lg">₹{product.sellingprice}</span>
                     <span className="text-[#DB4444] text-lg font-semibold">{product.stock_count > 0 ? <span className="text-green-500 ml-4">In Stock</span> : <span className="text-red-500 ml-4">Out of Stock</span>}</span>
                     <div className="flex justify-center items-center space-x-2">
-                        <button
-                            onClick={() => { addToCart(product), removeFromWishlist(product.id) }}
-                            className={`w-58 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
-                            <ShoppingCart className="me-2 duration-300" /> Add to Cart
-                        </button>
+                        {
+                            product.stock_count > 0 ? 
+                            <button
+                                onClick={() => { addToCart(product), removeFromWishlist(product.id) }}
+                                className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
+                                <ShoppingCart className="me-2 duration-300" /> Add to Cart
+                            </button> : 
+                            <button
+                                onClick={() => navigate('/contact')}
+                                className={`w-45 bg-white flex items-center border justify-center relative left-2.5 text-black py-2 cursor-pointer rounded hover:bg-[#DB4444] font-semibold hover:text-white transition-all duration-500 ease-in-out opacity-100 -top-10" `}>
+                                <Headset className="me-2 h-5 duration-300" /> Contact us
+                            </button>
+                        }
+
                     </div>
                     <button onClick={() => removeFromWishlist(product.id)} className="mx-auto hover:bg-red-500 hover:text-white transition-all duration-300 flex p-2 rounded-full">
                         <Trash2 className=" hover:scale-105" />
                     </button>
                 </div>
-            )) 
+            ))
             }
             <ProductCategory />
         </div>
-    ) 
-    : <EmptyWishlist />
+    )
+        : <EmptyWishlist />
 }

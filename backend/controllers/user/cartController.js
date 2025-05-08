@@ -13,7 +13,7 @@ const addToCart = async(req, res)=>{
     if(req.user){
         const {id} = req.body
         const [cartItem] = await db.execute('SELECT * FROM cart WHERE user_id=? AND product_id=?',[req.user.id,id])
-        const uniqueID = Math.floor(Math.random() * 1e16)
+        const uniqueID = Math.floor(Math.random() * 1e6)
 
         if(cartItem.length > 0){
             await db.execute('UPDATE cart SET quantity = quantity + ? WHERE user_id=? AND product_id=?',[1,req.user.id,id])

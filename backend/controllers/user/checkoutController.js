@@ -5,8 +5,8 @@ const postCheckout = async(req, res)=>{
     if(!req.user) return res.status(401).end()
 
     const {firstname, lastname, floor, address, city, pincode, country, email, mobile, isSaveInfo, paymentType, subtotal, shippingCharge, total, products} = req.body
-    const uniqueID = Math.floor(Math.random() * 1e16)
-    const uniqueID2 = Math.floor(Math.random() * 1e16) 
+    const uniqueID = Math.floor(Math.random() * 1e6)
+    const uniqueID2 = Math.floor(Math.random() * 1e6) 
     const paymentStatus = paymentType === 'Bank' ? "prepaid" : "unpaid";
         
 

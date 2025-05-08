@@ -9,7 +9,11 @@ const getAdminHomepage = async(req, res)=>{
 }
 
 const currentAdminData = async(req, res) => {
-    const id = req.admin ? req.admin.id : null
+    
+    if(!req.admin) return res.redirect('/admin/signin')
+    
+    const id = req.admin.id
+
     const [[admindata]] = await db.execute('SELECT * FROM admin WHERE id=?',[id])
     res.json(admindata)
     return admindata
@@ -41,7 +45,7 @@ const postSignin = async (req, res)=>{
 const postSignup = async (req, res)=>{
     const {firstname,lastname,email,mobile,password} = req.body
     const {salt, hashPassword} = await generateSalt(password)
-    const uniqueID = Math.floor(Math.random() * 1e16)
+    const uniqueID = Math.floor(Math.random() * 1e6)
     await db.execute('INSERT INTO admin (id, firstname,lastname,email,mobile,password,salt) VALUES (?,?,?,?,?,?,?)' ,[uniqueID, firstname, lastname, email, mobile, hashPassword,salt])
     return res.end()
 }

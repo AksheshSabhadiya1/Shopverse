@@ -23,29 +23,26 @@ export default function Breadcrumb() {
 
         return (
             <span key={url} className="flex items-center">
+                {isLast ? (<span className="text-[#DB4444] font-semibold capitalize">{label}</span>)
+                    :
+                    (path.includes('signin') || path.includes('signup'))
+                        ? <span className="text-white/80 font-semibold capitalize">{label}</span>
+                        : (
+                            <NavLink
+                                to={url}
+                                className={({ isActive }) =>
+                                    `${isActive ? "text-white/80 underline font-semibold" : "text-gray-600"} capitalize hover:text-[#DB4444] transition`
+                                }> {label}
+                            </NavLink>
+                        )}
                 <span className="mx-2 text-gray-500">/</span>
-                {isLast ? (
-                    <span className="text-[#DB4444] font-semibold capitalize">{label}</span>
-                ) : (
-                    <NavLink
-                        to={url}
-                        className={({ isActive }) =>
-                            `${isActive ? "text-white/80 underline font-semibold" : "text-gray-600"} capitalize hover:text-[#DB4444] transition`
-                        }
-                    >
-                        {label}
-                    </NavLink>
-                )}
             </span>
         );
     });
 
     return (
-        <nav className="flex flex-wrap items-center text-sm text-white/80 py-0 px-4 lg:mx-8 md:px-6 w-full max-w-screen-xl mx-auto">
-            <Link to="/admin" className="hover:text-[#DB4444] transition underline font-medium">
-                Home
-            </Link>
+        <nav className="flex flex-wrap items-center text-sm text-white/80 py-0 px-4 lg:mx-4 md:px-6 w-full max-w-screen-xl mx-auto">
             {breadcrumbs}
         </nav>
-    );
+    )
 }

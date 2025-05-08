@@ -8,18 +8,18 @@ const UserDataContext = React.createContext()
 export const UserDataContextProvider = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState(null)
-
+    
     const fetchCurrentUserData = () => {
         try {
             const token = Cookies.get('userToken')
-
+            
             if(token){
                 axios.get('http://localhost:5000/user',{ withCredentials: true })
                 .then(res => setCurrentUser(res.data || []))
                 .catch(()=> setCurrentUser(null))
             }
         } catch (error) {
-            console.log("User Not Found!!");
+            console.log("User Not Found!!", error);
         }
     }
 

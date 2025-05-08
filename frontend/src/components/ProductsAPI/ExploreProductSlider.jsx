@@ -18,7 +18,7 @@ export default function ExpolreProductSlider() {
     const userToken = Cookies.get('userToken') || null
 
 
-    const { data, isLoading, isError, error } = useQuery({
+    const { data, isLoading, isError, error, refetch } = useQuery({
         queryKey: ['exploreProduct'],
         queryFn: () => ExploreProducts()
     })
@@ -30,6 +30,9 @@ export default function ExpolreProductSlider() {
         })
     }, [])
 
+    useEffect(()=>{
+        refetch()
+    },[addToWishlist])
 
     if (isLoading) return <div className="flex justify-center items-center m-50"><RingLoader color="#DB4444" /></div>
     if (isError) return <div><h1> Error : {error.message || "Something Went Wrong!!"} </h1></div>
@@ -50,7 +53,7 @@ export default function ExpolreProductSlider() {
                                 <div className="relative">
                                     <div className="absolute top-2 right-2 cursor-pointer w-8 p-1.5 z-10">
                                         <button onClick={() => userToken ? addToWishlist(product) : navigate('/signin')}>
-                                            <Heart className="hover:text-red-500" />
+                                            <Heart className={`${product.isFavourite === 1 ? "text-red-500" : "text-black" } hover:text-red-500`} />
                                         </button>
                                     </div>
                                     <div className="absolute top-10 right-2 cursor-pointer w-8 p-1.5 z-10">

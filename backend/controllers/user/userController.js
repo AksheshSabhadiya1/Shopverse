@@ -1,5 +1,4 @@
 const db = require('../../config/database')
-const {Base64} = require('js-base64')
 const {createHmac} = require('crypto');
 const { matchPasswordAndCreateToken } = require('../../services/matchPasswordAndCreateToken');
 const { generateSalt } = require('../../services/generateSalt');
@@ -31,7 +30,6 @@ const userSignin = async(req, res)=>{
     try {
         const userToken = await matchPasswordAndCreateToken(email,password)
         res.cookie('userToken', userToken, { maxAge: 24 * 60 * 60 * 1000 })
-        console.log(userData);
         return res.json(userData)
     } catch (error) {
         console.log("Error While UserCookie generted");
@@ -42,7 +40,7 @@ const userSignin = async(req, res)=>{
 const userSignup = async(req, res)=>{
     const {firstname, lastname, email, mobile, password} = req.body
     const [[userData]] = await db.execute('SELECT * FROM users WHERE email=?',[email])
-    const uniqueID = Math.floor(Math.random() * 1e16)
+    const uniqueID = Math.floor(Math.random() * 1e6)
     if(userData){
         const {gender, address} = req.body
         await db.execute('UPDATE users SET firstname=? ,lastname=?, email=?, mobile=?, gender=?, address=? WHERE email=?',[firstname, lastname, email, mobile, gender, address, email])
