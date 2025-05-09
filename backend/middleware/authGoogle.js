@@ -8,7 +8,7 @@ const {generateSalt} = require('../services/generateSalt')
 
 authGoogleRouter.use(
     session({
-        secret: "52335fdssdf543dfs",
+        secret: process.env.client_session_secret,
         resave: false,
         saveUninitialized: true,
     })
@@ -17,7 +17,7 @@ authGoogleRouter.use(
 authGoogleRouter.use(passport.initialize());
 authGoogleRouter.use(passport.session());
 
-passport.use(
+passport.use("google-user",
     new OAuth20Strategy(
         {
             clientID: process.env.client_id,

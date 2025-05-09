@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useLocation, Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react"; 
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { LogOut, Menu, User, X } from "lucide-react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
@@ -9,20 +9,33 @@ import AdminDataContext from "../../context/AdminData/AdminDataContextProvider";
 
 export default function Header() {
     const { sliderOpen, setSliderOpen } = useContext(SliderContext);
-    const [adminDropDown, setAdminDropDown] = useState(false)
+    const [adminDropDown, setAdminDropDown] = useState(false);
     const { pathname } = useLocation();
-    const navigate = useNavigate()
-    const path = pathname.split("/").filter(Boolean)[1]
+    const navigate = useNavigate();
+    const path = pathname.split("/").filter(Boolean)[1];
 
-    const {currentAdmin, setCurrentAdmin} = useContext(AdminDataContext)
+    const { currentAdmin, setCurrentAdmin } = useContext(AdminDataContext);
 
-    const logoutAdmin = async() => {
-        await axios.get('http://localhost:5000/admin/logout',{ withCredentials: true })
-        .then(() => setCurrentAdmin(null))
-        .catch(()=> console.log("Logout not Done"))
-        .finally(()=> {setAdminDropDown(false), navigate('/admin/signin')} )
-    }
+    const logoutAdmin = async () => {
+        await axios
+            .get('http://localhost:5000/admin/logout', { withCredentials: true })
+            .then(() => setCurrentAdmin(null))
+            .catch(() => console.log("Logout not Done"))
+            .finally(() => { setAdminDropDown(false), navigate('/admin/signin'); });
+    };
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setSliderOpen(false);
+            }
+        };
+    
+        handleResize();
+    
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [setSliderOpen]);
 
     return (
         <div className="flex w-full fixed top-0 z-50">
@@ -41,92 +54,77 @@ export default function Header() {
                         {sliderOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
 
-                    <nav className="lg:flex hidden space-x-4 lg:ml-5 items-center">
+                    <nav className="hidden lg:flex space-x-4 lg:ml-5 items-center w-full">
                         {path === "signin" || path === "signup" ? (
                             <div className="flex gap-3">
                                 <NavLink
                                     to="/admin/signin"
                                     className={({ isActive }) =>
-                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Signin
                                 </NavLink>
                                 <NavLink
                                     to="/admin/signup"
                                     className={({ isActive }) =>
-                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Signup
                                 </NavLink>
                             </div>
                         ) : (
-                            <div className="flex md:flex lg:flex justify-between mx-auto items-center w-full">
+                            <div className="flex md:flex lg:flex justify-between items-center w-full">
                                 <div className="space-x-2 flex">
                                     <NavLink
                                         to="/admin"
                                         className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? path === "products" || path === "users" || path === 'orders' || path === 'contact' ? "text-white hover:bg-blue-500" : "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
+                                            `px-3 py-1 rounded transition ${isActive ? (path === "products" || path === "users" || path === 'orders' || path === 'contact' ? "text-white hover:bg-blue-500" : "bg-[#DB4444] text-white") : "text-white hover:bg-blue-500"}`}>
                                         Dashboard
                                     </NavLink>
                                     <NavLink
                                         to="/admin/products"
                                         className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
+                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                         Products
                                     </NavLink>
                                     <NavLink
                                         to="/admin/users"
                                         className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
+                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                         Users
                                     </NavLink>
                                     <NavLink
                                         to="/admin/orders"
                                         className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
+                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                         Orders
                                     </NavLink>
                                     <NavLink
                                         to="/admin/contact"
                                         className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
-                                        Conatct
+                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
+                                        Contact
                                     </NavLink>
                                 </div>
-                                <div className={`${adminDropDown && "bg-[#DB4444] text-white"} w-8 h-8 flex items-center justify-center rounded-full absolute right-5 `}>
+                                <div className={`${adminDropDown && "bg-[#DB4444] text-white"} w-8 h-8 flex items-center justify-center rounded-full absolute right-5`}>
                                     <button onClick={() => setAdminDropDown(!adminDropDown)}>
                                         <User className="text-white" />
                                     </button>
                                 </div>
-                                {
-                                    currentAdmin &&
-                                <div
-                                    className={`absolute right-0 md:right-0 top-12 w-28 sm:w-46 md:w-54 bg-white text-black divide-y divide-gray-100 rounded shadow-lg transition-all duration-300 ${adminDropDown ? "block" : "hidden"
-                                        }`}
-                                >
-                                    <div className="px-4 py-3 text-sm">
-                                        <div className="font-semibold">{currentAdmin.firstname} {currentAdmin.lastname}</div>
-                                        <div className="font-medium truncate text-gray-500">{currentAdmin.email}</div>
-                                    </div>
-                                    <div className="mt-auto">
-                                        <button onClick={()=> logoutAdmin()} className="w-full cursor-pointer flex items-center gap-4 px-4 py-3 bg-red-500 hover:bg-red-700 hover:text-white rounded-b transition-all">
+                                {currentAdmin && (
+                                    <div
+                                        className={`absolute right-0 md:right-0 top-12 w-28 sm:w-46 md:w-54 bg-white text-black divide-y divide-gray-100 rounded shadow-lg transition-all duration-300 ${adminDropDown ? "block" : "hidden"}`}>
+                                        <div className="px-4 py-3 text-sm">
+                                            <div className="font-semibold">{currentAdmin.firstname} {currentAdmin.lastname}</div>
+                                            <div className="font-medium truncate text-gray-500">{currentAdmin.email}</div>
+                                        </div>
+                                        <div className="mt-auto">
+                                            <button
+                                                onClick={() => logoutAdmin()}
+                                                className="w-full cursor-pointer flex items-center gap-4 px-4 py-3 bg-red-500 hover:bg-red-700 hover:text-white rounded-b transition-all">
                                                 <LogOut className="sidebar-icon" /> <span>Logout</span>
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                }
+                                )}
                             </div>
                         )}
                     </nav>
@@ -137,17 +135,13 @@ export default function Header() {
                                 <NavLink
                                     to="/admin/signin"
                                     className={({ isActive }) =>
-                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Signin
                                 </NavLink>
                                 <NavLink
                                     to="/admin/signup"
                                     className={({ isActive }) =>
-                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Signup
                                 </NavLink>
                             </div>
@@ -156,45 +150,35 @@ export default function Header() {
                                 <NavLink
                                     to="/admin"
                                     className={({ isActive }) =>
-                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Dashboard
                                 </NavLink>
                                 <NavLink
                                     to="/admin/products"
                                     className={({ isActive }) =>
-                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Products
                                 </NavLink>
                                 <NavLink
                                     to="/admin/users"
                                     className={({ isActive }) =>
-                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                    }
-                                >
+                                        `block px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
                                     Users
                                 </NavLink>
                                 <NavLink
-                                        to="/admin/orders"
-                                        className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
-                                        Orders
-                                    </NavLink>
-                                    <NavLink
-                                        to="/admin/contact"
-                                        className={({ isActive }) =>
-                                            `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`
-                                        }
-                                    >
-                                        Conatct
-                                    </NavLink>
+                                    to="/admin/orders"
+                                    className={({ isActive }) =>
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
+                                    Orders
+                                </NavLink>
+                                <NavLink
+                                    to="/admin/contact"
+                                    className={({ isActive }) =>
+                                        `px-3 py-1 rounded transition ${isActive ? "bg-[#DB4444] text-white" : "text-white hover:bg-blue-500"}`}>
+                                    Contact
+                                </NavLink>
                                 <div className={`${adminDropDown && "bg-[#DB4444] text-white"} w-8 h-8 flex items-center justify-center rounded-full`}>
-                                    <button onClick={() => setAdminDropDown(!adminDropDown)} >
+                                    <button onClick={() => setAdminDropDown(!adminDropDown)}>
                                         <User className="text-white" />
                                     </button>
                                 </div>

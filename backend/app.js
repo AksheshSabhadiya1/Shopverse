@@ -18,9 +18,9 @@ const orderRouter = require('./routes/user/orderRouter')
 const wishlistRouter = require('./routes/user/wishlistRouter')
 const admincontactRouter = require('./routes/admin/contactRouter')
 const contactRouter = require('./routes/user/contactRouter')
+const { createTokenForUser, createTokenForAdmin } = require('./services/createToken')
 const { authGoogleRouter, passport} = require('./middleware/authGoogle')
-const { createTokenForUser } = require('./services/createToken')
-const { matchPasswordAndCreateToken } = require('./services/matchPasswordAndCreateToken')
+const { authGoogleAdminRouter, adminPassport } = require('./middleware/authGoogleAdmin')
 
 
 const corsOptions = {
@@ -35,14 +35,16 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(checkAuthCookie('userToken'))
 app.use(checkAuthAdminCookie('adminToken'))
-app.use(authGoogleRouter)
 
-app.get("/auth/google", passport.authenticate("google",{
+app.use(authGoogleRouter)
+app.use(authGoogleAdminRouter)
+
+app.get("/auth/google", passport.authenticate("google-user",{
     scope: ["profile", "email"]
 }))
 
 app.get("/auth/google/callback", (req, res, next) => {
-    passport.authenticate("google", async (err, user) => {
+    passport.authenticate("google-user", async (err, user) => {
         if (err || !user) {
             return res.redirect("http://localhost:5173/signin");
         }
@@ -52,7 +54,7 @@ app.get("/auth/google/callback", (req, res, next) => {
 
             const userToken = createTokenForUser(user)
             res.cookie("userToken", userToken, {
-                maxAge: 7 * 24 * 60 * 60 * 1000,
+                maxAge: 1 * 24 * 60 * 60 * 1000,
             });
 
             return res.redirect("http://localhost:5173");
@@ -61,13 +63,36 @@ app.get("/auth/google/callback", (req, res, next) => {
 });
 
 
+app.get("/admin/auth/google", adminPassport.authenticate("google-admin",{
+    scope: ["profile", "email"]
+}))
+
+app.get("/admin/auth/google/callback", (req, res, next) => {
+    adminPassport.authenticate("google-admin", async (err, admin) => {
+        if (err || !admin) {
+            return res.redirect("http://localhost:5174/admin/signin");
+        }
+
+        req.logIn(admin, (err) => {
+            if (err) return res.redirect("http://localhost:5174/admin/signin");
+
+            const adminToken = createTokenForAdmin(admin)
+            res.cookie("adminToken", adminToken, {
+                maxAge: 1 * 24 * 60 * 60 * 1000,
+            });
+
+            return res.redirect("http://localhost:5174/admin");
+        });
+    })(req, res, next);
+});
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/admin', adminRouter)
 app.use('/admin/users', adminUserRouter)
 app.use('/admin/products', adminProductRouter)
 app.use('/admin/orders', adminOrderRouter)
-app.use(admincontactRouter)
+app.use('/admin/contact',admincontactRouter)
 app.use(userRouter)
 app.use(productRouter)
 app.use(cartRouter)

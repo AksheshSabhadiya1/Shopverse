@@ -35,24 +35,28 @@ export default function Signup() {
         }
     };
 
+    const signupWithGoogle = () => {
+        window.open("http://localhost:5000/admin/auth/google/callback", "_self");
+    };
+
     return (
-        <div className="flex flex-col pt-20 md:flex-row h-screen items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black px-4 md:px-12">
-            <div className="hidden lg:flex justify-center md:block md:w-1/2">
+        <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black px-4 py-14 md:px-12">
+            <div className="hidden md:flex justify-center w-full md:w-1/2 lg:w-2/5 mb-10 md:mb-0">
                 <img
                     src="/icons/signinpage-image.png"
                     alt="Signup Visual"
-                    className="w-100 h-auto object-cover"
+                    className="w-full max-w-md h-auto object-contain"
                 />
             </div>
 
-            <div className="w-full md:w-1/2 flex flex-col items-center">
-                <div className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-8 shadow-lg space-y-6 border border-white/10">
+            <div className="w-full md:w-1/2 lg:w-2/5 flex justify-center">
+                <div className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-6 mt-25 lg:mt-15 sm:p-8 shadow-lg space-y-6 border border-white/10">
                     <h1 className="text-3xl font-bold text-white text-center">Create an account</h1>
                     <p className="text-sm text-gray-300 text-center">Enter your details below</p>
 
                     <form onSubmit={handleSubmit(CreateNewAdmin)} className="space-y-4">
-                        <div className="flex gap-3">
-                            <div className="w-1/2">
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="w-full sm:w-1/2">
                                 <input
                                     type="text"
                                     placeholder="First Name"
@@ -61,7 +65,7 @@ export default function Signup() {
                                 />
                                 <p className="text-red-400 text-sm mt-1">{errors.firstname?.message}</p>
                             </div>
-                            <div className="w-1/2">
+                            <div className="w-full sm:w-1/2">
                                 <input
                                     type="text"
                                     placeholder="Last Name"
@@ -110,25 +114,26 @@ export default function Signup() {
 
                         <button
                             type="submit"
-                            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition duration-300"
                             onClick={() => trigger()}
+                            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition duration-300"
                         >
                             Create Account
                         </button>
 
+                    </form>
+                    <div className="flex items-center justify-center text-gray-500 text-sm">
+                        <span className="flex-grow border-t border-gray-300" />
+                        <span className="px-2">or</span>
+                        <span className="flex-grow border-t border-gray-300" />
+                    </div>
                         <button
                             type="button"
                             className="w-full flex items-center justify-center bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-2 rounded-lg transition duration-300"
-                            disabled
-                        >
-                            <img
-                                src="/icons/Google-logo.png"
-                                alt="Google"
-                                className="w-5 h-5 mr-2"
-                            />
-                            Sign up with Google
+                            onClick={()=> signupWithGoogle()}
+                            >
+                            <img src="/icons/Google-logo.png" alt="Google" className="w-5 h-5 mr-2" />
+                            Continue with Google
                         </button>
-                    </form>
 
                     <p className="text-gray-300 text-center">
                         Already have an account?{" "}

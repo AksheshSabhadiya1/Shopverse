@@ -3,7 +3,7 @@ const {Base64} = require('js-base64')
 
 
 const getOrders = async(req, res)=>{
-    const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id")
+        const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id")
         const [products] = await db.execute("Select * from products")
         let allProducts = [];
         let orderItems = [];
@@ -11,10 +11,11 @@ const getOrders = async(req, res)=>{
         ordersDetails.forEach(order => {
             try {
                 allProducts.push(order.allProducts_id_qty.slice(1,))
-                const [result] = allProducts.map(allitem => allitem.map(data=> products.find(product => product.id === data.product_id)))
+                const [result] = allProducts.map(allitem => allitem.map(data=> products.find(product => product.id === data.product_id.toString())))
                 const productresult = result.map(product => ({ ...product, image: Base64.decode(product.image)}));
                 orderItems.push(productresult)
                 allProducts.pop()
+
             } catch (err) {
                 console.error("Failed to parse allProduct_id for order:", order.id, err);
             }
@@ -23,7 +24,7 @@ const getOrders = async(req, res)=>{
 }
 
 const getOrderById = async(req, res)=>{
-    const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id WHERE o.id=?",[parseInt(req.params.orderid)])
+        const [ordersDetails] = await db.execute("select *, o.id as order_id from checkout c join orders o on c.id = o.checkout_id WHERE o.id=?",[parseInt(req.params.orderid)])
     
         const [products] = await db.execute("Select * from products")
         let allProducts = [];
